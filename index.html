@@ -32,10 +32,8 @@ nav ul a:hover{color:var(--ink)}
 .nav-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 [hidden],.chip[hidden],button[hidden],#pwaB[hidden]{display:none!important}
 .mob-pref{display:none}
-.nav-actions .chip{height:36px;padding:0 10px;font-size:.82rem;border-radius:99px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);outline:none;transition:border-color .2s}
-.nav-actions select.chip{max-width:124px;text-overflow:ellipsis}
-.nav-actions #cSel{max-width:120px}
-.nav-actions #lSel{max-width:110px}
+.nav-actions .chip{height:36px;padding:0 12px;font-size:.84rem;border-radius:99px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);outline:none;transition:border-color .2s}
+.nav-actions select.chip{min-width:fit-content;padding-right:12px}
 .nav-actions #thB{width:36px;height:36px;min-width:36px;padding:0;border-radius:50%;display:grid;place-items:center;font-size:1rem;flex-shrink:0}
 .nav-actions .btn{height:36px;padding:0 16px;font:600 .86rem Inter,sans-serif;white-space:nowrap;border-radius:10px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
 .menu-toggle{display:none;width:36px;height:36px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;align-items:center;justify-content:center;font-size:1.15rem;padding:0;flex-shrink:0}
@@ -206,13 +204,19 @@ textarea{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(
 
 /* Tablet & Mobile navigation (<= 1080px) */
 @media(max-width:1080px){
-.menu-toggle{display:inline-flex}
+.menu-toggle{display:inline-flex!important;width:36px;height:36px;font-size:1.15rem}
+.nav-actions #cSel,.nav-actions #lSel,.nav-actions #pwaB{display:none!important}
+.nav-actions{gap:6px}
+.nav-actions .btn.nav-book{height:35px;line-height:35px;padding:0 12px;font-size:.84rem;border-radius:8px;white-space:nowrap;display:inline-flex!important}
+#thB{width:35px;height:35px;min-width:35px;font-size:1rem}
 nav ul{display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 16px 32px rgba(0,0,0,.15);flex-direction:column;align-items:stretch;padding:14px 18px;gap:4px;z-index:90;max-height:calc(100vh - 70px);overflow-y:auto;-webkit-overflow-scrolling:touch;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 nav ul.open{display:flex!important;animation:rise .25s ease both}
 nav ul li{width:100%}
 nav ul a{display:block;width:100%;padding:9px 12px;font-size:.95rem;border-radius:8px}
 nav ul a:hover{background:var(--soft)}
 .tkopen.tk-pill{margin-top:4px;width:fit-content}
+.mob-pref{display:flex!important;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);width:100%}
+.mob-pref select.chip{display:flex!important;width:100%!important;max-width:100%!important;height:42px;font-size:.92rem;padding:0 12px;border-radius:10px;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);cursor:pointer}
 .mob-cta{display:block;width:100%;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
 .mob-cta .btn{display:block;width:100%;text-align:center;height:42px;line-height:42px;padding:0;font-size:.92rem}
 }
@@ -229,17 +233,6 @@ h2{font-size:clamp(1.5rem,4vw,2rem)}
 .steps,.perks,.quotes,.routes,.tiers{grid-template-columns:repeat(2,1fr);gap:16px}
 .est{grid-template-columns:1fr;gap:20px}
 .cta{padding:36px 24px}
-}
-
-/* Mobile & Small Tablet (<= 768px) */
-@media(max-width:768px){
-.nav-actions #cSel,.nav-actions #lSel{display:none!important}
-.mob-pref{display:flex!important;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);width:100%}
-.mob-pref select.chip{display:flex!important;width:100%!important;max-width:100%!important;height:42px;font-size:.92rem;padding:0 12px;border-radius:10px;background:var(--bg);color:var(--ink);border:1.5px solid var(--line)}
-.nav-actions{gap:6px}
-.nav-actions .btn.nav-book{height:34px;line-height:34px;padding:0 11px;font-size:.82rem;border-radius:8px;white-space:nowrap;display:inline-flex!important}
-#thB{width:34px;height:34px;min-width:34px;font-size:.95rem}
-.menu-toggle{display:inline-flex!important;width:34px;height:34px;font-size:1.1rem}
 }
 
 /* Mobile screens (<= 640px) */
@@ -296,8 +289,14 @@ input,select,textarea{font-size:16px!important}
 .cmpt td,.cmpt th{white-space:nowrap;font-size:.8rem}
 }
 @media(max-width:360px){
-.nav-actions .btn.nav-book{padding:0 8px;font-size:.78rem}
-.logo{font-size:1.1rem}
+.wrap{padding:0 12px}
+header .wrap{padding:0 10px}
+.nav-actions{gap:4px}
+.nav-actions .btn.nav-book{padding:0 7px;font-size:.76rem;height:32px;line-height:32px}
+#thB{width:32px;height:32px;min-width:32px;font-size:.9rem}
+.menu-toggle{width:32px;height:32px;font-size:1rem}
+.logo{font-size:1.05rem}
+.logo i{width:26px;height:26px;font-size:.85rem}
 }
 </style>
 </head>
@@ -305,7 +304,7 @@ input,select,textarea{font-size:16px!important}
 <div id="prog"></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><i>R</i>Rivo</a>
-<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#price">Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
+<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#price">Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
 <div class="nav-actions">
 <select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="#top">Book a ride</a>
 <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
@@ -553,20 +552,25 @@ nl.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nl.classList
 document.addEventListener("click",e=>{if(!e.target.closest("nav")){nl.classList.remove("open");mt.setAttribute("aria-expanded","false");mt.textContent="☰"}});
 }
 function syncNavElements(){
-const isMob=window.innerWidth<=768;
+const isMob=window.innerWidth<=1080;
 const mobPref=document.getElementById("mobPref"),actions=document.querySelector(".nav-actions");
 const cSel=document.getElementById("cSel"),lSel=document.getElementById("lSel");
-if(isMob&&mobPref&&cSel&&cSel.parentElement!==mobPref){
+if(!cSel||!lSel)return;
+if(isMob&&mobPref&&cSel.parentElement!==mobPref){
 mobPref.appendChild(cSel);
 mobPref.appendChild(lSel);
-}else if(!isMob&&actions&&cSel&&cSel.parentElement!==actions){
+}else if(!isMob&&actions&&cSel.parentElement!==actions){
 const thB=document.getElementById("thB");
+if(thB){
 actions.insertBefore(cSel,thB);
 actions.insertBefore(lSel,thB);
 }
 }
+}
+window.syncNavElements=syncNavElements;
 syncNavElements();
 window.addEventListener("resize",syncNavElements,{passive:true});
+window.addEventListener("orientationchange",syncNavElements,{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll(".eyebrow,section h2,.sub,.step,.perk,.route,.tier,.quote,.panel,details,.cta,.book").forEach((el,n)=>{el.classList.add("rv");el.style.transitionDelay=(n%4)*90+"ms";io.observe(el)});
 document.querySelectorAll(".stats b").forEach(b=>{const t=b.textContent,m=t.match(/[\d.]+/);if(!m)return;const end=parseFloat(m[0]),dec=m[0].includes(".")?1:0,pre=t.slice(0,m.index),suf=t.slice(m.index+m[0].length),t0=performance.now();
@@ -660,7 +664,7 @@ const setT=t=>{document.documentElement.dataset.theme=t;$("#thB").textContent=t=
 try{const t=localStorage.getItem("rivo_th");if(t)setT(t);else setT(th())}catch(e){setT(th())}
 $("#thB").onclick=()=>setT(th()=="dark"?"light":"dark");
 // install
-let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("#pwaB").hidden=false});$("#pwaB").onclick=()=>dp&&dp.prompt();
+let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("#pwaB").hidden=false;const mp=document.getElementById("mobPwaLi");if(mp)mp.hidden=false});$("#pwaB").onclick=()=>dp&&dp.prompt();const mpBtn=document.getElementById("mobPwa");if(mpBtn)mpBtn.onclick=()=>dp&&dp.prompt();
 // Malayalam
 const ML=window.ML={"Bikes":"ബൈക്കുകൾ","Cars":"കാറുകൾ","How it works":"എങ്ങനെ പ്രവർത്തിക്കുന്നു","Routes":"റൂട്ടുകൾ","Price":"വില","Cancellation":"റദ്ദാക്കൽ","FAQ":"ചോദ്യോത്തരങ്ങൾ","🛠 Breakdown help":"🛠 ബ്രേക്ക്ഡൗൺ സഹായം","Book a ride":"റൈഡ് ബുക്ക് ചെയ്യുക","Reserve":"റിസർവ് ചെയ്യുക","Free cancellation":"സൗജന്യ റദ്ദാക്കൽ","/day":"/ദിവസം","Continue to booking":"ബുക്കിംഗ് തുടരുക","Total":"ആകെ","Compare":"താരതമ്യം","Plan your trip":"യാത്ര പ്ലാൻ ചെയ്യൂ","Trip planner":"ട്രിപ്പ് പ്ലാനർ","Plan my trip":"എന്റെ യാത്ര പ്ലാൻ ചെയ്യൂ","Know your total before you book":"ബുക്ക് ചെയ്യും മുൻപ് ആകെ തുക അറിയൂ","Flexible cancellation, no drama":"എളുപ്പത്തിൽ റദ്ദാക്കാം, ബുദ്ധിമുട്ടില്ല","Cars for every journey":"ഓരോ യാത്രയ്ക്കും കാറുകൾ","Bikes for every kind of trip":"ഓരോ യാത്രയ്ക്കും ബൈക്കുകൾ","Trip calculator":"ട്രിപ്പ് കാൽക്കുലേറ്റർ","Rate your ride":"നിങ്ങളുടെ റൈഡിന് റേറ്റ് ചെയ്യൂ","Confirm booking":"ബുക്കിംഗ് സ്ഥിരീകരിക്കുക","Close":"അടയ്ക്കുക"};
 let ml=false;const tr=root=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const t=n.nodeValue.trim();if(ml&&ML[t]){n.__o=n.__o||n.nodeValue;n.nodeValue=n.nodeValue.replace(t,ML[t])}else if(!ml&&n.__o){n.nodeValue=n.__o;n.__o=null}}};
@@ -713,6 +717,7 @@ document.documentElement.lang=c;document.documentElement.dir=c=="ar"?"rtl":"ltr"
 (function(){const D=LGD();$("#lSel").innerHTML=Object.keys(D).map(c=>`<option value="${c}">🌐 ${D[c][0]}</option>`).join("");
 $("#lSel").onchange=e=>{if(e.target.value=="_o"){setLang(localStorage.getItem("rivo_lg")||"en");return modal('<h3>Any other language</h3><p>Use your browser\'s built-in translator to read this whole page in any language:</p><p><b>Chrome / Edge:</b> menu ⋮ → Translate<br><b>Safari:</b> the aA icon → Translate<br><b>Firefox:</b> the Translate icon in the address bar</p><p class="note">The menu above has hand-translated main headings and buttons in 9 languages.</p>')}setLang(e.target.value)};
 let c="en";try{c=localStorage.getItem("rivo_lg")||""}catch(e){}if(!c){const b=(navigator.language||"en").slice(0,2);c=D[b]?b:"en"}setLang(c)})();
+if(window.syncNavElements)window.syncNavElements();
 </script>
 </body>
 </html>

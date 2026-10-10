@@ -157,29 +157,68 @@ header{transition:box-shadow .3s}header.sc{box-shadow:0 8px 24px rgba(0,0,0,.12)
 .chip{transition:transform .2s,background .2s}.chip:hover{transform:translateY(-2px)}
 .logo i{animation:float 4s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
-.ph{display:block;width:100%;aspect-ratio:300/170;object-fit:contain;background:#e4e4e8;transition:transform .6s}
-.card:hover .ph{transform:scale(1.08) rotate(-1deg)}
-.hero img#heroArt{height:auto;aspect-ratio:3/2;object-fit:cover}
-.card .ph{animation:rise .8s both}
-.card .pic{position:relative}
-.star{position:absolute;top:12px;left:12px;z-index:2;background:linear-gradient(135deg,#ffd45e,#e8a21f);color:#3a2800;font:700 .75rem Inter,sans-serif;padding:5px 12px;border-radius:99px;box-shadow:0 4px 14px rgba(232,162,31,.5);animation:glow 2.4s infinite}
-.card:has(.star){border-color:#e8a21f;box-shadow:0 0 0 1px #e8a21f55}
-.route img.rbg{object-fit:cover;animation:kb 14s ease-in-out infinite alternate}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.12) translateX(-2%)}}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(232,116,42,.5)}70%,100%{box-shadow:0 0 0 12px rgba(232,116,42,0)}}
+/* ---- professional media & card styling ---- */
+.hero-frame{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.18);background:#0a2620}
+.hero-img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;transition:opacity .45s ease}
+.hero-badge{position:absolute;bottom:16px;left:16px;background:rgba(14,24,21,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;font:600 .76rem Inter,sans-serif;padding:6px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.2);display:inline-flex;align-items:center;gap:7px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:#3fbf9f;box-shadow:0 0 0 3px rgba(63,191,159,.3);animation:livepulse 2s infinite}
+@keyframes livepulse{0%{transform:scale(.95);box-shadow:0 0 0 0 rgba(63,191,159,.7)}70%{transform:scale(1);box-shadow:0 0 0 8px rgba(63,191,159,0)}100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(63,191,159,0)}}
+
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 22px 40px -10px rgba(0,0,0,.15);border-color:color-mix(in srgb,var(--brand) 40%,var(--line))}
+.card .pic{position:relative;background:var(--soft);aspect-ratio:16/10;overflow:hidden}
+.card .ph{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.card:hover .ph{transform:scale(1.05)}
+.card .pic:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 65%,rgba(0,0,0,.35) 100%);pointer-events:none}
+.badge-group{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;z-index:2}
+.badge-pill{font:700 .7rem Inter,sans-serif;letter-spacing:.02em;padding:4px 10px;border-radius:99px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.badge-star{background:rgba(232,162,31,.92);color:#241600;box-shadow:0 4px 12px rgba(232,162,31,.35)}
+.badge-tag{background:rgba(20,35,31,.75);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.card .body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card-cat{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--brand2)}
+.card h3{font-size:1.15rem;font-weight:700;color:var(--ink);margin:0;cursor:pointer;transition:color .2s}
+.card:hover h3{color:var(--brand)}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 4px}
+.meta span{font-size:.76rem;font-weight:500;background:var(--soft);color:var(--muted);padding:4px 9px;border-radius:7px;display:inline-flex;align-items:center;gap:4px}
+.meta span.fc{background:color-mix(in srgb,var(--brand) 12%,transparent);color:var(--brand);font-weight:600;border:1px solid color-mix(in srgb,var(--brand) 20%,transparent)}
+.card-foot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.price-box small{color:var(--muted);font-size:.8rem;margin-left:3px}
+.price-box b{font:800 1.35rem Sora,sans-serif;color:var(--ink)}
+.price-hint{font-size:.7rem;color:var(--muted);display:block;margin-top:1px}
+.card-btn{padding:10px 18px;font-size:.88rem;font-weight:600;border-radius:10px}
+.cmp{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted);cursor:pointer;user-select:none}
+.cmp input{cursor:pointer;accent-color:var(--brand)}
+
+.route img.rbg{object-fit:cover;transition:transform 1.2s ease}
+.route:hover img.rbg{transform:scale(1.06)}
 @keyframes mq{to{transform:translateX(-50%)}}
-.card .ph{animation:rise .8s both,kb 10s ease-in-out .8s infinite alternate}
-.card:hover .ph{filter:brightness(1.08) saturate(1.15)}
-.card{position:relative}
-.card:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;z-index:3;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.25),transparent 60%)}
-.card:hover:before{opacity:1}
-.price .btn{animation:pulse 2.6s infinite}
-.hero img#heroArt{transition:opacity .5s;background:#dfe3e2}
 .marq{overflow:hidden;margin-top:56px;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .mt{display:flex;gap:16px;width:max-content;animation:mq 45s linear infinite}.marq:hover .mt{animation-play-state:paused}
-.mt figure{margin:0;position:relative;width:230px;height:140px;border-radius:16px;overflow:hidden;flex:none;background:#ddd}
-.mt img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.mt figure:hover img{transform:scale(1.12)}
-.mt figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 8px;color:#fff;font:600 .8rem Inter,sans-serif;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+.mt figure{margin:0;position:relative;width:240px;height:148px;border-radius:16px;overflow:hidden;flex:none;background:var(--surface);border:1px solid var(--line);box-shadow:0 6px 16px rgba(0,0,0,.08);cursor:pointer;transition:transform .3s,box-shadow .3s}
+.mt figure:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.15)}
+.mt img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}.mt figure:hover img{transform:scale(1.08)}
+.mt figcaption{position:absolute;left:0;right:0;bottom:0;padding:20px 12px 8px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.82));display:flex;justify-content:space-between;align-items:flex-end}
+.mt-name{font:600 .82rem Inter,sans-serif;display:block}
+.mt-cat{font-size:.68rem;opacity:.8;display:block}
+.mt-p{font:700 .8rem Sora,sans-serif;color:#ffb27a}
+
+.det{display:flex;flex-direction:column;gap:10px}
+.det .det-hero{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/10;background:var(--soft)}
+.det .det-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.det-tag{position:absolute;top:10px;left:10px;background:rgba(20,35,31,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font:700 .7rem Inter,sans-serif;padding:4px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.2)}
+.det-header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.det-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.spec-box{background:var(--soft);padding:8px 12px;border-radius:10px;border:1px solid var(--line)}
+.spec-box small{font-size:.7rem;color:var(--muted);display:block;text-transform:uppercase;letter-spacing:.04em}
+.spec-box b{font-size:.88rem;color:var(--ink);display:block;margin-top:2px}
+.inclusions-list{list-style:none;padding:8px 12px;margin:0;display:grid;gap:5px;background:color-mix(in srgb,var(--brand) 6%,transparent);border-radius:10px;border:1px solid color-mix(in srgb,var(--brand) 16%,transparent)}
+.inclusions-list li{font-size:.8rem;color:var(--ink);display:flex;align-items:center;gap:6px}
+.inclusions-list li span{color:var(--brand);font-weight:700}
+.rate-tiers{display:flex;justify-content:space-around;background:var(--soft);padding:8px;border-radius:10px;font-size:.8rem}
+.rate-tiers div{text-align:center}
+.rate-tiers span{display:block;color:var(--muted);font-size:.72rem}
+.rate-tiers b{color:var(--ink);font-weight:700}
 textarea{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;min-height:70px;resize:vertical}
 .sos{position:fixed;right:16px;bottom:16px;z-index:14;border:0;border-radius:99px;padding:13px 18px;background:#d63f4f;color:#fff;font:700 .85rem Inter,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(214,63,79,.45);animation:sosp 2.2s infinite;transition:transform .2s}
 .sos:hover{transform:scale(1.06)}
@@ -319,7 +358,7 @@ header .wrap{padding:0 10px}
 <a class="btn" href="#fleet" data-go="bike">Browse bikes</a> <a class="btn" href="#fleet" data-go="car" style="background:#fff;color:#0f3d34">Browse cars</a> <a class="btn alt" style="color:#fff;border-color:rgba(255,255,255,.35)" href="#cancel">Cancellation policy</a>
 <div class="stats"><div><b>150+</b><span>Cars, bikes &amp; scooters</span></div><div><b>8</b><span>Pickup cities</span></div><div><b>4.8★</b><span>Rider rating</span></div></div>
 </div>
-<div><svg id="heroArt" viewBox="0 0 300 170"></svg></div>
+<div class="hero-frame"><img id="heroArt" class="hero-img" src="img/classic350.jpg" alt="Rivo Premium Fleet" loading="eager"><div class="hero-badge"><span class="badge-dot"></span> Certified &amp; Insured Fleet</div></div>
 </div></div>
 
 <div class="wrap"><div class="book"><div class="seg" id="mode"><button type="button" data-m="bike" class="on">🏍 Bikes</button><button type="button" data-m="car">🚗 Cars</button><button type="button" data-m="truck">🚚 Trucks</button></div><form id="search">
@@ -450,7 +489,7 @@ const PHT6="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGB
 const DATA={truck:[
 {n:"Mini Truck",t:"Mini",i:"truck",p:2500,s:["750 kg payload","Diesel","Driver optional"],ph:PHT1,pb:"#6b6f72",fit:"cover",pos:"50% 60%"},
 {n:"Tata Ace Gold",t:"Mini",i:"truck",p:2200,s:["710 kg payload","Petrol / CNG","Compact & nimble"],ph:"img/ace.jpg",pb:"#e8ecf0",fit:"cover",star:1},
-{n:"Mahindra Bolero Pik-Up",t:"Pickup",i:"truck",p:3500,s:["Open cargo bed","Diesel","Driver optional"],ph:PHT4,pb:"#14284a",fit:"cover"},
+{n:"Mahindra Bolero Pik-Up",t:"Pickup",i:"truck",p:3500,s:["Open cargo bed","Diesel","Driver optional"],ph:"img/bolero.jpg",pb:"#eaedf0",fit:"cover",star:1},
 {n:"Isuzu D-Max V-Cross",t:"Pickup",i:"truck",p:4500,s:["Double cab","Diesel","Driver optional"],ph:PHT3,pb:"#ffffff",fit:"cover"},
 {n:"Ashok Leyland Dost LiTE",t:"Mini",i:"truck",p:3000,s:["Open cargo bed","Diesel","Driver optional"],ph:PHT5,pb:"#3a3f45",fit:"cover"},
 {n:"Eicher Pro 2059",t:"Light",i:"truck",p:5500,s:["Open body","Diesel","Driver included"],ph:PHT6,pb:"#ffffff",fit:"cover"},
@@ -458,26 +497,26 @@ const DATA={truck:[
 {n:"Heavy Truck",t:"Heavy",i:"truck",p:13000,s:["16 t payload","Diesel","Driver included"],ph:PHT2,pb:"#ffffff",fit:"cover"}
 ],
 bike:[
-{n:"Honda Activa 6G",t:"Scooter",i:"scoot",p:499,s:["110cc","2 riders","Auto"],ph:PHOTO},
-{n:"Suzuki Access 125",t:"Scooter",i:"scoot",p:599,s:["125cc","Storage","Auto"],ph:PHOTO2,pb:"#ffffff"},
-{n:"TVS Jupiter",t:"Scooter",i:"scoot",p:549,s:["110cc","Under-seat storage","Auto"],ph:PHOTO3,pb:"#d8d8d6",fit:"cover",pos:"50% 18%"},
+{n:"Honda Activa 6G",t:"Scooter",i:"scoot",p:499,s:["110cc","2 riders","Automatic"],ph:"img/activa.jpg",pb:"#e8eff4",fit:"cover"},
+{n:"Suzuki Access 125",t:"Scooter",i:"scoot",p:599,s:["125cc","Storage","Automatic"],ph:PHOTO2,pb:"#ffffff"},
+{n:"TVS Jupiter",t:"Scooter",i:"scoot",p:549,s:["110cc","Under-seat storage","Automatic"],ph:PHOTO3,pb:"#d8d8d6",fit:"cover",pos:"50% 18%"},
 {n:"Bajaj Pulsar 150",t:"Commuter",i:"bike",p:699,s:["150cc","Manual","Fuel-efficient"],ph:PHOTO4,pb:"#ffffff"},
 {n:"TVS Apache RTR",t:"Sport",i:"bike",p:899,s:["Manual","ABS","Sporty"],ph:PHOTO5,pb:"#e3e5e6",fit:"cover",pos:"50% 60%"},
-{n:"Yamaha YZF-R15 V4",t:"Sport",i:"bike",p:1199,s:["155cc VVA","Dual ABS","Quickshifter"],ph:"img/r15.jpg",pb:"#1a4cb0",fit:"cover"},
+{n:"Yamaha YZF-R15 V4",t:"Sport",i:"bike",p:1199,s:["155cc VVA","Dual ABS","Quickshifter"],ph:"img/r15.jpg",pb:"#1a4cb0",fit:"cover",star:1},
 {n:"KTM 390 Duke",t:"Sport",i:"bike",p:1499,s:["373cc","Cornering ABS","TFT Display"],ph:"img/duke.jpg",pb:"#f26522",fit:"cover",star:1},
-{n:"Royal Enfield Hunter 350",t:"Roadster",i:"bike",p:1099,s:["350cc","Manual","City &amp; highway"],ph:PHOTO8,pb:"#7e8a7a",fit:"cover"},
-{n:"Royal Enfield Classic 350",t:"Premium",i:"bike",p:1299,s:["350cc","Manual","Highway"],ph:PHOTO6,pb:"#5f7f58",fit:"cover",star:1},
-{n:"Royal Enfield Himalayan",t:"Adventure",i:"bike",p:1899,s:["Adventure","ABS","Off-road ready"],ph:PHOTO7,pb:"#6d6a5c",fit:"cover"},
+{n:"Royal Enfield Hunter 350",t:"Roadster",i:"bike",p:1099,s:["350cc","Manual","City & highway"],ph:PHOTO8,pb:"#7e8a7a",fit:"cover"},
+{n:"Royal Enfield Classic 350",t:"Premium",i:"bike",p:1299,s:["350cc","Manual","Highway Cruiser"],ph:"img/classic350.jpg",pb:"#eef2ee",fit:"cover",star:1},
+{n:"Royal Enfield Himalayan",t:"Adventure",i:"bike",p:1899,s:["Adventure","Dual ABS","Off-road ready"],ph:"img/himalayan.jpg",pb:"#eaedf0",fit:"cover",star:1}
 ],
 car:[
-{n:"Maruti Suzuki Swift",t:"Economy",i:"car",p:1999,s:["5 seats","Petrol","Manual"],ph:PHOTO9,pb:"#7a8396",fit:"cover",pos:"50% 62%"},
+{n:"Maruti Suzuki Swift",t:"Economy",i:"car",p:1999,s:["5 seats","Petrol","Manual"],ph:"img/swift.jpg",pb:"#f5e8e8",fit:"cover"},
 {n:"Maruti Suzuki Baleno",t:"Hatchback",i:"car",p:2299,s:["5 seats","Petrol","Manual / Auto"],ph:PHOTO10,pb:"#1c3a52",fit:"cover",pos:"50% 55%"},
-{n:"Honda City",t:"Sedan",i:"car",p:2499,s:["5 seats","Petrol","Auto"],ph:PHOTO11,pb:"#c9d0d3",fit:"cover"},
+{n:"Honda City",t:"Sedan",i:"car",p:2499,s:["5 seats","Petrol","Automatic"],ph:PHOTO11,pb:"#c9d0d3",fit:"cover"},
 {n:"Maruti Suzuki Brezza",t:"SUV",i:"car",p:3499,s:["5 seats","Compact SUV","Manual / Auto"],ph:PHOTO12,pb:"#d9d2c0",fit:"cover"},
 {n:"Hyundai Creta",t:"SUV",i:"car",p:3799,s:["5 seats","Panoramic Sunroof","Auto / Manual"],ph:"img/creta.jpg",pb:"#dbe1e6",fit:"cover",star:1},
 {n:"Mahindra Thar 4x4",t:"SUV",i:"car",p:4299,s:["4 seats","4x4 Hard Top","Off-road ready"],ph:"img/thar.jpg",pb:"#1b1c1e",fit:"cover",star:1},
-{n:"Toyota Innova Crysta",t:"MPV",i:"car",p:3999,s:["6–7 seats","Diesel","Manual"],ph:PHOTO13,pb:"#6b7a5e",fit:"cover",pos:"50% 60%"},
-{n:"Toyota Innova Hycross",t:"MPV",i:"car",p:4999,s:["6–7 seats","Hybrid","Auto"],ph:PHOTO14,pb:"#8a8f6f",fit:"cover"},
+{n:"Toyota Innova Crysta",t:"MPV",i:"car",p:3999,s:["6–7 seats","Diesel","Manual"],ph:"img/innova.jpg",pb:"#edf1f3",fit:"cover",star:1},
+{n:"Toyota Innova Hycross",t:"MPV",i:"car",p:4999,s:["6–7 seats","Hybrid","Automatic"],ph:PHOTO14,pb:"#8a8f6f",fit:"cover"},
 {n:"Toyota Fortuner",t:"SUV",i:"car",p:5999,s:["7 seats","4x4 Automatic","Luxury SUV"],ph:"img/fortuner.jpg",pb:"#eaedf0",fit:"cover",star:1}
 ]};
 const META={truck:{h:"Rent a ride",hv:"truck",sub:"Load and go. Rates are per day, with 300 km/day included. Driver available. Free cancellation up to 48 hrs.",pax:["Driver only","Driver + helper"],paxL:"Crew",ins:300,extra:"Loading helper",pil:600,del:500},
@@ -504,10 +543,10 @@ return `<svg viewBox="0 0 300 170" role="img" aria-label="${name}"><defs><linear
 let mode="bike",cur="all",V=DATA.bike,M=META.bike,TOT=0;
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}
 function chips(){const ts=["all",...new Set(V.map(v=>v.t))];$("#chips").innerHTML=ts.map(t=>`<button class="chip ${t==cur?"on":""}" data-t="${t}">${t=="all"?"All":t}</button>`).join("");$("#type").innerHTML=ts.map(t=>`<option value="${t}" ${t==cur?"selected":""}>${t=="all"?"All vehicles":t}</option>`).join("")}
-function grid(){$("#grid").innerHTML=V.filter(v=>cur=="all"||v.t==cur).map((v,ix)=>`<div class="card" style="--d:${ix*80}ms"><div class="pic">${v.star?`<span class="star">⭐ Premium</span>`:""}${v.ph?`<img class="ph" loading="lazy" decoding="async" src="${v.ph}" alt="${v.n}" style="background:${v.pb||'#e4e4e8'};object-fit:${v.fit||'contain'};object-position:${v.pos||'center'}">`:PH(v)}</div><div class="body"><h3>${v.n}</h3><div class="meta">${[v.t,...v.s].map(x=>`<span>${x}</span>`).join("")}<span class="fc">Free cancellation</span></div><label class="cmp"><input type="checkbox" data-c="${v.n}" ${(window.CMP||[]).includes(v.n)?"checked":""}> Compare</label><div class="price"><div><b>${fmt(v.p)}</b><small>/day</small></div><button class="btn" data-n="${v.n}">Reserve</button></div></div></div>`).join("")}
+function grid(){$("#grid").innerHTML=V.filter(v=>cur=="all"||v.t==cur).map((v,ix)=>`<div class="card" style="--d:${ix*80}ms"><div class="pic"><div class="badge-group">${v.star?`<span class="badge-pill badge-star">★ Premium Fleet</span>`:`<span class="badge-pill badge-tag">⚡ Instant Pickup</span>`}<span class="badge-pill badge-tag">${v.t}</span></div>${v.ph?`<img class="ph" loading="lazy" decoding="async" src="${v.ph}" alt="${v.n}" style="background:${v.pb||'#e4e4e8'};object-fit:${v.fit||'cover'};object-position:${v.pos||'center'}">`:PH(v)}</div><div class="body"><div class="card-head"><span class="card-cat">${v.t}</span><label class="cmp"><input type="checkbox" data-c="${v.n}" ${(window.CMP||[]).includes(v.n)?"checked":""}> Compare</label></div><h3 title="Click to view full specifications">${v.n}</h3><div class="meta">${v.s.map(x=>`<span>${x}</span>`).join("")}<span class="fc">✓ Free cancellation</span></div><div class="card-foot"><div class="price-box"><b>${fmt(v.p)}</b><small>/day</small><span class="price-hint">Tax &amp; insurance incl.</span></div><button class="btn card-btn" data-n="${v.n}">Reserve</button></div></div></div>`).join("")}
 function setMode(m,scroll){mode=m;V=DATA[m];M=META[m];cur="all";
 document.querySelectorAll("#mode button").forEach(b=>b.classList.toggle("on",b.dataset.m==m));
-$("#hv").textContent=M.hv;$("#heroArt").outerHTML=`<img id="heroArt" class="ph" src="${m=="bike"?PHOTO:m=="car"?PHOTO12:PHT4}" alt="${m}">`;
+$("#hv").textContent=M.hv;const a=$("#heroArt");if(a){a.src=m=="bike"?"img/classic350.jpg":m=="car"?"img/thar.jpg":"img/bolero.jpg";a.alt=m}
 $("#fleetH").textContent=m=="car"?"Cars for every journey":m=="truck"?"Trucks for every load":"Bikes for every kind of trip";$("#fleetSub").textContent=UNITS(M.sub);
 $("#paxL").textContent=M.paxL;$("#pax").innerHTML=M.pax.map(x=>`<option>${x}</option>`).join("");
 $("#pDel").textContent=fmt(M.del);$("#pIns").textContent=fmt(M.ins);$("#pPil").textContent=fmt(M.pil);$("#nPil").textContent=M.extra;
@@ -597,11 +636,13 @@ hero.addEventListener("mouseleave",()=>{document.getElementById("heroArt").style
 
 /* ---- photos-only extras ---- */
 (function(){
-const RP=[PHOTO7,PHOTO9,PHOTO8];document.querySelectorAll(".route img.rbg").forEach((im,i)=>im.src=RP[i]);
-const all=[...DATA.bike,...DATA.car,...DATA.truck].filter(v=>v.ph),f=all.map(v=>`<figure><img src="${v.ph}" alt=""><figcaption>${v.n}</figcaption></figure>`).join("");
+const RP=["img/himalayan.jpg","img/swift.jpg","img/thar.jpg"];document.querySelectorAll(".route img.rbg").forEach((im,i)=>im.src=RP[i]);
+const all=[...DATA.bike,...DATA.car,...DATA.truck].filter(v=>v.ph);
+const f=all.map(v=>`<figure data-n="${v.n}"><img src="${v.ph}" alt="${v.n}" loading="lazy"><figcaption><div><span class="mt-name">${v.n}</span><span class="mt-cat">${v.t}</span></div><span class="mt-p">${fmt(v.p)}/day</span></figcaption></figure>`).join("");
 $("#mt").innerHTML=f+f;
-const SL={bike:[PHOTO,PHOTO2,PHOTO4,PHOTO5,"img/r15.jpg","img/duke.jpg",PHOTO6,PHOTO7,PHOTO8],car:[PHOTO12,PHOTO9,PHOTO10,"img/thar.jpg","img/creta.jpg",PHOTO11,PHOTO13,PHOTO14,"img/fortuner.jpg"],truck:[PHT4,PHT1,"img/ace.jpg",PHT5,PHT3,PHT6,"img/medium_truck.jpg",PHT2]};let k=0;
-setInterval(()=>{const a=document.getElementById("heroArt");if(!a||a.tagName!="IMG")return;const l=SL[mode];if(!l)return;k=(k+1)%l.length;a.style.opacity=0;setTimeout(()=>{a.src=l[k];a.style.opacity=1},500)},4200);
+$("#mt").onclick=e=>{const fig=e.target.closest("figure");if(fig&&fig.dataset.n)detail(fig.dataset.n)};
+const SL={bike:["img/classic350.jpg","img/himalayan.jpg","img/duke.jpg","img/r15.jpg","img/activa.jpg"],car:["img/thar.jpg","img/creta.jpg","img/fortuner.jpg","img/innova.jpg","img/swift.jpg"],truck:["img/bolero.jpg","img/ace.jpg","img/medium_truck.jpg"]};let k=0;
+setInterval(()=>{const a=document.getElementById("heroArt");if(!a||a.tagName!="IMG")return;const l=SL[mode];if(!l)return;k=(k+1)%l.length;a.style.opacity=0;setTimeout(()=>{a.src=l[k];a.style.opacity=1},400)},4500);
 $("#grid").addEventListener("mousemove",e=>{const c=e.target.closest(".card");if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty("--mx",e.clientX-r.left+"px");c.style.setProperty("--my",e.clientY-r.top+"px")});
 })();
 
@@ -660,9 +701,7 @@ function detail(n){const v=ALL().find(x=>x.n==n);if(!v)return;const car=v.m=="ca
 const P=d=>{const b=v.p*d,x=d>=7?Math.round(b*.1):0;return fmt(b-x)+(x?" (10% off)":"")};
 const t0=new Date(),cells=[];for(let i=0;i<t0.getDay();i++)cells.push("<span></span>");
 for(let i=0;i<35;i++){const x=new Date(t0.getTime()+i*864e5),k=ymd(x),b=isBooked(v,k);cells.push(`<button class="cd ${b?"x":""}" ${b?"disabled":""} data-k="${k}">${x.getDate()}</button>`)}
-modal(`<div class="det">${v.ph?`<img src="${v.ph}" alt="${v.n}">`:PH(v)}<h3 style="margin-top:12px">${v.n} ${v.star?"⭐":""}</h3><table><tr><td>Category</td><td>${v.t}</td></tr>${v.s.map(x=>`<tr><td>Spec</td><td>${x}</td></tr>`).join("")}<tr><td>Included</td><td>${DU(km)}/day</td></tr><tr><td>Refundable deposit</td><td>${fmt(dep)}</td></tr><tr><td>1 day</td><td>${P(1)}</td></tr><tr><td>3 days</td><td>${P(3)}</td></tr><tr><td>7 days</td><td>${P(7)}</td></tr></table>
-<p class="note">Included: basic cover, 24×7 breakdown help, free cancellation up to 48 hrs. Sample rates.</p><b style="font-size:.85rem">Availability (sample) – tap a green date to pick up</b><div class="cal">${"SMTWTFS".split("").map(c=>`<b>${c}</b>`).join("")}${cells.join("")}</div>
-<button class="btn" style="width:100%" id="dRes">Reserve this ${car?"car":"ride"}</button></div>`);
+modal(`<div class="det"><div class="det-hero">${v.ph?`<img src="${v.ph}" alt="${v.n}">`:PH(v)}<span class="det-tag">${v.star?"★ Premium Selection":"Verified Rental"}</span></div><div class="det-header"><div><span class="card-cat">${v.t}</span><h3 style="margin:2px 0 0;font-size:1.3rem">${v.n}</h3></div><div style="text-align:right"><b style="font:800 1.35rem Sora,sans-serif;color:var(--brand)">${fmt(v.p)}</b><small style="color:var(--muted)">/day</small></div></div><div class="det-specs"><div class="spec-box"><small>Included Distance</small><b>${DU(km)} / day</b></div><div class="spec-box"><small>Refundable Deposit</small><b>${fmt(dep)}</b></div>${v.s.map((x,i)=>`<div class="spec-box"><small>Spec ${i+1}</small><b>${x}</b></div>`).join("")}</div><ul class="inclusions-list"><li><span>✓</span> 100% Free cancellation up to 48 hours</li><li><span>✓</span> Comprehensive insurance &amp; 24×7 roadside assistance</li><li><span>✓</span> Hotel, airport or hub pick-up with instant verification</li></ul><div class="rate-tiers"><div><span>1 Day:</span> <b>${P(1)}</b></div><div><span>3 Days:</span> <b>${P(3)}</b></div><div><span>7 Days:</span> <b>${P(7)}</b></div></div><div style="margin-top:6px"><b style="font-size:.85rem;display:block;margin-bottom:6px">Availability – tap a green date to pick up:</b><div class="cal">${"SMTWTFS".split("").map(c=>`<b>${c}</b>`).join("")}${cells.join("")}</div></div><button class="btn" style="width:100%;margin-top:8px" id="dRes">Reserve this ${car?"car":"ride"}</button></div>`);
 document.querySelectorAll(".cd:not(.x)").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cd.s").forEach(e=>e.classList.remove("s"));b.classList.add("s");$("#from").value=b.dataset.k;toast("Pick-up date set: "+b.dataset.k)});
 $("#dRes").onclick=()=>{closeM();pick(n)}}
 function cmpModal(){const L=CMP.map(n=>ALL().find(v=>v.n==n)).filter(Boolean),r=(a,f)=>`<tr><td><b>${a}</b></td>${L.map(v=>`<td>${f(v)}</td>`).join("")}</tr>`;
@@ -683,7 +722,7 @@ let dp;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;$("#pw
 // Malayalam
 const ML=window.ML={"Bikes":"ബൈക്കുകൾ","Cars":"കാറുകൾ","How it works":"എങ്ങനെ പ്രവർത്തിക്കുന്നു","Routes":"റൂട്ടുകൾ","Price":"വില","Cancellation":"റദ്ദാക്കൽ","FAQ":"ചോദ്യോത്തരങ്ങൾ","🛠 Breakdown help":"🛠 ബ്രേക്ക്ഡൗൺ സഹായം","Book a ride":"റൈഡ് ബുക്ക് ചെയ്യുക","Reserve":"റിസർവ് ചെയ്യുക","Free cancellation":"സൗജന്യ റദ്ദാക്കൽ","/day":"/ദിവസം","Continue to booking":"ബുക്കിംഗ് തുടരുക","Total":"ആകെ","Compare":"താരതമ്യം","Plan your trip":"യാത്ര പ്ലാൻ ചെയ്യൂ","Trip planner":"ട്രിപ്പ് പ്ലാനർ","Plan my trip":"എന്റെ യാത്ര പ്ലാൻ ചെയ്യൂ","Know your total before you book":"ബുക്ക് ചെയ്യും മുൻപ് ആകെ തുക അറിയൂ","Flexible cancellation, no drama":"എളുപ്പത്തിൽ റദ്ദാക്കാം, ബുദ്ധിമുട്ടില്ല","Cars for every journey":"ഓരോ യാത്രയ്ക്കും കാറുകൾ","Bikes for every kind of trip":"ഓരോ യാത്രയ്ക്കും ബൈക്കുകൾ","Trip calculator":"ട്രിപ്പ് കാൽക്കുലേറ്റർ","Rate your ride":"നിങ്ങളുടെ റൈഡിന് റേറ്റ് ചെയ്യൂ","Confirm booking":"ബുക്കിംഗ് സ്ഥിരീകരിക്കുക","Close":"അടയ്ക്കുക"};
 let ml=false;const tr=root=>{const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const t=n.nodeValue.trim();if(ml&&ML[t]){n.__o=n.__o||n.nodeValue;n.nodeValue=n.nodeValue.replace(t,ML[t])}else if(!ml&&n.__o){n.nodeValue=n.__o;n.__o=null}}};
-window.setML=on=>{ml=on;tr(document.body)};
+var setML=window.setML=on=>{ml=on;tr(document.body)};
 new MutationObserver(()=>{if(ml)tr(document.body)}).observe(document.body,{childList:true,subtree:true});
 // planner
 const RT=[{n:"Kochi → Munnar",km:280,b:"Royal Enfield Himalayan",c:"Toyota Innova Crysta",pl:["Kochi to Munnar via Cheeyappara and Valara waterfalls, then tea gardens and Mattupetty Dam","Eravikulam and Top Station views, then the return drive"]},{n:"Varkala Coast Loop",km:120,b:"Suzuki Access 125",c:"Maruti Suzuki Swift",pl:["Papanasam beach, Varkala cliff, Kappil backwaters and Anjengo Fort"]},{n:"Wayanad Circuit",km:350,b:"Royal Enfield Hunter 350",c:"Maruti Suzuki Brezza",pl:["Thamarassery ghat drive and Pookode Lake","Edakkal Caves and Banasura Dam","Soochipara Falls, then the return drive"]}];
@@ -726,8 +765,8 @@ var LGK="Bikes|Cars|Trucks|How it works|Routes|Price|Cancellation|FAQ|🛠 Break
 function LGD(){return {
 en:["English"],
 ml:["മലയാളം","ബൈക്കുകൾ|കാറുകൾ|ട്രക്കുകൾ|എങ്ങനെ പ്രവർത്തിക്കുന്നു|റൂട്ടുകൾ|വില|റദ്ദാക്കൽ|ചോദ്യോത്തരങ്ങൾ|🛠 ബ്രേക്ക്ഡൗൺ സഹായം|റൈഡ് ബുക്ക് ചെയ്യുക|റിസർവ് ചെയ്യുക|സൗജന്യ റദ്ദാക്കൽ|/ദിവസം|ബുക്കിംഗ് തുടരുക|ആകെ|താരതമ്യം|ബുക്കിംഗ് സ്ഥിരീകരിക്കുക|അടയ്ക്കുക|യാത്ര പ്ലാൻ ചെയ്യൂ|നിങ്ങളുടെ റൈഡിന് റേറ്റ് ചെയ്യൂ"],}}
-function setLang(c){const D=LGD(),L=D[c]||D.en;setML(false);Object.keys(ML).forEach(k=>delete ML[k]);
-if(L[1]){const v=L[1].split("|");LGK.forEach((k,i)=>ML[k]=v[i]);setML(true)}
+function setLang(c){const D=LGD(),L=D[c]||D.en;if(window.setML)window.setML(false);const mlObj=window.ML||ML||{};Object.keys(mlObj).forEach(k=>delete mlObj[k]);
+if(L[1]){const v=L[1].split("|");const mlObj=window.ML||ML||{};LGK.forEach((k,i)=>mlObj[k]=v[i]);if(window.setML)window.setML(true)}
 document.documentElement.lang=c;document.documentElement.dir=c=="ar"?"rtl":"ltr";try{localStorage.setItem("rivo_lg",c)}catch(e){}$("#lSel").value=c}
 (function(){const D=LGD();$("#lSel").innerHTML=Object.keys(D).map(c=>`<option value="${c}">🌐 ${D[c][0]}</option>`).join("");
 $("#lSel").onchange=e=>{if(e.target.value=="_o"){setLang(localStorage.getItem("rivo_lg")||"en");return modal('<h3>Any other language</h3><p>Use your browser\'s built-in translator to read this whole page in any language:</p><p><b>Chrome / Edge:</b> menu ⋮ → Translate<br><b>Safari:</b> the aA icon → Translate<br><b>Firefox:</b> the Translate icon in the address bar</p><p class="note">The menu above has hand-translated main headings and buttons in 9 languages.</p>')}setLang(e.target.value)};

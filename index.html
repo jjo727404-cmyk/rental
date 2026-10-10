@@ -11,9 +11,11 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1815;--surface:#162521;--ink:#eef3f0;--muted:#9bb0a8;--brand:#3fbf9f;--brand2:#f08a45;--line:#27403a;--soft:#1b2d28;--hero:#0a2620}}
 :root[data-theme="dark"]{--bg:#0e1815;--surface:#162521;--ink:#eef3f0;--muted:#9bb0a8;--brand:#3fbf9f;--brand2:#f08a45;--line:#27403a;--soft:#1b2d28;--hero:#0a2620}
 html{scroll-padding-top:70px;scroll-behavior:smooth}
+html,body{overflow-x:hidden;width:100%;-webkit-text-size-adjust:100%}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
 h1,h2,h3{font-family:Sora,Inter,sans-serif;line-height:1.15;margin:0}
+img,svg{max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:auto;padding:0 20px}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:100;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
@@ -28,6 +30,8 @@ nav ul a:hover{color:var(--ink)}
 .tkopen.tk-pill{color:#d63f4f!important;font-weight:600;background:rgba(214,63,79,.09);padding:4px 10px;border-radius:99px;border:1px solid rgba(214,63,79,.2);display:inline-flex;align-items:center;gap:4px;font-size:.8rem;white-space:nowrap;transition:background .2s}
 .tkopen.tk-pill:hover{background:rgba(214,63,79,.18)}
 .nav-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+[hidden],.chip[hidden],button[hidden],#pwaB[hidden]{display:none!important}
+.mob-pref{display:none}
 .nav-actions .chip{height:36px;padding:0 10px;font-size:.82rem;border-radius:99px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);outline:none;transition:border-color .2s}
 .nav-actions select.chip{max-width:124px;text-overflow:ellipsis}
 .nav-actions #cSel{max-width:120px}
@@ -114,9 +118,7 @@ footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-s
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 #toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--ink);color:var(--bg);padding:14px 22px;border-radius:12px;transition:.35s;z-index:20;max-width:90%}
 #toast.show{transform:translate(-50%,0)}
-@media(max-width:1100px){.menu-toggle{display:inline-flex}nav ul{display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 16px 32px rgba(0,0,0,.15);flex-direction:column;align-items:stretch;padding:14px 18px;gap:4px;z-index:90;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}nav ul.open{display:flex!important;animation:rise .25s ease both}nav ul li{width:100%}nav ul a{display:block;width:100%;padding:9px 12px;font-size:.95rem;border-radius:8px}nav ul a:hover{background:var(--soft)}.tkopen.tk-pill{margin-top:4px;width:fit-content}}
-@media(max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-bottom:90px}.hero svg{max-width:420px}.book form{grid-template-columns:1fr 1fr}.book .btn{grid-column:1/-1}.steps,.perks,.quotes,.routes,.tiers{grid-template-columns:1fr}.est{grid-template-columns:1fr}.cta{padding:32px 20px}section{padding:56px 0}}
-@media(max-width:640px){.nav-actions #lSel{display:none}.nav-actions #cSel{max-width:88px;padding:0 6px;font-size:.78rem}.nav-actions .btn{padding:0 10px;font-size:.8rem;height:34px}nav{height:58px}.logo{font-size:1.15rem}.logo i{width:28px;height:28px;font-size:.9rem}}
+
 
 /* ---- motion ---- */
 @keyframes rise{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
@@ -199,16 +201,113 @@ textarea{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(
 .pl li{margin:6px 0}#plOut{animation:rise .5s both}.stars{color:#e8a21f;letter-spacing:2px}.rvf{display:grid;gap:8px;max-width:520px;margin:26px auto 0}
 .chip.on2{background:var(--brand);color:#fff}
 .nophoto{aspect-ratio:300/170;display:grid;place-items:center;align-content:center;gap:4px;background:linear-gradient(135deg,var(--soft),var(--line));color:var(--muted)}.nophoto span{font-size:3rem;animation:float 3.5s ease-in-out infinite}.nophoto small{font-size:.75rem}
-/* header overrides integrated */
+.mob-cta{display:none}
+.mob-pref{display:none}
+
+/* Tablet & Mobile navigation (<= 1080px) */
+@media(max-width:1080px){
+.menu-toggle{display:inline-flex}
+nav ul{display:none;position:absolute;top:calc(100% + 1px);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:0 16px 32px rgba(0,0,0,.15);flex-direction:column;align-items:stretch;padding:14px 18px;gap:4px;z-index:90;max-height:calc(100vh - 70px);overflow-y:auto;-webkit-overflow-scrolling:touch;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+nav ul.open{display:flex!important;animation:rise .25s ease both}
+nav ul li{width:100%}
+nav ul a{display:block;width:100%;padding:9px 12px;font-size:.95rem;border-radius:8px}
+nav ul a:hover{background:var(--soft)}
+.tkopen.tk-pill{margin-top:4px;width:fit-content}
+.mob-cta{display:block;width:100%;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.mob-cta .btn{display:block;width:100%;text-align:center;height:42px;line-height:42px;padding:0;font-size:.92rem}
+}
+
+/* Tablet screens (<= 860px) */
+@media(max-width:860px){
+section{padding:56px 0}
+h2{font-size:clamp(1.5rem,4vw,2rem)}
+.hero .wrap{grid-template-columns:1fr;padding-top:36px;padding-bottom:70px;gap:28px}
+.hero svg,.hero #heroArt{max-width:440px;margin:0 auto;display:block}
+.book form{grid-template-columns:1fr 1fr;gap:12px}
+.book .btn{grid-column:1/-1;height:46px;font-size:.95rem}
+.grid{grid-template-columns:repeat(2,1fr);gap:16px}
+.steps,.perks,.quotes,.routes,.tiers{grid-template-columns:repeat(2,1fr);gap:16px}
+.est{grid-template-columns:1fr;gap:20px}
+.cta{padding:36px 24px}
+}
+
+/* Mobile & Small Tablet (<= 768px) */
+@media(max-width:768px){
+.nav-actions #cSel,.nav-actions #lSel{display:none!important}
+.mob-pref{display:flex!important;flex-direction:column;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);width:100%}
+.mob-pref select.chip{display:flex!important;width:100%!important;max-width:100%!important;height:42px;font-size:.92rem;padding:0 12px;border-radius:10px;background:var(--bg);color:var(--ink);border:1.5px solid var(--line)}
+.nav-actions{gap:6px}
+.nav-actions .btn.nav-book{height:34px;line-height:34px;padding:0 11px;font-size:.82rem;border-radius:8px;white-space:nowrap;display:inline-flex!important}
+#thB{width:34px;height:34px;min-width:34px;font-size:.95rem}
+.menu-toggle{display:inline-flex!important;width:34px;height:34px;font-size:1.1rem}
+}
+
+/* Mobile screens (<= 640px) */
+@media(max-width:640px){
+.wrap{padding:0 16px}
+nav{height:58px;gap:6px}
+.logo{font-size:1.15rem}
+.logo i{width:28px;height:28px;font-size:.9rem}
+.hero h1{font-size:clamp(1.8rem,7vw,2.3rem);line-height:1.2}
+.hero p{font-size:.92rem;margin:12px 0 20px;line-height:1.5}
+.hero .tag{font-size:.74rem;padding:5px 10px;margin:0 4px 8px 0}
+.hero .btn{display:block;width:100%;text-align:center;margin:0 0 10px 0;padding:12px 16px;font-size:.92rem}
+.hero .btn:last-of-type{margin-bottom:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:12px 6px;border-radius:14px;text-align:center}
+.stats b{font-size:1.2rem}
+.stats span{font-size:.7rem;line-height:1.25;display:block}
+.book{margin-top:-36px;padding:16px;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.12)}
+.seg{display:flex;width:100%;padding:3px;margin-bottom:14px;border-radius:12px}
+.seg button{flex:1;padding:9px 2px;font-size:.82rem;text-align:center;border-radius:9px}
+.book form{grid-template-columns:1fr;gap:12px}
+.book form select,.book form input{font-size:16px;height:46px;padding:10px 12px}
+.book .btn{height:48px;font-size:1rem;margin-top:2px}
+.marq{margin-top:36px}
+.mt figure{width:180px;height:115px;border-radius:12px}
+.chips{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;margin:14px 0 18px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:7px 14px;font-size:.84rem}
+.grid{grid-template-columns:1fr;gap:14px}
+.card{border-radius:16px}
+.card .body{padding:16px}
+.steps,.perks,.quotes,.routes,.tiers{grid-template-columns:1fr;gap:12px;margin-top:20px}
+.step,.tier,.quote{padding:16px;border-radius:14px}
+.tier b{font-size:1.5rem;margin:4px 0 2px}
+.route{min-height:200px;padding:18px;border-radius:16px}
+.perk{gap:12px}
+.perk i{width:40px;height:40px;font-size:1.1rem;border-radius:10px}
+.panel{padding:18px 14px;border-radius:16px}
+.checks label{font-size:.9rem;margin:6px 0}
+#bCancel,#bResch{width:100%;display:block;margin-bottom:8px;height:46px;text-align:center}
+section{padding:44px 0}
+details{padding:14px 16px;border-radius:12px}
+.cta{padding:30px 16px;border-radius:18px}
+.cta h2{font-size:1.4rem}
+.cta p{font-size:.88rem;margin:8px auto 18px}
+.cta .btn{display:block;width:100%;text-align:center;height:46px;line-height:46px;padding:0}
+footer{padding:32px 0 84px}
+footer .wrap{flex-direction:column;text-align:center;gap:14px}
+.sos{right:12px;bottom:12px;padding:10px 15px;font-size:.8rem}
+#cmpbar{bottom:72px;width:calc(100% - 24px);max-width:360px;font-size:.8rem;padding:9px 12px}
+#toast{max-width:calc(100% - 24px);font-size:.82rem;padding:12px 16px}
+.modal{padding:8px;align-items:flex-end}
+.mbox{max-width:100%;max-height:86vh;padding:20px 16px;border-radius:20px 20px 12px 12px}
+input,select,textarea{font-size:16px!important}
+.cmpt td,.cmpt th{white-space:nowrap;font-size:.8rem}
+}
+@media(max-width:360px){
+.nav-actions .btn.nav-book{padding:0 8px;font-size:.78rem}
+.logo{font-size:1.1rem}
+}
 </style>
 </head>
 <body>
 <div id="prog"></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><i>R</i>Rivo</a>
-<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#price">Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li></ul>
+<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#price">Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
 <div class="nav-actions">
-<select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn" href="#top">Book a ride</a>
+<select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="#top">Book a ride</a>
 <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
 </div>
 </nav></div></header>
@@ -453,6 +552,21 @@ mt.onclick=e=>{e.stopPropagation();const op=nl.classList.toggle("open");mt.setAt
 nl.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nl.classList.remove("open");mt.setAttribute("aria-expanded","false");mt.textContent="☰"}));
 document.addEventListener("click",e=>{if(!e.target.closest("nav")){nl.classList.remove("open");mt.setAttribute("aria-expanded","false");mt.textContent="☰"}});
 }
+function syncNavElements(){
+const isMob=window.innerWidth<=768;
+const mobPref=document.getElementById("mobPref"),actions=document.querySelector(".nav-actions");
+const cSel=document.getElementById("cSel"),lSel=document.getElementById("lSel");
+if(isMob&&mobPref&&cSel&&cSel.parentElement!==mobPref){
+mobPref.appendChild(cSel);
+mobPref.appendChild(lSel);
+}else if(!isMob&&actions&&cSel&&cSel.parentElement!==actions){
+const thB=document.getElementById("thB");
+actions.insertBefore(cSel,thB);
+actions.insertBefore(lSel,thB);
+}
+}
+syncNavElements();
+window.addEventListener("resize",syncNavElements,{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll(".eyebrow,section h2,.sub,.step,.perk,.route,.tier,.quote,.panel,details,.cta,.book").forEach((el,n)=>{el.classList.add("rv");el.style.transitionDelay=(n%4)*90+"ms";io.observe(el)});
 document.querySelectorAll(".stats b").forEach(b=>{const t=b.textContent,m=t.match(/[\d.]+/);if(!m)return;const end=parseFloat(m[0]),dec=m[0].includes(".")?1:0,pre=t.slice(0,m.index),suf=t.slice(m.index+m[0].length),t0=performance.now();

@@ -79,7 +79,23 @@ h2{font-size:clamp(1.7rem,3.5vw,2.4rem);margin:8px 0 12px}
 .step{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
 .step span{font:800 1.8rem Sora,sans-serif;color:var(--brand2)}
 .step h3{font-size:1.05rem;margin:8px 0 6px}.step p{margin:0;color:var(--muted);font-size:.92rem}
-.routes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}
+.routes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+@media(max-width:1100px){.routes{grid-template-columns:repeat(2,1fr);gap:16px}}
+@media(max-width:640px){.routes{grid-template-columns:1fr;gap:14px}}
+.route{position:relative;overflow:hidden;border-radius:20px;padding:22px;color:#fff;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.14);transition:transform .35s ease,box-shadow .35s ease,border-color .35s}
+.route:hover{transform:translateY(-6px);box-shadow:0 24px 44px rgba(0,0,0,.28);border-color:rgba(255,255,255,.45)}
+.route:focus-visible{outline:3px solid var(--brand2);outline-offset:3px}
+.route .rbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.route:hover .rbg{transform:scale(1.08)}
+.route:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.5) 45%,rgba(0,0,0,.92) 100%);pointer-events:none}
+.route-tag{position:absolute;top:16px;left:16px;background:rgba(20,35,31,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font:700 .74rem Inter,sans-serif;padding:5px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.25);z-index:2;display:inline-flex;align-items:center;gap:6px}
+.route-meta{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:.8rem;color:rgba(255,255,255,.88);font-weight:600}
+.route h3{position:relative;z-index:2;font-size:1.2rem;font-weight:700;margin:0 0 6px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.route-desc{position:relative;z-index:2;font-size:.82rem;color:rgba(255,255,255,.86);line-height:1.45;margin:0 0 12px}
+.route-foot{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto}
+.route-veh-badge{background:rgba(255,255,255,.16);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font:600 .72rem Inter,sans-serif;padding:4px 9px;border-radius:8px;border:1px solid rgba(255,255,255,.22);color:#fff}
+.route-btn{background:var(--brand2);color:#fff;font:700 .76rem Inter,sans-serif;padding:6px 12px;border-radius:8px;display:inline-flex;align-items:center;gap:4px;transition:filter .2s}
+.route:hover .route-btn{filter:brightness(1.15)}
 .route{position:relative;overflow:hidden;border-radius:18px;padding:24px;color:#fff;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end}.route .rbg{position:absolute;inset:0;width:100%;height:100%}.route:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(0,0,0,.72))}.route>small,.route>h3{position:relative;z-index:2}
 .route small{opacity:.85}.route h3{margin:4px 0}
 .perks{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
@@ -443,13 +459,47 @@ header .wrap{padding:0 10px}
 <div class="perk"><i>↩️</i><div><h3>Easy cancellation</h3><p>Free up to 48 hrs before pick-up. Refunds in 3–5 days.</p></div></div>
 </div></div></section>
 
-<section id="routes"><div class="wrap">
-<span class="eyebrow">Where to ride</span><h2>Three routes worth the fuel</h2>
-<div class="routes">
-<a class="route" href="#fleet"><img class="rbg" alt=""><small>2 days · 280 km</small><h3>Kochi → Munnar</h3><small>Tea gardens and misty switchbacks. Best on: Adventure</small></a>
-<a class="route" href="#fleet"><img class="rbg" alt=""><small>1 day · 120 km</small><h3>Varkala Coast Loop</h3><small>Cliffs, beaches, backwater stops. Best on: Hatchback</small></a>
-<a class="route" href="#fleet"><img class="rbg" alt=""><small>3 days · 350 km</small><h3>Wayanad Circuit</h3><small>Ghats, waterfalls, forest roads. Best on: Roadster</small></a>
-</div></div></section>
+<section id="routes" class="rv"><div class="wrap">
+<span class="eyebrow">Where to Ride</span><h2>Kerala’s Greatest Road Trips</h2>
+<p class="sub">Curated touring circuits through misty tea hills, Arabian Sea cliffs, and dense rainforest ghats. Tap any route to view the day plan and pre-book the perfect ride.</p>
+<div class="routes" id="routesGrid">
+  <div class="route" data-r="0" tabindex="0" role="button" aria-label="Kochi to Munnar Mist Trail">
+    <img class="rbg" src="img/himalayan.jpg" alt="Kochi to Munnar" loading="lazy">
+    <span class="route-tag">☕ Hill Station &amp; Ghats</span>
+    <div class="route-meta"><span>📅 2–3 Days</span><span>🛣️ 280 km</span></div>
+    <h3>Kochi → Munnar Cloud Trail</h3>
+    <p class="route-desc">Cheeyappara &amp; Valara waterfalls, misty hairpin climbs, tea plantations, and sunrise at Top Station.</p>
+    <div class="route-foot"><span class="route-veh-badge">🏍️ Royal Enfield Himalayan</span><span class="route-btn">Explore Route ➔</span></div>
+  </div>
+
+  <div class="route" data-r="1" tabindex="0" role="button" aria-label="Varkala and Kollam Coast Loop">
+    <img class="rbg" src="img/swift.jpg" alt="Varkala Coast" loading="lazy">
+    <span class="route-tag">🌊 Cliffs &amp; Ocean Roads</span>
+    <div class="route-meta"><span>📅 1–2 Days</span><span>🛣️ 135 km</span></div>
+    <h3>Varkala Cliff &amp; Coast Loop</h3>
+    <p class="route-desc">Golden sea cliffs, pristine Kappil estuary drive, beach café culture, and palm-shaded coastal stretches.</p>
+    <div class="route-foot"><span class="route-veh-badge">🚗 Maruti Suzuki Swift</span><span class="route-btn">Explore Route ➔</span></div>
+  </div>
+
+  <div class="route" data-r="2" tabindex="0" role="button" aria-label="Wayanad Rainforest and Ghat Pass">
+    <img class="rbg" src="img/thar.jpg" alt="Wayanad Rainforest" loading="lazy">
+    <span class="route-tag">⛰️ 9 Hairpins &amp; Ghats</span>
+    <div class="route-meta"><span>📅 3 Days</span><span>🛣️ 360 km</span></div>
+    <h3>Wayanad Rainforest Expedition</h3>
+    <p class="route-desc">Thamarassery Churam 9 hairpin bends, Lakkidi viewpoint, Banasura Sagar Dam, and off-road jungle passes.</p>
+    <div class="route-foot"><span class="route-veh-badge">🚙 Mahindra Thar 4x4</span><span class="route-btn">Explore Route ➔</span></div>
+  </div>
+
+  <div class="route" data-r="3" tabindex="0" role="button" aria-label="Athirappilly and Valparai Sholayar Loop">
+    <img class="rbg" src="img/innova.jpg" alt="Athirappilly Waterfalls" loading="lazy">
+    <span class="route-tag">🌲 Waterfalls &amp; Rainforest</span>
+    <div class="route-meta"><span>📅 2 Days</span><span>🛣️ 220 km</span></div>
+    <h3>Athirappilly &amp; Sholayar Loop</h3>
+    <p class="route-desc">Niagara of India waterfalls, dense canopy drives, tea valleys, and misty forest wildlife corridors.</p>
+    <div class="route-foot"><span class="route-veh-badge">🚐 Toyota Innova Crysta</span><span class="route-btn">Explore Route ➔</span></div>
+  </div>
+</div>
+</div></section>
 
 <section id="gallery" class="rv"><div class="wrap">
 <span class="eyebrow">Fleet In Action</span><h2>Kerala road trips &amp; rider moments</h2>
@@ -546,7 +596,7 @@ header .wrap{padding:0 10px}
 </div></section>
 
 <section id="planner"><div class="wrap"><span class="eyebrow">Trip planner</span><h2>Plan your trip</h2><p class="sub">Pick a route and we suggest the vehicle, a day plan and the cost.</p>
-<div class="est"><div class="panel"><label>Route</label><select id="plR"><option value="0">Kochi → Munnar</option><option value="1">Varkala Coast Loop</option><option value="2">Wayanad Circuit</option></select>
+<div class="est"><div class="panel"><label>Route</label><select id="plR"><option value="0">Kochi → Munnar Cloud Trail (280 km)</option><option value="1">Varkala Cliff &amp; Coast Loop (135 km)</option><option value="2">Wayanad Rainforest Expedition (360 km)</option><option value="3">Athirappilly &amp; Sholayar Loop (220 km)</option></select>
 <label style="margin-top:12px">Travellers</label><select id="plP"><option value="1">1–2 people</option><option value="3">3–7 people</option></select>
 <label style="margin-top:12px">Days: <b id="plDl">2</b></label><input type="range" id="plD" min="1" max="7" value="2" style="width:100%"><button class="btn" style="width:100%;margin-top:14px" id="plGo">Plan my trip</button></div><div class="panel" id="plOut"><p class="note">Your plan will appear here.</p></div></div></div></section>
 <section id="faq"><div class="wrap" style="max-width:760px">
@@ -683,12 +733,33 @@ ${isPre?`
 <button class="btn" style="width:100%;margin-top:14px" id="go">${isPre?"Pre-Book Now (Pay "+fmt(adv)+")":"Continue to booking"}</button>
 <p style="font-size:.78rem;color:var(--muted);margin:10px 0 0">✅ Free cancellation up to 48 hrs before pick-up. <a href="#cancel" style="text-decoration:underline">See policy</a>. Pick-up at any hub or doorstep delivery.</p>`;
 $("#go").onclick=openBook;refund()}
-["#eVeh","#eDays","#eDel","#eIns","#ePil"].forEach(s=>$(s).addEventListener("input",calc));
+["#eVeh","#eDays","#eDel","#eIns","#ePil","#ePre","#eGps","#eKid","#eDrv","#from","#to"].forEach(s=>{const el=$(s);if(el){el.addEventListener("input",calc);el.addEventListener("change",calc)}});
 $("#rWhen").onchange=refund;
 let mem=[];
 const BK={get(){try{return JSON.parse(localStorage.getItem("rivo_bk")||"[]")}catch(e){return mem}},set(a){mem=a;try{localStorage.setItem("rivo_bk",JSON.stringify(a))}catch(e){}}};
 const ph10=s=>s.replace(/\D/g,"").slice(-CLEN()),when=t=>new Date(t).toLocaleString((window.CN?CN.loc:"en-IN"),{dateStyle:"medium",timeStyle:"short"});
 function closeM(){$("#modal").hidden=true}
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeM();
+});
+document.addEventListener("click", e => {
+  const m = document.getElementById("modal");
+  if (m && e.target === m) closeM();
+  const rc = e.target.closest(".route");
+  if (rc && rc.dataset.r !== undefined) {
+    e.preventDefault();
+    if (typeof showRoute === "function") showRoute(+rc.dataset.r);
+  }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") {
+    const rc = document.activeElement ? document.activeElement.closest(".route") : null;
+    if (rc && rc.dataset.r !== undefined) {
+      e.preventDefault();
+      if (typeof showRoute === "function") showRoute(+rc.dataset.r);
+    }
+  }
+});
 function modal(h){$("#mbox").innerHTML=h+'<button class="btn alt" style="margin-top:12px;width:100%" onclick="closeM()">Close</button>';$("#modal").hidden=false}
 function sms(b,t){return `<div class="sms"><small>SMS to +${CDIAL()} ${b.phone}</small><p>${t}</p></div><a class="btn" style="display:block;text-align:center" href="sms:+${CDIAL()}${b.phone}?body=${encodeURIComponent(t)}">Open in Messages</a><p class="note">Preview only. Sending a real SMS needs a server and an SMS provider.</p>`}
 function openBook(){
@@ -953,7 +1024,123 @@ let ml=false;const tr=root=>{const w=document.createTreeWalker(root,NodeFilter.S
 var setML=window.setML=on=>{ml=on;tr(document.body)};
 new MutationObserver(()=>{if(ml)tr(document.body)}).observe(document.body,{childList:true,subtree:true});
 // planner
-const RT=[{n:"Kochi → Munnar",km:280,b:"Royal Enfield Himalayan",c:"Toyota Innova Crysta",pl:["Kochi to Munnar via Cheeyappara and Valara waterfalls, then tea gardens and Mattupetty Dam","Eravikulam and Top Station views, then the return drive"]},{n:"Varkala Coast Loop",km:120,b:"Suzuki Access 125",c:"Maruti Suzuki Swift",pl:["Papanasam beach, Varkala cliff, Kappil backwaters and Anjengo Fort"]},{n:"Wayanad Circuit",km:350,b:"Royal Enfield Hunter 350",c:"Maruti Suzuki Brezza",pl:["Thamarassery ghat drive and Pookode Lake","Edakkal Caves and Banasura Dam","Soochipara Falls, then the return drive"]}];
+const RT=[
+  {
+    n: "Kochi → Munnar Cloud Trail",
+    tag: "☕ Hill Station & Ghats",
+    km: 280,
+    days: 2,
+    city: "Kochi",
+    b: "Royal Enfield Himalayan",
+    c: "Mahindra Thar 4x4",
+    img: "img/himalayan.jpg",
+    desc: "A breathtaking climb from sea-level plains to 1,600m misty hill station through cascading waterfalls and vast tea carpets.",
+    pl: [
+      "Kochi early departure via Cheeyappara and Valara waterfalls, arriving at Old Munnar tea estates & Mattupetty Dam",
+      "Early sunrise drive to Top Station (1,700m), Kundala Lake, Eravikulam National Park, then gentle descent back"
+    ]
+  },
+  {
+    n: "Varkala Cliff & Coast Loop",
+    tag: "🌊 Cliffs & Ocean Roads",
+    km: 135,
+    days: 2,
+    city: "Varkala",
+    b: "Honda Activa 6G",
+    c: "Maruti Suzuki Swift",
+    img: "img/swift.jpg",
+    desc: "Scenic coastal cruise along dramatic red laterite cliffs, coconut lagoons, and seaside fishing hamlets.",
+    pl: [
+      "Varkala North Cliff morning cruise, Papanasam Beach, Odayam sunset cafés, and seaside cliff walk",
+      "Coastal highway to Kappil beach & estuary bridge where backwaters meet the Arabian Sea, returning via Paravur Lake"
+    ]
+  },
+  {
+    n: "Wayanad Rainforest Expedition",
+    tag: "⛰️ 9 Hairpins & Ghats",
+    km: 360,
+    days: 3,
+    city: "Wayanad",
+    b: "Royal Enfield Classic 350",
+    c: "Mahindra Thar 4x4",
+    img: "img/thar.jpg",
+    desc: "Thrilling mountain road trip conquering the 9 hairpin curves of Thamarassery Churam into emerald rainforests.",
+    pl: [
+      "Ascend through Thamarassery Churam 9 hairpin bends to Lakkidi Viewpoint and serene Pookode Lake",
+      "Banasura Sagar Dam (largest earthen dam in India), Karlad Lake adventure hub, and Chembra tea slopes",
+      "Prehistoric Edakkal Caves, Soochipara Waterfalls hike, followed by scenic afternoon return cruise"
+    ]
+  },
+  {
+    n: "Athirappilly & Sholayar Loop",
+    tag: "🌲 Waterfalls & Rainforest",
+    km: 220,
+    days: 2,
+    city: "Kochi",
+    b: "KTM 390 Duke",
+    c: "Toyota Innova Crysta",
+    img: "img/innova.jpg",
+    desc: "Kerala's most famous waterfall highway through dense tropical rainforests, elephant corridors, and mountain reservoirs.",
+    pl: [
+      "Morning departure to Athirappilly 80ft waterfall plunge, Vazhachal forest rapids, and river view points",
+      "Deep forest ride along Sholayar Dam reservoir, misty Valparai tea plateau borders, and afternoon return"
+    ]
+  }
+];
+
+function showRoute(i){
+  const r = RT[i];
+  if (!r) return;
+  const isGrp = (+$("#plP").value||1) > 1;
+  const recVeh = isGrp ? r.c : r.b;
+  const vObj = ALL().find(x=>x.n==recVeh) || ALL()[0];
+
+  modal(`<h3>${r.n}</h3>
+  <div style="position:relative;border-radius:14px;overflow:hidden;margin:10px 0;max-height:220px">
+    <img src="${r.img}" style="width:100%;height:180px;object-fit:cover;display:block" alt="${r.n}">
+    <span style="position:absolute;top:10px;left:10px;background:rgba(20,35,31,.85);color:#fff;font:700 .75rem Inter,sans-serif;padding:4px 10px;border-radius:99px">${r.tag}</span>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted);margin:6px 0">${r.desc}</p>
+  <div style="background:var(--soft);border-radius:12px;padding:10px 14px;margin:10px 0;border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div><small style="color:var(--muted)">Distance</small><div style="font-weight:700">${DU(r.km)}</div></div>
+    <div><small style="color:var(--muted)">Recommended Days</small><div style="font-weight:700">${r.days} Days</div></div>
+  </div>
+  <div style="margin:12px 0"><b style="font-size:.9rem">Day-by-Day Expedition Plan:</b>
+    <ul class="pl" style="margin-top:8px">
+      ${r.pl.map((p, idx)=>`<li><b>Day ${idx + 1}:</b> ${p}</li>`).join("")}
+    </ul>
+  </div>
+  <div style="background:var(--surface);border:1.5px solid var(--brand);border-radius:12px;padding:12px;margin:12px 0;display:flex;align-items:center;justify-content:space-between;gap:12px">
+    <div>
+      <small style="color:var(--brand);font-weight:700;text-transform:uppercase;font-size:.72rem">Recommended Ride</small>
+      <div style="font-weight:700;font-size:1.05rem">${recVeh}</div>
+      <small style="color:var(--muted)">${fmt(vObj.p)}/day &middot; Free cancellation</small>
+    </div>
+    ${vObj.ph?`<img src="${vObj.ph}" style="width:72px;height:48px;object-fit:cover;border-radius:8px;background:var(--soft)">`:""}
+  </div>
+  <button class="btn" style="width:100%" id="rPickBtn">⚡ Pre-Book ${recVeh} for this Route</button>`);
+
+  const b = $("#rPickBtn");
+  if (b) {
+    b.onclick = () => {
+      closeM();
+      if ($("#eVeh")) $("#eVeh").value = recVeh;
+      if ($("#eDays")) $("#eDays").value = r.days;
+      if ($("#dLbl")) $("#dLbl").textContent = r.days;
+      if ($("#city")) {
+        for (let opt of $("#city").options) {
+          if (opt.value.toLowerCase().includes(r.city.toLowerCase())) {
+            $("#city").value = opt.value;
+            break;
+          }
+        }
+      }
+      calc();
+      toast("Selected " + recVeh + " for " + r.n + "! Check your pre-booking total below.");
+      document.getElementById("price").scrollIntoView();
+    };
+  }
+}
 $("#plD").oninput=()=>$("#plDl").textContent=$("#plD").value;
 $("#plGo").onclick=()=>{const r=RT[+$("#plR").value],d=+$("#plD").value,grp=+$("#plP").value>1,n=grp?r.c:r.b,v=ALL().find(x=>x.n==n),fuel=Math.round(r.km/(grp?15:40)*105),cost=v.p*d;
 $("#plOut").innerHTML=`<h3>${r.n}</h3><p class="note">${d} day(s) · about ${r.km} km · suggested: <b>${n}</b></p><ul class="pl">${Array.from({length:d},(_,i)=>`<li><b>Day ${i+1}:</b> ${r.pl[Math.min(i,r.pl.length-1)]}${i>=r.pl.length?" (free day to explore)":""}</li>`).join("")}</ul><div class="row"><span>Rental</span><span>${fmt(cost)}</span></div><div class="row"><span>Fuel (approx.)</span><span>${fmt(fuel)}</span></div><div class="row t"><span>Estimated total</span><span>${fmt(cost+fuel)}</span></div><button class="btn" style="width:100%;margin-top:12px" id="plRes">Reserve ${n}</button>`;$("#plRes").onclick=()=>pick(n,d)};

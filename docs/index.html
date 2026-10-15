@@ -375,23 +375,6 @@ header .wrap{padding:0 10px}
 .logo i{width:26px;height:26px;font-size:.85rem}
 }
 
-/* ---- Google Maps & Hubs styling ---- */
-.hubs-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-top:28px;align-items:stretch}
-@media(max-width:900px){.hubs-grid{grid-template-columns:1fr;gap:18px}}
-.hub-map-card{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 14px 34px rgba(0,0,0,.08);min-height:360px;background:var(--soft)}
-.hub-map-frame{width:100%;height:100%;min-height:380px;border:0;display:block}
-.hub-details-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:0 14px 34px rgba(0,0,0,.08)}
-.hub-header-badge{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.hub-tag{font:700 .74rem Inter,sans-serif;color:var(--brand2);text-transform:uppercase;letter-spacing:.06em}
-.hub-live-status{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:700;color:#2f9e6e;background:rgba(47,158,110,.12);padding:4px 10px;border-radius:99px}
-.hub-chips{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
-.hub-chip{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:99px;cursor:pointer;font:600 .82rem Inter,sans-serif;transition:all .2s ease}
-.hub-chip.on{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:0 4px 12px rgba(15,92,77,.25)}
-.hub-chip:hover:not(.on){border-color:var(--brand);transform:translateY(-1px)}
-.hub-address-box{background:var(--soft);padding:12px 14px;border-radius:12px;border:1px solid var(--line);display:grid;gap:6px}
-.hub-fleet-info{font-size:.82rem;color:var(--ink);background:color-mix(in srgb,var(--brand) 8%,transparent);border:1px solid color-mix(in srgb,var(--brand) 20%,transparent);padding:8px 12px;border-radius:10px;font-weight:600}
-.hub-actions{display:grid;gap:8px;margin-top:auto;padding-top:10px}
-
 /* Pre-booking specific styles */
 .prebook-banner-bar{background:linear-gradient(135deg,rgba(232,116,42,.12),rgba(15,92,77,.08));border:1px solid rgba(232,116,42,.3);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-top:14px}
 .prebook-pill{font:700 .78rem Inter,sans-serif;color:var(--brand2);display:inline-flex;align-items:center;gap:6px}
@@ -410,7 +393,7 @@ header .wrap{padding:0 10px}
 <div id="prog"></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><i>R</i>Rivo</a>
-<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#hubs">Hubs &amp; Map</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
+<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
 <div class="nav-actions">
 <select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="#top">Book a ride</a>
 <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
@@ -515,35 +498,6 @@ header .wrap{padding:0 10px}
   <div class="gal-card" data-img="img/r15.jpg" data-veh="Yamaha YZF-R15 V4" data-title="Cherai Coastal Sprint" data-loc="📍 Cherai Beach Road" data-desc="Aerodynamic track-bred supersport with variable valve actuation, bi-functional LED projection, and sharp handling.">
     <div class="gal-pic"><img src="img/r15.jpg" alt="Yamaha R15 at Cherai" loading="lazy"><span class="gal-loc">📍 Cherai Beach</span><span class="gal-veh">R15 V4 Racing Blue</span></div>
     <div class="gal-body"><h3>Cherai Coastal Sprint</h3><p>Precision cornering, aerodynamic styling, and track-bred racing ergonomics.</p><div class="gal-foot"><small>₹1,199 / day</small><button class="btn" type="button">Inspect &amp; Book</button></div></div>
-  </div>
-</div>
-</div></section>
-
-
-<section id="hubs" class="rv"><div class="wrap">
-<span class="eyebrow">Google Map &amp; Pickup Locations</span><h2>Find a Rivo Hub near you</h2>
-<p class="sub">Locate our 8 partner hubs across Kerala with live Google Maps navigation, or get your ride delivered directly to Cochin Airport, your resort or railway station.</p>
-<div class="hub-chips" id="hubChips"></div>
-<div class="hubs-grid">
-  <div class="hub-map-card">
-    <iframe id="hubGMap" class="hub-map-frame" src="https://maps.google.com/maps?q=Cochin+International+Airport+Nedumbassery+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen title="Google Map of Rivo Hub Location"></iframe>
-  </div>
-  <div class="hub-details-card">
-    <div class="hub-header-badge">
-      <span class="hub-tag" id="hubTag">✈️ Airport Terminal Delivery &amp; Hub</span>
-      <span class="hub-live-status" id="hubStatus">Open 24×7 · Instant Handover</span>
-    </div>
-    <h3 id="hubName" style="font-size:1.2rem;margin:2px 0 0">Cochin International Airport (COK) Hub</h3>
-    <div class="hub-address-box">
-      <div style="font-size:.85rem;color:var(--ink)" id="hubAddr">VIP Road, Nedumbassery, Kochi, Kerala 683111</div>
-      <small style="color:var(--muted)" id="hubLand">500m from Terminal 3 Arrivals (Free shuttle / doorstep meet &amp; greet)</small>
-      <div style="font-size:.85rem;font-weight:600"><span style="color:var(--muted)">Direct Hotline:</span> <a href="tel:+919847012345" id="hubPhone" style="color:var(--brand)">+91 98470 12345</a></div>
-    </div>
-    <div class="hub-fleet-info" id="hubFleet">🏍️ 28 Bikes &amp; Scooters · 🚗 24 Cars · 🚚 6 Trucks</div>
-    <div class="hub-actions">
-      <a class="btn" id="hubDirBtn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Cochin+International+Airport+Nedumbassery+Kerala">🗺️ Get Directions in Google Maps</a>
-      <button class="btn alt" id="hubSelectBtn" type="button">⚡ Pre-Book from this Hub</button>
-    </div>
   </div>
 </div>
 </div></section>
@@ -690,7 +644,7 @@ return `<svg viewBox="0 0 300 170" role="img" aria-label="${name}"><defs><linear
 let mode="bike",cur="all",V=DATA.bike,M=META.bike,TOT=0;
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}
 function chips(){const ts=["all",...new Set(V.map(v=>v.t))];$("#chips").innerHTML=ts.map(t=>`<button class="chip ${t==cur?"on":""}" data-t="${t}">${t=="all"?"All":t}</button>`).join("");$("#type").innerHTML=ts.map(t=>`<option value="${t}" ${t==cur?"selected":""}>${t=="all"?"All vehicles":t}</option>`).join("")}
-function grid(){$("#grid").innerHTML=V.filter(v=>cur=="all"||v.t==cur).map((v,ix)=>`<div class="card" style="--d:${ix*80}ms"><div class="pic"><div class="badge-group">${v.star?`<span class="badge-pill badge-star">★ Premium Fleet</span>`:`<span class="badge-pill badge-tag">⚡ Instant Pickup</span>`}<span class="badge-pill badge-tag">${v.t}</span></div>${v.ph?`<img class="ph" loading="lazy" decoding="async" src="${v.ph}" alt="${v.n}" style="background:${v.pb||'#e4e4e8'};object-fit:${v.fit||'cover'};object-position:${v.pos||'center'}">`:PH(v)}</div><div class="body"><div class="card-head"><span class="card-cat">${v.t}</span><label class="cmp"><input type="checkbox" data-c="${v.n}" ${(window.CMP||[]).includes(v.n)?"checked":""}> Compare</label></div><h3 title="Click to view full specifications">${v.n}</h3><div class="meta">${v.s.map(x=>`<span>${x}</span>`).join("")}<span class="fc">✓ Free cancellation</span></div><div class="card-foot"><div class="price-box"><b>${fmt(v.p)}</b><small>/day</small><span class="price-hint">Tax &amp; insurance incl.</span></div><button class="btn card-btn" data-n="${v.n}">Reserve</button></div></div></div>`).join("")}
+function updateSegPill(){const pill=document.getElementById("segPill"),onBtn=document.querySelector("#mode button.on");if(pill&&onBtn){pill.style.transform=`translateX(${onBtn.offsetLeft - 4}px)`;pill.style.width=`${onBtn.offsetWidth}px`}}
 function setMode(m,scroll){mode=m;V=DATA[m];M=META[m];cur="all";
 document.querySelectorAll("#mode button").forEach(b=>b.classList.toggle("on",b.dataset.m==m));
 $("#hv").textContent=M.hv;const a=$("#heroArt");if(a){a.src=m=="bike"?"img/classic350.jpg":m=="car"?"img/thar.jpg":"img/bolero.jpg";a.alt=m}
@@ -698,7 +652,7 @@ $("#fleetH").textContent=m=="car"?"Cars for every journey":m=="truck"?"Trucks fo
 $("#paxL").textContent=M.paxL;$("#pax").innerHTML=M.pax.map(x=>`<option>${x}</option>`).join("");
 $("#pDel").textContent=fmt(M.del);$("#pIns").textContent=fmt(M.ins);$("#pPil").textContent=fmt(M.pil);$("#nPil").textContent=M.extra;
 $("#eVeh").innerHTML=V.map(v=>`<option>${v.n}</option>`).join("");
-chips();grid();calc();updateSegPill();if(scroll)document.getElementById("fleet").scrollIntoView()}
+chips();grid();calc();if(typeof updateSegPill==="function")updateSegPill();if(scroll)document.getElementById("fleet").scrollIntoView()}
 $("#mode").onclick=e=>{if(e.target.dataset.m)setMode(e.target.dataset.m)};
 document.querySelectorAll("[data-go]").forEach(a=>a.onclick=e=>{e.preventDefault();setMode(a.dataset.go,true)});
 $("#chips").onclick=e=>{if(e.target.dataset.t){cur=e.target.dataset.t;chips();grid()}};
@@ -742,7 +696,9 @@ const v=V.find(x=>x.n==$("#eVeh").value)||V[0],d=+$("#eDays").value,tm=new Date(
 const isPre = $("#ePre") ? $("#ePre").checked : true;
 const adv = Math.round(TOT*0.1);
 const bal = TOT - adv;
-const curHub = (window.SELECTED_HUB || (typeof HUBS!=="undefined"?HUBS[0]:{name:"Cochin Airport Hub",q:"Cochin+Airport",addr:"VIP Road, Nedumbassery"}));
+const LOCS = ["Cochin International Airport (COK)", "Fort Kochi", "Munnar Hill Station", "Varkala Cliff", "Wayanad (Vythiri)", "Trivandrum Central", "Alappuzha Backwaters", "Kozhikode Beach"];
+const curCity = $("#city") ? $("#city").value : "Kochi";
+const curLoc = LOCS.find(l => l.toLowerCase().includes(curCity.toLowerCase())) || LOCS[0];
 
 modal(`<h3>${isPre?"⚡ Pre-Book Your Ride":"Confirm Booking"}</h3>
 <div class="prebook-summary-banner">
@@ -751,9 +707,9 @@ modal(`<h3>${isPre?"⚡ Pre-Book Your Ride":"Confirm Booking"}</h3>
 </div>
 <div class="fld"><label>Full Name</label><input type="text" id="mN" placeholder="Enter your full name"></div>
 <div class="fld"><label>Mobile Number (++${CDIAL()})</label><input type="tel" id="mP" placeholder="${CLEN()}-digit number"></div>
-<div class="fld"><label>Pick-up Hub Location (Google Maps Verified)</label>
-  <select id="mHub">
-    ${(typeof HUBS!=="undefined"?HUBS:[curHub]).map((h,i)=>`<option value="${i}" ${h.id==curHub.id?"selected":""}>${h.name}</option>`).join("")}
+<div class="fld"><label>Pick-up Location</label>
+  <select id="mLoc">
+    ${LOCS.map(l=>`<option value="${l}" ${l===curLoc?"selected":""}>${l}</option>`).join("")}
   </select>
 </div>
 <div class="fld"><label>Pick-up Date</label><input type="date" id="mD" value="${$("#from").value||tm}" min="${today}"></div>
@@ -774,7 +730,7 @@ $("#mType").onchange = e => {
 
 $("#mOk").onclick=()=>{
   const n=$("#mN").value.trim(),p=ph10($("#mP").value),at=new Date($("#mD").value+"T"+$("#mT").value);
-  const chosenHub = (typeof HUBS!=="undefined"?HUBS[+$("#mHub").value]:curHub) || curHub;
+  const chosenLoc = $("#mLoc") ? $("#mLoc").value : curLoc;
   const preChoice = $("#mType").value=="pre";
   if(!n){toast("Please enter your name.");return}
   if(p.length!=CLEN()){toast("Enter a valid mobile number.");return}
@@ -793,8 +749,7 @@ $("#mOk").onclick=()=>{
     bal: preChoice ? bal : 0,
     del: $("#eDel").checked?M.del:0,
     at: at.getTime(),
-    hub: chosenHub.name,
-    hubQ: chosenHub.q,
+    hub: chosenLoc,
     status: "Confirmed",
     isPre: preChoice
   };
@@ -803,15 +758,14 @@ $("#mOk").onclick=()=>{
   $("#bId").value=b.id;
   $("#bPh").value=p;
 
-  const gMapLink = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(chosenHub.q)}`;
-  const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Rivo Rental: " + v.n)}&dates=${at.toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z/${new Date(at.getTime()+d*864e5).toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z&details=${encodeURIComponent("Booking ID: "+b.id+"\nVehicle: "+v.n+"\nHub: "+chosenHub.name+"\nBalance Due: "+fmt(b.bal))}&location=${encodeURIComponent(chosenHub.addr)}`;
+  const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Rivo Rental: " + v.n)}&dates=${at.toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z/${new Date(at.getTime()+d*864e5).toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z&details=${encodeURIComponent("Booking ID: "+b.id+"\nVehicle: "+v.n+"\nLocation: "+chosenLoc+"\nBalance Due: "+fmt(b.bal))}&location=${encodeURIComponent(chosenLoc)}`;
 
   modal(`<h3>${preChoice?"🎉 Pre-Booking Confirmed!":"✅ Booking Confirmed!"}</h3>
   <div class="prebook-success-box">
     <div class="prebook-badge-large">📅 Pick-up in ${daysUntil} Day${daysUntil>1?"s":""} (${when(b.at)})</div>
     <div class="row"><span>Booking ID</span><b>${b.id}</b></div>
     <div class="row"><span>Vehicle</span><b>${v.n}</b></div>
-    <div class="row"><span>Pick-up Hub</span><b>${chosenHub.name}</b></div>
+    <div class="row"><span>Pick-up Location</span><b>${chosenLoc}</b></div>
     ${preChoice?`
     <div class="row"><span>Advance Paid (10%)</span><b style="color:var(--brand2)">${fmt(b.adv)}</b></div>
     <div class="row"><span>Balance on Arrival</span><b>${fmt(b.bal)}</b></div>
@@ -819,9 +773,8 @@ $("#mOk").onclick=()=>{
     <div class="row"><span>Total</span><b>${fmt(b.total)}</b></div>
   </div>
   <div class="success-actions" style="display:grid;gap:8px;margin:12px 0">
-    <a class="btn" style="text-align:center" target="_blank" rel="noopener" href="${gMapLink}">🗺️ Open Hub on Google Maps</a>
     <a class="btn alt" style="text-align:center" target="_blank" rel="noopener" href="${calLink}">📅 Add to Google Calendar</a>
-  </div>`+sms(b, `Rivo: Hi ${n}, your ${preChoice?"pre-booking":"booking"} ${b.id} for ${v.n} is confirmed! Pick-up at ${chosenHub.name} on ${when(b.at)}. ${preChoice?"Advance paid: "+fmt(b.adv)+", Balance on arrival: "+fmt(b.bal)+".":"Total: "+fmt(b.total)+"."} Map: ${gMapLink}`));
+  </div>`+sms(b, `Rivo: Hi ${n}, your ${preChoice?"pre-booking":"booking"} ${b.id} for ${v.n} is confirmed! Pick-up at ${chosenLoc} on ${when(b.at)}. ${preChoice?"Advance paid: "+fmt(b.adv)+", Balance on arrival: "+fmt(b.bal)+".":"Total: "+fmt(b.total)+"."}`));
 }}
 function find(){const id=$("#bId").value.trim().toUpperCase(),p=ph10($("#bPh").value),all=BK.get(),b=all.find(x=>x.id==id&&x.phone==p);if(!b)toast("No booking found for that ID and number.");return b?[all,b]:null}
 $("#bCancel").onclick=()=>{const r=find();if(!r)return;const [all,b]=r;if(b.status!="Confirmed"){toast("This booking is already "+b.status.toLowerCase()+".");return}
@@ -905,7 +858,7 @@ modal(`<h3>🛠 Vehicle breakdown help</h3><p class="note">Tell us what happened
 <div><label>Where are you?</label><input type="text" id="tL" placeholder="Road, landmark, town"><button class="btn alt" style="margin-top:6px;width:100%" id="tGeo">📍 Use my location</button></div>
 <div><label>Notes (optional)</label><textarea id="tN" placeholder="Anything that helps the technician"></textarea></div>
 <button class="btn" id="tGo">Raise ticket</button><button class="btn alt" id="tTr">Track an existing ticket</button></div>`);
-$("#tGeo").onclick=()=>{if(!navigator.geolocation)return toast("Location not available. Please type it.");navigator.geolocation.getCurrentPosition(p=>{$("#tL").value=`https://maps.google.com/?q=${p.coords.latitude.toFixed(5)},${p.coords.longitude.toFixed(5)}`},()=>toast("Could not get location. Please type it."))};
+$("#tGeo").onclick=()=>{if(!navigator.geolocation)return toast("Location not available. Please type it.");navigator.geolocation.getCurrentPosition(p=>{$("#tL").value=p.coords.latitude.toFixed(5)+", "+p.coords.longitude.toFixed(5)},()=>toast("Could not get location. Please type it."))};
 $("#tTr").onclick=track;
 $("#tGo").onclick=()=>{const p=ph($("#tP").value),l=$("#tL").value.trim();if(p.length!=CLEN())return toast("Enter a valid 10-digit mobile number.");if(!l)return toast("Please tell us where you are.");
 const t={id:"TKT-"+Math.random().toString(36).slice(2,7).toUpperCase(),veh:$("#tV").value,issue:$("#tI").value,phone:p,loc:l,note:$("#tN").value.trim(),at:Date.now()};t.urg=t.issue=="Accident";
@@ -955,184 +908,6 @@ const bar=()=>{$("#cmpbar").classList.toggle("on",CMP.length>0);$("#cmpN").textC
 $("#grid").addEventListener("click",e=>{const c=e.target.closest("[data-c]");if(c){const n=c.dataset.c;if(c.checked){if(CMP.length>=3){c.checked=false;return toast("Compare up to 3 vehicles.")}CMP.push(n)}else CMP=CMP.filter(x=>x!=n);bar();return}
 if(e.target.closest(".btn,.cmp"))return;const k=e.target.closest(".pic,h3");if(k)detail(k.closest(".card").querySelector("h3").textContent)});
 $("#cmpGo").onclick=cmpModal;$("#cmpX").onclick=()=>{CMP=[];bar();grid()};
-
-/* ---- Google Maps & Hubs Data ---- */
-const HUBS = [
-  {
-    id: "cok",
-    city: "Kochi",
-    name: "Cochin International Airport (COK) Hub",
-    tag: "✈️ Airport Terminal Delivery & Hub",
-    status: "Open 24×7 · Instant Handover",
-    addr: "VIP Road, Nedumbassery, Kochi, Kerala 683111",
-    landmark: "500m from Terminal 3 Arrivals (Free shuttle / meet & greet)",
-    phone: "+91 98470 12345",
-    q: "Cochin+International+Airport+Nedumbassery+Kerala",
-    lat: 10.1518,
-    lng: 76.3930,
-    fleet: "🏍️ 28 Bikes & Scooters · 🚗 24 Cars · 🚚 6 Trucks"
-  },
-  {
-    id: "fkochi",
-    city: "Kochi",
-    name: "Fort Kochi Tourist Hub",
-    tag: "🏖️ Heritage & Coastal Hub",
-    status: "Open 7:00 AM – 10:30 PM",
-    addr: "Princess Street, Near Tower House, Fort Kochi, Kerala 682001",
-    landmark: "Walking distance to Chinese Fishing Nets & Promenade",
-    phone: "+91 98470 23456",
-    q: "Princess+Street+Fort+Kochi+Kerala",
-    lat: 9.9658,
-    lng: 76.2421,
-    fleet: "🏍️ 32 Classic & Commuter Bikes · 🚗 14 Cars"
-  },
-  {
-    id: "munnar",
-    city: "Munnar",
-    name: "Munnar Hill Station Hub",
-    tag: "☕ Mountain & Adventure Hub",
-    status: "Open 6:30 AM – 9:30 PM",
-    addr: "Old Munnar Bus Stand Road, Near Post Office, Munnar, Kerala 685612",
-    landmark: "Opposite Tea Museum Junction (Racks & cold gear available)",
-    phone: "+91 98470 34567",
-    q: "Old+Munnar+Bus+Stand+Munnar+Kerala",
-    lat: 10.0889,
-    lng: 77.0595,
-    fleet: "🏍️ 26 Adventure & Royal Enfields · 🚗 18 4x4 & SUVs"
-  },
-  {
-    id: "varkala",
-    city: "Varkala",
-    name: "Varkala North Cliff Hub",
-    tag: "🌊 Beach & Surfing Hub",
-    status: "Open 7:30 AM – 10:00 PM",
-    addr: "North Cliff Helipad Road, Varkala, Kerala 695141",
-    landmark: "Near Helipad Parking (Beach cruisers & surf rack vehicles)",
-    phone: "+91 98470 45678",
-    q: "North+Cliff+Helipad+Varkala+Kerala",
-    lat: 8.7379,
-    lng: 76.7032,
-    fleet: "🏍️ 35 Automatic Scooters & Bikes · 🚗 12 Hatchbacks"
-  },
-  {
-    id: "wayanad",
-    city: "Wayanad",
-    name: "Wayanad Vythiri & Kalpetta Hub",
-    tag: "⛰️ Off-Road & Ghats Hub",
-    status: "Open 7:00 AM – 9:00 PM",
-    addr: "NH 766, Main Bypass, Kalpetta, Wayanad, Kerala 673121",
-    landmark: "Near New Bus Terminal (Gateway to Chembra & Ghat pass)",
-    phone: "+91 98470 56789",
-    q: "Kalpetta+Bypass+Wayanad+Kerala",
-    lat: 11.6050,
-    lng: 76.0827,
-    fleet: "🏍️ 22 Touring Bikes · 🚗 16 4x4 Thar & Fortuners"
-  },
-  {
-    id: "tvm",
-    city: "Trivandrum",
-    name: "Trivandrum Central Hub",
-    tag: "🏛️ Capital City & Airport Hub",
-    status: "Open 24×7 · Self-Pickup",
-    addr: "Station Road, Near Central Railway Station, Thampanoor, Trivandrum, Kerala 695001",
-    landmark: "Direct corridor to Domestic & International Airport",
-    phone: "+91 98470 67890",
-    q: "Central+Railway+Station+Thampanoor+Trivandrum+Kerala",
-    lat: 8.4875,
-    lng: 76.9525,
-    fleet: "🏍️ 24 Scooters & Bikes · 🚗 20 Sedans & SUVs"
-  },
-  {
-    id: "alp",
-    city: "Alappuzha",
-    name: "Alappuzha Backwaters Hub",
-    tag: "🌴 Houseboat & Canal Hub",
-    status: "Open 7:00 AM – 9:30 PM",
-    addr: "Finishing Point Road, Roundabout, Alappuzha, Kerala 688013",
-    landmark: "200m from Nehru Trophy Finishing Point & Punnamada jetty",
-    phone: "+91 98470 78901",
-    q: "Finishing+Point+Alappuzha+Kerala",
-    lat: 9.4981,
-    lng: 76.3388,
-    fleet: "🏍️ 18 Scooters · 🚗 15 MPVs & Family Cars"
-  },
-  {
-    id: "clt",
-    city: "Kozhikode",
-    name: "Kozhikode Calicut Beach Hub",
-    tag: "🍛 Malabar Coast Hub",
-    status: "Open 7:00 AM – 10:00 PM",
-    addr: "Beach Road, Near Gujarati Street, Kozhikode, Kerala 673032",
-    landmark: "Opposite Calicut Beach Open Stage (Direct highway link)",
-    phone: "+91 98470 89012",
-    q: "Calicut+Beach+Road+Kozhikode+Kerala",
-    lat: 11.2588,
-    lng: 75.7804,
-    fleet: "🏍️ 20 Bikes · 🚗 18 Cars · 🚚 8 Delivery Trucks"
-  }
-];
-
-function selectHub(i) {
-  const h = HUBS[i];
-  if (!h) return;
-  window.SELECTED_HUB = h;
-  document.querySelectorAll(".hub-chip").forEach((c, idx) => c.classList.toggle("on", idx === i));
-  const f = document.getElementById("hubGMap");
-  if (f) {
-    f.src = "https://maps.google.com/maps?q=" + encodeURIComponent(h.q) + "&t=&z=14&ie=UTF8&iwloc=&output=embed";
-  }
-  const nameEl = document.getElementById("hubName");
-  if (nameEl) nameEl.textContent = h.name;
-  const tagEl = document.getElementById("hubTag");
-  if (tagEl) tagEl.textContent = h.tag;
-  const statusEl = document.getElementById("hubStatus");
-  if (statusEl) statusEl.textContent = h.status;
-  const addrEl = document.getElementById("hubAddr");
-  if (addrEl) addrEl.textContent = h.addr;
-  const landEl = document.getElementById("hubLand");
-  if (landEl) landEl.textContent = h.landmark;
-  const phoneEl = document.getElementById("hubPhone");
-  if (phoneEl) {
-    phoneEl.textContent = h.phone;
-    phoneEl.href = "tel:" + h.phone.replace(/\D/g, "");
-  }
-  const fleetEl = document.getElementById("hubFleet");
-  if (fleetEl) fleetEl.textContent = h.fleet;
-  const dirBtn = document.getElementById("hubDirBtn");
-  if (dirBtn) dirBtn.href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(h.q);
-
-  const citySelect = document.getElementById("city");
-  if (citySelect) {
-    for (let opt of citySelect.options) {
-      if (opt.value.toLowerCase().includes(h.city.toLowerCase())) {
-        citySelect.value = opt.value;
-        break;
-      }
-    }
-  }
-}
-
-(function initHubs(){
-  const chipsContainer = document.getElementById("hubChips");
-  if (chipsContainer) {
-    chipsContainer.innerHTML = HUBS.map((h, i) =>
-      `<button class="hub-chip ${i===0?"on":""}" data-i="${i}">${h.tag.split(" ")[0]} ${h.name.split(" ")[0]} ${h.name.includes("Airport")?"Airport":""}</button>`
-    ).join("");
-    chipsContainer.onclick = e => {
-      const b = e.target.closest(".hub-chip");
-      if (b && b.dataset.i) selectHub(+b.dataset.i);
-    };
-  }
-  const selBtn = document.getElementById("hubSelectBtn");
-  if (selBtn) {
-    selBtn.onclick = () => {
-      const cur = window.SELECTED_HUB || HUBS[0];
-      toast("Selected " + cur.name + " for pick-up. Pre-book your vehicle below.");
-      document.getElementById("price").scrollIntoView();
-    };
-  }
-  window.SELECTED_HUB = HUBS[0];
-})();
 
 // gallery click & animations
 document.addEventListener("click",e=>{
@@ -1204,7 +979,7 @@ function TPH(){return "data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http
 function flag(id){return id=="ZZ"?"🌍":String.fromCodePoint(...[...id].map(c=>127397+c.charCodeAt()))}
 function applyCountry(id,quiet){const L=CL();CN=L.find(c=>c.id==id)||L[0];try{localStorage.setItem("rivo_cn",CN.id)}catch(e){}
 $("#cSel").value=CN.id;$("#city").innerHTML=CN.cities.map(x=>`<option>${x}</option>`).join("");
-const ind=CN.id=="IN";["routes","planner","gallery","hubs"].forEach(i=>{const el=document.getElementById(i);if(el)el.style.display=ind?"":"none"});document.querySelectorAll('nav a[href="#routes"], nav a[href="#gallery"], nav a[href="#hubs"]').forEach(a=>{if(a&&a.parentElement)a.parentElement.style.display=ind?"":"none"});
+const ind=CN.id=="IN";["routes","planner","gallery"].forEach(i=>{const el=document.getElementById(i);if(el)el.style.display=ind?"":"none"});document.querySelectorAll('nav a[href="#routes"], nav a[href="#gallery"]').forEach(a=>{if(a&&a.parentElement)a.parentElement.style.display=ind?"":"none"});
 document.querySelectorAll(".cname").forEach(e=>e.textContent=ind?"Kerala":CN.name);document.querySelectorAll("[data-fp]").forEach(e=>e.textContent=fmt(+e.dataset.fp));
 setMode(mode);if(!quiet)toast(`Showing ${CN.name}: prices in ${CN.cur}, distance in ${CN.u}. Sample local rates.`)}
 (function(){const L=CL();$("#cSel").innerHTML=L.map(c=>`<option value="${c.id}">${flag(c.id)} ${c.name}</option>`).join("");

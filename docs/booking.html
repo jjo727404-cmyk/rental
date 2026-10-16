@@ -900,6 +900,266 @@ footer{
   line-height:1.45;
 }
 
+
+/* =========================================
+   Mobile Friendly Responsive Overhaul
+   ========================================= */
+.help-short{display:none}
+.help-full{display:inline}
+.back-text{margin-left:4px}
+
+@media(max-width:768px){
+  /* Header clean-up: no line wrapping */
+  .hdr-wrap{
+    padding:10px 14px;
+    gap:8px;
+  }
+  .brand-link{
+    font-size:1.1rem;
+    gap:6px;
+    flex-shrink:0;
+  }
+  .hdr-right{
+    gap:6px;
+  }
+  .help-full{
+    display:none;
+  }
+  .help-short{
+    display:inline;
+  }
+  .help-pill{
+    padding:6px 10px;
+    font-size:.78rem;
+    gap:4px;
+  }
+  .th-btn{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+  }
+  .back-btn{
+    padding:6px 10px;
+    font-size:.78rem;
+    gap:2px;
+    border-radius:8px;
+  }
+
+  /* Page Wrap & Spacing */
+  .page-wrap{
+    padding:16px 12px 100px; /* Cushion for floating bottom bar */
+  }
+  .box{
+    padding:16px 14px;
+    border-radius:14px;
+    margin-bottom:14px;
+  }
+  .box-head{
+    margin-bottom:14px;
+    padding-bottom:10px;
+  }
+  .box-title{
+    font-size:1rem;
+  }
+  .box-badge{
+    font-size:.68rem;
+    padding:2px 7px;
+  }
+
+  /* Stepper mobile pill */
+  .stepper{
+    margin-bottom:16px;
+    gap:6px;
+    justify-content:center;
+    background:var(--surface);
+    padding:8px 12px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    flex-wrap:nowrap;
+  }
+  .stepper::-webkit-scrollbar{display:none}
+  .step-item{
+    font-size:.74rem;
+    gap:4px;
+    flex-shrink:0;
+  }
+  .step-num{
+    width:20px;
+    height:20px;
+    font-size:.7rem;
+  }
+  .step-div{
+    width:16px;
+    flex-shrink:0;
+  }
+
+  /* Category tabs */
+  .cat-tabs{
+    gap:4px;
+    padding:3px;
+    margin-bottom:12px;
+  }
+  .cat-btn{
+    padding:8px 6px;
+    font-size:.78rem;
+    gap:4px;
+  }
+
+  /* Vehicle Picker: compact mobile horizontal list */
+  .veh-picker{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    max-height:360px;
+  }
+  .veh-opt{
+    display:grid;
+    grid-template-columns:84px 1fr auto;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    text-align:left;
+  }
+  .veh-opt-img{
+    width:84px;
+    height:56px;
+    margin-bottom:0;
+    border-radius:8px;
+  }
+  .veh-opt-title{
+    font-size:.88rem;
+    white-space:normal;
+    display:-webkit-box;
+    -webkit-line-clamp:1;
+    -webkit-box-orient:vertical;
+  }
+  .veh-opt-price{
+    font-size:.86rem;
+  }
+  .veh-opt-specs{
+    font-size:.72rem;
+  }
+
+  /* Input fields: 16px to prevent iOS auto-zoom */
+  .field input, .field select, .field textarea{
+    font-size:16px !important;
+    padding:11px 12px;
+    min-height:44px;
+    border-radius:9px;
+  }
+  .grid-2{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+
+  /* Driver section mobile */
+  .driver-select-grid{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .driver-card{
+    padding:12px 14px;
+  }
+  .driver-card-top{
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .driver-card-icon{
+    width:38px;
+    height:38px;
+    font-size:1.3rem;
+  }
+  .driver-card-price{
+    font-size:1rem;
+    margin-bottom:6px;
+  }
+  .driver-perks li{
+    font-size:.74rem;
+  }
+
+  /* Summary on mobile */
+  .summary-box{
+    position:static;
+    margin-top:10px;
+  }
+  .veh-hero-img{
+    height:150px;
+  }
+  .adv-amt{
+    font-size:1.55rem;
+  }
+}
+
+/* Floating Mobile Action Bar */
+.mob-bottom-bar{
+  display:none;
+}
+@media(max-width:992px){
+  .mob-bottom-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:99;
+    background:rgba(18,30,26,.95);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-top:1px solid var(--line-strong);
+    padding:10px 16px max(10px, env(safe-area-inset-bottom));
+    box-shadow:0 -8px 24px rgba(0,0,0,.38);
+  }
+  [data-theme="light"] .mob-bottom-bar{
+    background:rgba(255,255,255,.96);
+    box-shadow:0 -6px 20px rgba(0,0,0,.08);
+  }
+  .mob-bar-info{
+    display:flex;
+    flex-direction:column;
+  }
+  .mob-bar-label{
+    font-size:.66rem;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--brand);
+    font-weight:700;
+  }
+  .mob-bar-amt{
+    font-family:var(--font-head);
+    font-size:1.3rem;
+    font-weight:800;
+    color:var(--ink);
+    line-height:1.15;
+  }
+  .mob-bar-tot{
+    font-size:.7rem;
+    color:var(--muted);
+  }
+  .mob-bar-cta{
+    padding:11px 18px;
+    background:var(--brand);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-family:var(--font-head);
+    font-size:.9rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 4px 14px var(--brand-glow);
+    display:flex;
+    align-items:center;
+    gap:6px;
+    transition:transform .15s;
+  }
+  .mob-bar-cta:active{
+    transform:scale(.96);
+  }
+}
+
 </style>
 </head>
 <body>
@@ -908,12 +1168,14 @@ footer{
   <div class="hdr-wrap">
     <a href="index.html" class="brand-link">
       <span class="brand-dot"></span>
-      <span>Rivo Rentals</span>
+      <span class="brand-name">Rivo Rentals</span>
     </a>
     <div class="hdr-right">
-      <span class="help-pill">📞 24×7 +91 90000 00000</span>
+      <a href="tel:+919000000000" class="help-pill" title="24x7 Customer Support">
+        <span>📞</span><span class="help-full">24×7 +91 90000 00000</span><span class="help-short">Help</span>
+      </a>
       <button class="th-btn" id="thBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">🌙</button>
-      <a href="index.html#fleet" class="back-btn">← Back to Fleet</a>
+      <a href="index.html#fleet" class="back-btn"><span>←</span><span class="back-text">Fleet</span></a>
     </div>
   </div>
 </header>
@@ -1366,6 +1628,19 @@ footer{
       </a>
     </div>
   </div>
+
+  <!-- Floating Mobile Action Bar -->
+  <div class="mob-bottom-bar" id="mobBottomBar">
+    <div class="mob-bar-info">
+      <span class="mob-bar-label" id="mobBarLabel">Advance (10%):</span>
+      <b class="mob-bar-amt" id="mobBarAdv">₹441</b>
+      <small class="mob-bar-tot" id="mobBarTot">Total ₹4,406 &middot; Free Cancel</small>
+    </div>
+    <button type="button" class="mob-bar-cta" id="mobBarCta" onclick="triggerMobileBooking()">
+      <span>Pre-Book ➔</span>
+    </button>
+  </div>
+
 </main>
 
 <footer>
@@ -1699,6 +1974,12 @@ function calcTotal() {
     $("#confirmBookingBtn span").textContent = "Confirm & Complete Reservation (" + fmt(grandTotal) + ") ➔";
   }
 
+  // Update Mobile Floating Bottom Bar
+  const mobAdv = $("#mobBarAdv"), mobTot = $("#mobBarTot"), mobLbl = $("#mobBarLabel");
+  if (mobAdv) mobAdv.textContent = fmt(advAmt);
+  if (mobTot) mobTot.textContent = "Total " + fmt(grandTotal) + " · Free Cancel";
+  if (mobLbl) mobLbl.textContent = isPre ? "Advance (10%):" : "Payable Today:";
+
   // Update Summary Card
   $("#sumVehTitle").textContent = curVeh.n;
   $("#sumVehImg").src = curVeh.ph;
@@ -1863,10 +2144,38 @@ $("#confirmBookingBtn").onclick = () => {
 
   // Hide Form, Show Success
   $("#bookingLayout").style.display = "none";
+  const mb = $("#mobBottomBar"); if (mb) mb.style.display = "none";
   $("#stepper").style.display = "none";
   $("#successScreen").style.display = "block";
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+
+function triggerMobileBooking() {
+  const name = $("#custName").value.trim();
+  const phone = $("#custPhone").value.trim();
+  const email = $("#custEmail").value.trim();
+  const lic = $("#custLic").value.trim();
+
+  // If rider details are missing, scroll down smoothly to Step 5
+  if (!name || !phone || !email || !lic) {
+    const riderBox = document.querySelector("#custName").closest(".box");
+    if (riderBox) {
+      riderBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => {
+        if (!name) $("#custName").focus();
+        else if (!phone) $("#custPhone").focus();
+        else if (!email) $("#custEmail").focus();
+        else if (!lic) $("#custLic").focus();
+      }, 400);
+    }
+    return;
+  }
+
+  // Trigger main booking click
+  $("#confirmBookingBtn").click();
+}
+window.triggerMobileBooking = triggerMobileBooking;
 
 // Initialize
 parseUrlParams();

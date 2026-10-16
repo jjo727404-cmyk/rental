@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reserve Your Ride · Rivo Rentals Kerala</title>
+<meta name="description" content="Book self-drive cars, touring bikes, and scooters across Kerala with 10% advance deposit, free cancellation up to 48 hours, and 24x7 roadside assistance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1512;
+  --surface:#13221e;
+  --surface-hover:#192e28;
+  --card:#162722;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.16);
+  --ink:#f1f7f4;
+  --muted:#8fa49b;
+  --brand:#19c37d;
+  --brand-hover:#22da8e;
+  --brand2:#f59e0b;
+  --brand-glow:rgba(25,195,125,.25);
+  --danger:#ef4444;
+  --danger-bg:rgba(239,68,68,.12);
+  --success:#10b981;
+  --font-head:'Sora',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --radius:16px;
+  --shadow:0 12px 36px rgba(0,0,0,.35);
+}
+[data-theme="light"]{
+  --bg:#f4f7f5;
+  --surface:#ffffff;
+  --surface-hover:#f0f4f2;
+  --card:#ffffff;
+  --line:rgba(0,0,0,.08);
+  --line-strong:rgba(0,0,0,.15);
+  --ink:#121a17;
+  --muted:#5c6e66;
+  --brand:#0ea666;
+  --brand-hover:#0d965c;
+  --brand2:#d97706;
+  --brand-glow:rgba(14,166,102,.2);
+  --shadow:0 12px 32px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background-image:
+    radial-gradient(ellipse at 10% 0%, rgba(25,195,125,.12), transparent 45%),
+    radial-gradient(ellipse at 90% 15%, rgba(245,158,11,.08), transparent 40%);
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+
+/* Header */
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(12,21,18,.82);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+[data-theme="light"] header{background:rgba(244,247,245,.88)}
+.hdr-wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.brand-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--font-head);
+  font-size:1.25rem;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+.brand-dot{
+  width:10px;
+  height:10px;
+  border-radius:99px;
+  background:var(--brand);
+  box-shadow:0 0 12px var(--brand);
+}
+.hdr-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.88rem;
+  font-weight:600;
+  color:var(--muted);
+  padding:8px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  transition:all .2s;
+}
+.back-btn:hover{
+  color:var(--ink);
+  border-color:var(--brand);
+  background:var(--surface);
+}
+.th-btn{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:all .2s;
+}
+.th-btn:hover{border-color:var(--line-strong)}
+.help-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.82rem;
+  font-weight:600;
+  color:var(--brand);
+  background:rgba(25,195,125,.1);
+  padding:7px 12px;
+  border-radius:99px;
+  border:1px solid rgba(25,195,125,.2);
+}
+
+/* Page Container */
+.page-wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:32px 24px 64px;
+  width:100%;
+  flex:1;
+}
+
+/* Stepper Bar */
+.stepper{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:32px;
+  flex-wrap:wrap;
+}
+.step-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.85rem;
+  font-weight:600;
+  color:var(--muted);
+}
+.step-item.active{
+  color:var(--ink);
+}
+.step-num{
+  width:24px;
+  height:24px;
+  border-radius:99px;
+  background:var(--surface);
+  border:1.5px solid var(--line);
+  display:grid;
+  place-items:center;
+  font-size:.75rem;
+  font-weight:700;
+}
+.step-item.active .step-num{
+  background:var(--brand);
+  color:#fff;
+  border-color:var(--brand);
+}
+.step-div{
+  width:28px;
+  height:1.5px;
+  background:var(--line);
+}
+
+/* Layout Grid */
+.layout{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:32px;
+  align-items:start;
+}
+@media(max-width:992px){
+  .layout{grid-template-columns:1fr;gap:24px}
+  .order-col{order:2}
+  .form-col{order:1}
+}
+
+/* Cards */
+.box{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:24px;
+}
+.box-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.box-title{
+  font-family:var(--font-head);
+  font-size:1.15rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.box-badge{
+  font-size:.75rem;
+  font-weight:700;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:99px;
+  background:rgba(25,195,125,.14);
+  color:var(--brand);
+  border:1px solid rgba(25,195,125,.25);
+}
+
+/* Route Callout Banner */
+.route-banner{
+  background:linear-gradient(135deg, rgba(245,158,11,.15), rgba(25,195,125,.1));
+  border:1.5px solid var(--brand2);
+  border-radius:12px;
+  padding:12px 16px;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.route-banner-text b{display:block;font-size:.95rem;color:var(--ink)}
+.route-banner-text small{color:var(--muted);font-size:.8rem}
+
+/* Form Controls */
+.grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+@media(max-width:580px){
+  .grid-2{grid-template-columns:1fr;gap:12px}
+}
+.field{
+  margin-bottom:16px;
+}
+.field label{
+  display:block;
+  font-size:.82rem;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.field input, .field select, .field textarea{
+  width:100%;
+  padding:11px 14px;
+  background:var(--card);
+  border:1px solid var(--line-strong);
+  border-radius:10px;
+  color:var(--ink);
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none;
+  border-color:var(--brand);
+  box-shadow:0 0 0 3px var(--brand-glow);
+}
+
+/* Category Tabs */
+.cat-tabs{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px;
+  background:var(--card);
+  padding:5px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  margin-bottom:16px;
+}
+.cat-btn{
+  background:transparent;
+  border:none;
+  padding:9px 12px;
+  border-radius:9px;
+  font-weight:600;
+  font-size:.88rem;
+  cursor:pointer;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:all .2s;
+}
+.cat-btn.active{
+  background:var(--brand);
+  color:#fff;
+  box-shadow:0 4px 12px var(--brand-glow);
+}
+
+/* Vehicle Selector Cards */
+.veh-picker{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+  gap:12px;
+  max-height:340px;
+  overflow-y:auto;
+  padding-right:4px;
+  margin-bottom:14px;
+}
+.veh-picker::-webkit-scrollbar{width:6px}
+.veh-picker::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px}
+.veh-opt{
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:10px;
+  cursor:pointer;
+  transition:all .2s;
+  display:flex;
+  flex-direction:column;
+  text-align:left;
+  position:relative;
+}
+.veh-opt:hover{
+  border-color:var(--line-strong);
+  transform:translateY(-2px);
+}
+.veh-opt.selected{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.08);
+  box-shadow:0 0 0 2px var(--brand);
+}
+.veh-opt-img{
+  width:100%;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:8px;
+  background:#101a17;
+}
+.veh-opt-title{
+  font-size:.86rem;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-bottom:2px;
+}
+.veh-opt-price{
+  font-size:.82rem;
+  font-weight:700;
+  color:var(--brand);
+}
+.veh-opt-specs{
+  font-size:.72rem;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+/* Checkbox Add-ons */
+.addons{
+  display:grid;
+  gap:12px;
+}
+.addon-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.addon-row:hover{
+  border-color:var(--line-strong);
+}
+.addon-row.active{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.06);
+}
+.addon-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.addon-chk{
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  accent-color:var(--brand);
+  cursor:pointer;
+}
+.addon-info b{
+  display:block;
+  font-size:.9rem;
+}
+.addon-info small{
+  color:var(--muted);
+  font-size:.78rem;
+}
+.addon-price{
+  font-weight:700;
+  font-size:.9rem;
+  color:var(--ink);
+  text-align:right;
+}
+
+/* Payment Mode Radio Cards */
+.pay-modes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+@media(max-width:540px){.pay-modes{grid-template-columns:1fr}}
+.mode-card{
+  border:2px solid var(--line);
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+}
+.mode-card:hover{border-color:var(--line-strong)}
+.mode-card.selected{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.08);
+}
+.mode-tag{
+  position:absolute;
+  top:-9px;
+  right:12px;
+  background:var(--brand2);
+  color:#fff;
+  font-size:.68rem;
+  font-weight:700;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:99px;
+}
+.mode-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  font-size:.92rem;
+  margin-bottom:4px;
+}
+.mode-desc{
+  font-size:.78rem;
+  color:var(--muted);
+}
+
+/* Payment Methods Grid */
+.methods-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:8px;
+  margin-top:12px;
+}
+@media(max-width:600px){.methods-grid{grid-template-columns:repeat(2, 1fr)}}
+.method-btn{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--muted);
+  transition:all .2s;
+}
+.method-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+.method-btn.active{
+  border-color:var(--brand);
+  color:var(--brand);
+  background:rgba(25,195,125,.08);
+}
+
+/* Order Summary Column */
+.summary-box{
+  position:sticky;
+  top:90px;
+}
+.veh-hero{
+  position:relative;
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:16px;
+  border:1px solid var(--line);
+}
+.veh-hero-img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+  background:#14221e;
+}
+.veh-hero-badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:rgba(12,21,18,.86);
+  backdrop-filter:blur(6px);
+  color:var(--brand);
+  font-size:.74rem;
+  font-weight:700;
+  padding:4px 10px;
+  border-radius:99px;
+  border:1px solid rgba(255,255,255,.15);
+}
+.veh-hero-title{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:24px 14px 10px;
+  background:linear-gradient(transparent, rgba(12,21,18,.95));
+  font-family:var(--font-head);
+  font-size:1.15rem;
+  font-weight:700;
+  color:#fff;
+}
+.spec-pills{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-bottom:16px;
+}
+.pill{
+  font-size:.74rem;
+  font-weight:600;
+  color:var(--muted);
+  background:var(--card);
+  padding:4px 10px;
+  border-radius:99px;
+  border:1px solid var(--line);
+}
+
+/* Price Lines */
+.price-table{
+  border-top:1px solid var(--line);
+  padding-top:14px;
+  margin-top:14px;
+}
+.price-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:.88rem;
+  margin-bottom:8px;
+  color:var(--muted);
+}
+.price-row b{color:var(--ink)}
+.price-row.total{
+  border-top:1.5px dashed var(--line);
+  padding-top:10px;
+  margin-top:10px;
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--ink);
+}
+.advance-callout{
+  background:linear-gradient(135deg, rgba(25,195,125,.18), rgba(25,195,125,.08));
+  border:1.5px solid var(--brand);
+  border-radius:12px;
+  padding:14px;
+  margin:16px 0;
+  text-align:center;
+}
+.adv-label{
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-weight:700;
+  color:var(--brand);
+}
+.adv-amt{
+  font-family:var(--font-head);
+  font-size:1.8rem;
+  font-weight:800;
+  color:var(--brand);
+  line-height:1.2;
+  margin:2px 0;
+}
+.adv-sub{
+  font-size:.76rem;
+  color:var(--muted);
+}
+
+/* Coupon Box */
+.coupon-box{
+  display:flex;
+  gap:8px;
+  margin:12px 0;
+}
+.coupon-box input{
+  flex:1;
+  padding:9px 12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.coupon-box button{
+  padding:9px 14px;
+  background:var(--surface-hover);
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-weight:700;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:all .2s;
+}
+.coupon-box button:hover{background:var(--brand);color:#fff}
+
+/* Big CTA */
+.book-cta{
+  width:100%;
+  padding:15px;
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  font-family:var(--font-head);
+  font-size:1.05rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .25s ease;
+  box-shadow:0 8px 24px var(--brand-glow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.book-cta:hover{
+  background:var(--brand-hover);
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px var(--brand-glow);
+}
+.trust-badges{
+  margin-top:14px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:.76rem;
+  color:var(--muted);
+}
+.trust-badges span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* Confirmation Success Modal/View */
+.success-screen{
+  text-align:center;
+  padding:32px 16px;
+}
+.success-icon{
+  width:72px;
+  height:72px;
+  background:rgba(25,195,125,.15);
+  border:2px solid var(--brand);
+  border-radius:99px;
+  color:var(--brand);
+  display:grid;
+  place-items:center;
+  font-size:2.2rem;
+  margin:0 auto 20px;
+  animation:pop .4s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.success-title{
+  font-family:var(--font-head);
+  font-size:1.75rem;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.success-ref{
+  display:inline-block;
+  background:var(--card);
+  border:1px solid var(--line-strong);
+  padding:6px 14px;
+  border-radius:99px;
+  font-weight:700;
+  font-size:.9rem;
+  color:var(--brand);
+  margin-bottom:24px;
+}
+.receipt-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+  max-width:540px;
+  margin:0 auto 28px;
+  text-align:left;
+}
+.receipt-row{
+  display:flex;
+  justify-content:space-between;
+  padding:8px 0;
+  border-bottom:1px solid var(--line);
+  font-size:.88rem;
+}
+.receipt-row:last-child{border-bottom:none}
+.receipt-row span{color:var(--muted)}
+.receipt-row b{color:var(--ink)}
+.success-actions{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  max-width:540px;
+  margin:0 auto;
+}
+.btn-act{
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:600;
+  font-size:.88rem;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  transition:all .2s;
+  border:1px solid var(--line);
+}
+.btn-act.wa{background:#25d366;color:#fff;border-color:#25d366}
+.btn-act.sec{background:var(--surface);color:var(--ink)}
+.btn-act:hover{transform:translateY(-2px);filter:brightness(1.08)}
+
+/* Footer */
+footer{
+  border-top:1px solid var(--line);
+  padding:24px;
+  text-align:center;
+  font-size:.82rem;
+  color:var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-wrap">
+    <a href="index.html" class="brand-link">
+      <span class="brand-dot"></span>
+      <span>Rivo Rentals</span>
+    </a>
+    <div class="hdr-right">
+      <span class="help-pill">📞 24×7 +91 90000 00000</span>
+      <button class="th-btn" id="thBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">🌙</button>
+      <a href="index.html#fleet" class="back-btn">← Back to Fleet</a>
+    </div>
+  </div>
+</header>
+
+<main class="page-wrap">
+  <!-- Stepper -->
+  <div class="stepper" id="stepper">
+    <div class="step-item active"><span class="step-num">1</span> Ride Selection</div>
+    <div class="step-div"></div>
+    <div class="step-item active"><span class="step-num">2</span> Itinerary</div>
+    <div class="step-div"></div>
+    <div class="step-item active"><span class="step-num">3</span> Protection &amp; Details</div>
+    <div class="step-div"></div>
+    <div class="step-item"><span class="step-num">4</span> Confirmation</div>
+  </div>
+
+  <!-- Booking Form & Summary Layout -->
+  <div class="layout" id="bookingLayout">
+    <!-- Left Column: Form -->
+    <div class="form-col">
+      <!-- Route Banner (Conditional) -->
+      <div class="route-banner" id="routeBanner" style="display:none">
+        <div class="route-banner-text">
+          <small>Selected Kerala Road Trip:</small>
+          <b id="routeTitle">Kochi → Munnar Cloud Trail (280 km)</b>
+        </div>
+        <span class="box-badge">Curated Route</span>
+      </div>
+
+      <!-- Step 1: Vehicle Selection -->
+      <div class="box">
+        <div class="box-head">
+          <h2 class="box-title">🚗 Step 1: Choose Vehicle</h2>
+          <span class="box-badge" id="vehCountBadge">27 Available</span>
+        </div>
+
+        <div class="cat-tabs" id="catTabs">
+          <button class="cat-btn" data-cat="bike">🏍️ Bikes (10)</button>
+          <button class="cat-btn" data-cat="car">🚗 Cars (9)</button>
+          <button class="cat-btn" data-cat="truck">🚚 Trucks (8)</button>
+        </div>
+
+        <div class="veh-picker" id="vehPicker">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Step 2: Trip Itinerary -->
+      <div class="box">
+        <div class="box-head">
+          <h2 class="box-title">📍 Step 2: Dates &amp; Pick-up Location</h2>
+          <span class="box-badge">Kerala Touring</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>Pick-up City / Hub</label>
+            <select id="hubSelect">
+              <option value="Cochin International Airport (COK)">Cochin International Airport (COK)</option>
+              <option value="Fort Kochi (Princess St Hub)">Fort Kochi (Princess St Hub)</option>
+              <option value="Munnar (Old Munnar Bus Stand)">Munnar (Old Munnar Hub)</option>
+              <option value="Varkala (North Cliff Helipad)">Varkala (North Cliff)</option>
+              <option value="Wayanad (Vythiri Gateway)">Wayanad (Vythiri Hub)</option>
+              <option value="Trivandrum Central (Railway Hub)">Trivandrum Central</option>
+              <option value="Alappuzha (Finishing Point Jetty)">Alappuzha Backwaters</option>
+              <option value="Kozhikode Beach (Beach Road)">Kozhikode Beach Hub</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Drop-off Location</label>
+            <select id="dropHubSelect">
+              <option value="Same as Pick-up Location">Same as Pick-up Location</option>
+              <option value="Cochin International Airport (COK)">Cochin International Airport (COK) (+₹500)</option>
+              <option value="Trivandrum Central (Railway Hub)">Trivandrum Central (+₹800)</option>
+              <option value="Munnar (Old Munnar Bus Stand)">Munnar Hill Station (+₹900)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>Pick-up Date &amp; Time</label>
+            <div style="display:flex;gap:8px">
+              <input type="date" id="pDate" style="flex:1.4">
+              <input type="time" id="pTime" value="09:00" style="flex:1">
+            </div>
+          </div>
+          <div class="field">
+            <label>Return Date &amp; Time (<span id="tripDurLabel" style="color:var(--brand);font-weight:700">2 Days</span>)</label>
+            <div style="display:flex;gap:8px">
+              <input type="date" id="rDate" style="flex:1.4">
+              <input type="time" id="rTime" value="09:00" style="flex:1">
+            </div>
+          </div>
+        </div>
+
+        <div class="addon-row" id="delRow" style="margin-top:4px">
+          <div class="addon-left">
+            <input type="checkbox" id="chkDel" class="addon-chk">
+            <div class="addon-info">
+              <b>Doorstep Hotel / Airport Terminal Delivery</b>
+              <small>Driver delivers clean vehicle directly to your terminal or resort</small>
+            </div>
+          </div>
+          <div class="addon-price">+₹300</div>
+        </div>
+      </div>
+
+      <!-- Step 3: Protection & Add-ons -->
+      <div class="box">
+        <div class="box-head">
+          <h2 class="box-title">🛡️ Step 3: Protection &amp; Add-ons</h2>
+          <span class="box-badge">Recommended</span>
+        </div>
+
+        <div class="addons">
+          <div class="addon-row active" id="insRow">
+            <div class="addon-left">
+              <input type="checkbox" id="chkIns" class="addon-chk" checked>
+              <div class="addon-info">
+                <b>Zero-Depreciation Damage Waiver</b>
+                <small>Zero liability on accidental bumper scratches, glass damage, or minor mishaps</small>
+              </div>
+            </div>
+            <div class="addon-price"><span id="insPriceLabel">+₹199</span>/day</div>
+          </div>
+
+          <div class="addon-row" id="pilRow">
+            <div class="addon-left">
+              <input type="checkbox" id="chkPil" class="addon-chk">
+              <div class="addon-info">
+                <b id="pilTitle">Premium Touring Helmets (2x)</b>
+                <small id="pilSub">ECE/DOT certified dual-visor hill helmets with hygiene balaclavas</small>
+              </div>
+            </div>
+            <div class="addon-price"><span id="pilPriceLabel">+₹99</span>/day</div>
+          </div>
+
+          <div class="addon-row" id="gpsRow">
+            <div class="addon-left">
+              <input type="checkbox" id="chkGps" class="addon-chk">
+              <div class="addon-info">
+                <b>Offline Waterproof GPS Navigator / Mount</b>
+                <small>Pre-loaded with Kerala hairpin curves, ghat offline maps, and power bank</small>
+              </div>
+            </div>
+            <div class="addon-price">+₹149/day</div>
+          </div>
+
+          <div class="addon-row" id="drvRow">
+            <div class="addon-left">
+              <input type="checkbox" id="chkDrv" class="addon-chk">
+              <div class="addon-info">
+                <b>Professional Kerala Tour Chauffeur / Guide</b>
+                <small>Experienced hill-station commercial driver (fuel extra)</small>
+              </div>
+            </div>
+            <div class="addon-price">+₹799/day</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Rider / Customer Information -->
+      <div class="box">
+        <div class="box-head">
+          <h2 class="box-title">👤 Step 4: Rider Information</h2>
+          <span class="box-badge">ID Verified</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>Full Name (as per Driving Licence) *</label>
+            <input type="text" id="custName" placeholder="e.g. Rahul Menon" required>
+          </div>
+          <div class="field">
+            <label>Mobile Number (WhatsApp) *</label>
+            <div style="display:flex;gap:6px">
+              <select id="custDial" style="width:96px">
+                <option value="91">+91 (IN)</option>
+                <option value="971">+971 (AE)</option>
+                <option value="1">+1 (US/CA)</option>
+                <option value="44">+44 (UK)</option>
+                <option value="966">+966 (SA)</option>
+                <option value="974">+974 (QA)</option>
+                <option value="65">+65 (SG)</option>
+                <option value="61">+61 (AU)</option>
+              </select>
+              <input type="tel" id="custPhone" placeholder="10-digit number" style="flex:1" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label>Email Address (for instant receipt) *</label>
+            <input type="email" id="custEmail" placeholder="rahul@example.com" required>
+          </div>
+          <div class="field">
+            <label>Driving Licence / ID Number *</label>
+            <input type="text" id="custLic" placeholder="KL-07-20210001234 or Passport" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Special Instructions / Flight Details (Optional)</label>
+          <textarea id="custNotes" rows="2" placeholder="e.g. Flight 6E-241 landing at 10:30 AM at Terminal 3"></textarea>
+        </div>
+      </div>
+
+      <!-- Step 5: Booking Mode & Payment Selection -->
+      <div class="box">
+        <div class="box-head">
+          <h2 class="box-title">💳 Step 5: Pre-Booking Payment Mode</h2>
+          <span class="box-badge">Secure 256-Bit</span>
+        </div>
+
+        <div class="pay-modes">
+          <div class="mode-card selected" id="modePre" onclick="selectPayMode('pre')">
+            <span class="mode-tag">Popular</span>
+            <div class="mode-head">⚡ Pay 10% Advance Deposit</div>
+            <p class="mode-desc">Pay only 10% now to guarantee your ride. Pay remaining 90% balance at vehicle pickup after inspection.</p>
+          </div>
+          <div class="mode-card" id="modeFull" onclick="selectPayMode('full')">
+            <div class="mode-head">💯 100% Full Payment</div>
+            <p class="mode-desc">Pay total trip amount now for express contactless key handover at your terminal or hub.</p>
+          </div>
+        </div>
+
+        <label style="font-size:.82rem;font-weight:600;color:var(--muted);display:block;margin-bottom:8px">Select Payment Method</label>
+        <div class="methods-grid">
+          <div class="method-btn active" data-pm="upi">
+            <span style="font-size:1.2rem">📱</span>
+            <span>UPI (GPay/PhonePe)</span>
+          </div>
+          <div class="method-btn" data-pm="card">
+            <span style="font-size:1.2rem">💳</span>
+            <span>Debit / Credit Card</span>
+          </div>
+          <div class="method-btn" data-pm="net">
+            <span style="font-size:1.2rem">🏦</span>
+            <span>Net Banking</span>
+          </div>
+          <div class="method-btn" data-pm="cod">
+            <span style="font-size:1.2rem">🤝</span>
+            <span>Pay on Handover</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Sticky Order Summary -->
+    <div class="order-col">
+      <div class="box summary-box">
+        <div class="box-head">
+          <h3 class="box-title">📋 Trip Summary</h3>
+          <span class="box-badge" id="categoryBadge">Bike</span>
+        </div>
+
+        <!-- Vehicle Hero Preview -->
+        <div class="veh-hero">
+          <img id="sumVehImg" class="veh-hero-img" src="img/himalayan.jpg" alt="Vehicle preview">
+          <span id="sumVehBadge" class="veh-hero-badge">★ Premium Fleet</span>
+          <div id="sumVehTitle" class="veh-hero-title">Royal Enfield Himalayan</div>
+        </div>
+
+        <!-- Spec Pills -->
+        <div class="spec-pills" id="sumSpecPills">
+          <span class="pill" id="sumMpg">⛽ 32 km/l</span>
+          <span class="pill" id="sumKm">🛣️ 200 km/day</span>
+          <span class="pill" id="sumTrans">⚙️ Manual</span>
+          <span class="pill" id="sumSeats">👤 2 Seats</span>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="price-table">
+          <div class="price-row">
+            <span>Base Rental (<span id="sumDays">2</span> Days × <span id="sumDaily">₹1,899</span>)</span>
+            <b id="sumBaseTotal">₹3,798</b>
+          </div>
+          <div class="price-row">
+            <span>Included Distance (<span id="sumTotalKm">400</span> km total)</span>
+            <b style="color:var(--brand)">Free Included</b>
+          </div>
+          <div class="price-row" id="rowDel" style="display:none">
+            <span>Doorstep Delivery</span>
+            <b id="sumDel">₹300</b>
+          </div>
+          <div class="price-row" id="rowIns">
+            <span>Zero-Dep Damage Protection</span>
+            <b id="sumIns">₹398</b>
+          </div>
+          <div class="price-row" id="rowPil" style="display:none">
+            <span>Touring Helmets (2x)</span>
+            <b id="sumPil">₹198</b>
+          </div>
+          <div class="price-row" id="rowGps" style="display:none">
+            <span>Offline GPS Navigator</span>
+            <b id="sumGps">₹298</b>
+          </div>
+          <div class="price-row" id="rowDrv" style="display:none">
+            <span>Professional Tour Chauffeur</span>
+            <b id="sumDrv">₹1,598</b>
+          </div>
+          <div class="price-row" id="rowDisc" style="display:none;color:var(--brand)">
+            <span>Promo Discount (10% OFF)</span>
+            <b id="sumDisc">-₹0</b>
+          </div>
+          <div class="price-row">
+            <span>GST &amp; Road Safety Tax (5%)</span>
+            <b id="sumGst">₹210</b>
+          </div>
+          <div class="price-row total">
+            <span>Total Estimated Cost</span>
+            <b id="sumGrandTotal">₹4,406</b>
+          </div>
+        </div>
+
+        <!-- Coupon Input -->
+        <div class="coupon-box">
+          <input type="text" id="couponCode" placeholder="Promo code (e.g. RIVO10)">
+          <button type="button" id="applyCouponBtn">Apply</button>
+        </div>
+
+        <!-- Advance Callout -->
+        <div class="advance-callout" id="advCallout">
+          <div class="adv-label" id="advLabelText">⚡ Advance Payable Today (10%)</div>
+          <div class="adv-amt" id="advAmtText">₹441</div>
+          <div class="adv-sub" id="advSubText">Remaining Balance of ₹3,965 payable at vehicle pickup</div>
+        </div>
+
+        <button type="button" class="book-cta" id="confirmBookingBtn">
+          <span>Confirm &amp; Pre-Book Ride ➔</span>
+        </button>
+
+        <div class="trust-badges">
+          <span>🛡️ <b>100% Free Cancellation</b> up to 48 hours prior</span>
+          <span>⚡ <b>Instant Confirmation</b> &amp; WhatsApp Digital Voucher</span>
+          <span>💳 <b>Refundable Deposit:</b> <span id="sumDepLabel">₹2,000</span> (collected on handover)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Success Confirmation Screen (Hidden Initially) -->
+  <div class="box success-screen" id="successScreen" style="display:none">
+    <div class="success-icon">✓</div>
+    <h2 class="success-title">Your Ride is Confirmed!</h2>
+    <p style="color:var(--muted);margin-bottom:12px">We've reserved your vehicle and sent confirmation to your email and WhatsApp.</p>
+    <div class="success-ref">Booking Reference: <span id="resBookingId">RIV-74892</span></div>
+
+    <div class="receipt-card">
+      <div class="receipt-row">
+        <span>Vehicle</span>
+        <b id="resVehName">Royal Enfield Himalayan</b>
+      </div>
+      <div class="receipt-row">
+        <span>Pick-up Location</span>
+        <b id="resLocation">Cochin International Airport (COK)</b>
+      </div>
+      <div class="receipt-row">
+        <span>Pick-up Date &amp; Time</span>
+        <b id="resPickup">18 Oct 2026, 09:00 AM</b>
+      </div>
+      <div class="receipt-row">
+        <span>Return Date &amp; Time</span>
+        <b id="resReturn">20 Oct 2026, 09:00 AM (2 Days)</b>
+      </div>
+      <div class="receipt-row">
+        <span>Included Kilometers</span>
+        <b id="resKm">400 km included</b>
+      </div>
+      <div class="receipt-row">
+        <span>Advance Paid Today</span>
+        <b style="color:var(--brand)" id="resAdvPaid">₹441</b>
+      </div>
+      <div class="receipt-row">
+        <span>Balance Due on Pickup</span>
+        <b id="resBalDue">₹3,965</b>
+      </div>
+      <div class="receipt-row">
+        <span>Customer Name</span>
+        <b id="resCustName">Rahul Menon</b>
+      </div>
+      <div class="receipt-row">
+        <span>Helpline &amp; Support</span>
+        <b>+91 90000 00000 (24×7)</b>
+      </div>
+    </div>
+
+    <div class="success-actions">
+      <a class="btn-act wa" id="resWaBtn" target="_blank" rel="noopener">
+        <span>💬 Open in WhatsApp</span>
+      </a>
+      <button class="btn-act sec" onclick="window.print()">
+        <span>🖨️ Download / Print Receipt</span>
+      </button>
+      <a class="btn-act sec" href="index.html">
+        <span>🏠 Return to Homepage</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2026 Rivo Rentals Kerala · All rides include 24×7 roadside breakdown assistance and sanitized helmets.</p>
+</footer>
+
+<script>
+// Load Dataset
+const DATA = {truck:[
+{n:"Mini Truck",t:"Mini",i:"truck",p:2500,s:["750 kg payload","Diesel","Driver optional"],ph:"img/ace.jpg",pb:"#e8ecf0",fit:"cover",pos:"50% 60%",mpg:"17 km/l",fuel:"Diesel",trans:"Manual",tank:"30 L",power:"750 kg Payload",seats:"2 Crew",extraKm:"₹12/km"},
+{n:"Tata Ace Gold",t:"Mini",i:"truck",p:2200,s:["710 kg payload","Petrol / CNG","Compact & nimble"],ph:"img/ace.jpg",pb:"#e8ecf0",fit:"cover",star:1,mpg:"18 km/l",fuel:"Petrol / CNG",trans:"Manual",tank:"26 L",power:"710 kg Payload",seats:"2 Crew",extraKm:"₹12/km"},
+{n:"Mahindra Bolero Pik-Up",t:"Pickup",i:"truck",p:3500,s:["Open cargo bed","Diesel","Driver optional"],ph:"img/bolero.jpg",pb:"#eaedf0",fit:"cover",star:1,mpg:"14 km/l",fuel:"Diesel",trans:"Manual",tank:"60 L",power:"1,700 kg Payload",seats:"2 Crew",extraKm:"₹14/km"},
+{n:"Isuzu D-Max V-Cross",t:"Pickup",i:"truck",p:4500,s:["Double cab 4x4","Diesel","Driver optional"],ph:"img/bolero.jpg",pb:"#eaedf0",fit:"cover",star:1,mpg:"13 km/l",fuel:"Diesel 4x4",trans:"Manual",tank:"55 L",power:"Double Cab 4x4",seats:"5 Seats",extraKm:"₹14/km"},
+{n:"Ashok Leyland Dost LiTE",t:"Mini",i:"truck",p:3000,s:["Open cargo bed","Diesel","Driver optional"],ph:"img/ace.jpg",pb:"#e8ecf0",fit:"cover",mpg:"16 km/l",fuel:"Diesel",trans:"Manual",tank:"40 L",power:"1,250 kg Payload",seats:"2 Crew",extraKm:"₹12/km"},
+{n:"Eicher Pro 2059",t:"Light",i:"truck",p:5500,s:["Open body","Diesel","Driver included"],ph:"img/medium_truck.jpg",pb:"#1a4b8c",fit:"cover",mpg:"9 km/l",fuel:"Diesel",trans:"Manual",tank:"60 L",power:"5.9 t GVW",seats:"Driver Included",extraKm:"₹18/km"},
+{n:"Medium Truck",t:"Medium",i:"truck",p:8500,s:["9 t payload","Diesel","Driver included"],ph:"img/medium_truck.jpg",pb:"#1a4b8c",fit:"cover",star:1,mpg:"8 km/l",fuel:"Diesel",trans:"Manual",tank:"100 L",power:"9 t Payload",seats:"Driver Included",extraKm:"₹20/km"},
+{n:"Heavy Truck",t:"Heavy",i:"truck",p:13000,s:["16 t payload","Diesel","Driver included"],ph:"img/medium_truck.jpg",pb:"#1a4b8c",fit:"cover",mpg:"6 km/l",fuel:"Diesel",trans:"Manual",tank:"200 L",power:"16 t Payload",seats:"Driver Included",extraKm:"₹25/km"}
+],
+bike:[
+{n:"Honda Activa 6G",t:"Scooter",i:"scoot",p:499,s:["110cc","2 riders","Automatic"],ph:"img/activa.jpg",pb:"#e8eff4",fit:"cover",mpg:"50 km/l",fuel:"Petrol",trans:"Automatic (CVT)",tank:"5.3 L",power:"7.8 bhp",seats:"2 Riders",extraKm:"₹4/km"},
+{n:"Suzuki Access 125",t:"Scooter",i:"scoot",p:599,s:["125cc","Storage","Automatic"],ph:"img/activa.jpg",pb:"#e8eff4",fit:"cover",mpg:"48 km/l",fuel:"Petrol",trans:"Automatic (CVT)",tank:"5.0 L",power:"8.7 bhp",seats:"2 Riders",extraKm:"₹4/km"},
+{n:"TVS Jupiter",t:"Scooter",i:"scoot",p:549,s:["110cc","Under-seat storage","Automatic"],ph:"img/activa.jpg",pb:"#e8eff4",fit:"cover",mpg:"50 km/l",fuel:"Petrol",trans:"Automatic (CVT)",tank:"6.0 L",power:"7.9 bhp",seats:"2 Riders",extraKm:"₹4/km"},
+{n:"Bajaj Pulsar 150",t:"Commuter",i:"bike",p:699,s:["150cc","Manual","Fuel-efficient"],ph:"img/duke.jpg",pb:"#f26522",fit:"cover",mpg:"45 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"15.0 L",power:"14.0 bhp",seats:"2 Riders",extraKm:"₹4/km"},
+{n:"TVS Apache RTR",t:"Sport",i:"bike",p:899,s:["Manual","ABS","Sporty"],ph:"img/r15.jpg",pb:"#1a4cb0",fit:"cover",mpg:"42 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"12.0 L",power:"16.0 bhp",seats:"2 Riders",extraKm:"₹4/km"},
+{n:"Yamaha YZF-R15 V4",t:"Sport",i:"bike",p:1199,s:["155cc VVA","Dual ABS","Quickshifter"],ph:"img/r15.jpg",pb:"#1a4cb0",fit:"cover",star:1,mpg:"40 km/l",fuel:"Petrol",trans:"6-Speed Manual",tank:"11.0 L",power:"18.4 bhp",seats:"2 Riders",extraKm:"₹5/km"},
+{n:"KTM 390 Duke",t:"Sport",i:"bike",p:1499,s:["373cc","Cornering ABS","TFT Display"],ph:"img/duke.jpg",pb:"#f26522",fit:"cover",star:1,mpg:"30 km/l",fuel:"Petrol",trans:"6-Speed Manual",tank:"13.5 L",power:"43.5 bhp",seats:"2 Riders",extraKm:"₹6/km"},
+{n:"Royal Enfield Hunter 350",t:"Roadster",i:"bike",p:1099,s:["350cc","Manual","City & highway"],ph:"img/classic350.jpg",pb:"#eef2ee",fit:"cover",mpg:"36 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"13.0 L",power:"20.2 bhp",seats:"2 Riders",extraKm:"₹5/km"},
+{n:"Royal Enfield Classic 350",t:"Premium",i:"bike",p:1299,s:["350cc","Manual","Highway Cruiser"],ph:"img/classic350.jpg",pb:"#eef2ee",fit:"cover",star:1,mpg:"35 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"13.0 L",power:"20.2 bhp",seats:"2 Riders",extraKm:"₹5/km"},
+{n:"Royal Enfield Himalayan",t:"Adventure",i:"bike",p:1899,s:["Adventure","Dual ABS","Off-road ready"],ph:"img/himalayan.jpg",pb:"#eaedf0",fit:"cover",star:1,mpg:"32 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"15.0 L",power:"24.3 bhp",seats:"2 Riders",extraKm:"₹6/km"}
+],
+car:[
+{n:"Maruti Suzuki Swift",t:"Economy",i:"car",p:1999,s:["5 seats","Petrol","Manual"],ph:"img/swift.jpg",pb:"#f5e8e8",fit:"cover",mpg:"22 km/l",fuel:"Petrol",trans:"5-Speed Manual",tank:"37 L",power:"89 bhp",seats:"5 Seats",extraKm:"₹8/km"},
+{n:"Maruti Suzuki Baleno",t:"Hatchback",i:"car",p:2299,s:["5 seats","Petrol","Manual / Auto"],ph:"img/swift.jpg",pb:"#f5e8e8",fit:"cover",mpg:"22 km/l",fuel:"Petrol",trans:"Manual / Auto",tank:"37 L",power:"89 bhp",seats:"5 Seats",extraKm:"₹8/km"},
+{n:"Honda City",t:"Sedan",i:"car",p:2499,s:["5 seats","Petrol","Automatic"],ph:"img/swift.jpg",pb:"#f5e8e8",fit:"cover",mpg:"18 km/l",fuel:"Petrol",trans:"CVT Automatic",tank:"40 L",power:"121 bhp",seats:"5 Seats",extraKm:"₹9/km"},
+{n:"Maruti Suzuki Brezza",t:"SUV",i:"car",p:3499,s:["5 seats","Compact SUV","Manual / Auto"],ph:"img/creta.jpg",pb:"#dbe1e6",fit:"cover",mpg:"19 km/l",fuel:"Petrol",trans:"Manual / Auto",tank:"48 L",power:"102 bhp",seats:"5 Seats",extraKm:"₹9/km"},
+{n:"Hyundai Creta",t:"SUV",i:"car",p:3799,s:["5 seats","Panoramic Sunroof","Auto / Manual"],ph:"img/creta.jpg",pb:"#dbe1e6",fit:"cover",star:1,mpg:"17 km/l",fuel:"Petrol / Diesel",trans:"Automatic",tank:"50 L",power:"115 bhp",seats:"5 Seats",extraKm:"₹10/km"},
+{n:"Mahindra Thar 4x4",t:"SUV",i:"car",p:4299,s:["4 seats","4x4 Hard Top","Off-road ready"],ph:"img/thar.jpg",pb:"#1b1c1e",fit:"cover",star:1,mpg:"12 km/l",fuel:"Diesel 4x4",trans:"6-Speed Manual",tank:"57 L",power:"130 bhp",seats:"4 Seats",extraKm:"₹12/km"},
+{n:"Toyota Innova Crysta",t:"MPV",i:"car",p:3999,s:["6–7 seats","Diesel","Manual"],ph:"img/innova.jpg",pb:"#edf1f3",fit:"cover",star:1,mpg:"14 km/l",fuel:"Diesel",trans:"5-Speed Manual",tank:"55 L",power:"150 bhp",seats:"7 Seats",extraKm:"₹12/km"},
+{n:"Toyota Innova Hycross",t:"MPV",i:"car",p:4999,s:["6–7 seats","Hybrid","Automatic"],ph:"img/innova.jpg",pb:"#edf1f3",fit:"cover",star:1,mpg:"21 km/l",fuel:"Strong Hybrid",trans:"e-CVT Automatic",tank:"52 L",power:"186 bhp",seats:"7 Seats",extraKm:"₹14/km"},
+{n:"Toyota Fortuner",t:"SUV",i:"car",p:5999,s:["7 seats","4x4 Automatic","Luxury SUV"],ph:"img/fortuner.jpg",pb:"#eaedf0",fit:"cover",star:1,mpg:"11 km/l",fuel:"Diesel 4x4",trans:"Automatic",tank:"80 L",power:"201 bhp",seats:"7 Seats",extraKm:"₹15/km"}
+]};
+const META = {truck:{h:"Rent a ride",hv:"truck",sub:"Load and go. Rates are per day, with 300 km/day included. Driver available. Free cancellation up to 48 hrs.",pax:["Driver only","Driver + helper"],paxL:"Crew",ins:300,extra:"Loading helper",pil:600,del:500},
+bike:{h:"Rent a ride",hv:"bike",sub:"From quick city hops to hill-station climbs. Rates are per day, with 200 km/day included. Free cancellation up to 48 hrs.",pax:["Solo","Two riders"],paxL:"Riders",ins:120,extra:"Extra helmet",pil:50,del:250},
+car:{h:"Rent a ride",hv:"car",sub:"Self-drive cars for families, groups and long road trips. Rates are per day, with 250 km/day included. Free cancellation up to 48 hrs.",pax:["1–2 passengers","3–5 passengers","6–7 passengers"],paxL:"Passengers",ins:350,extra:"Child seat",pil:100,del:500}};
+
+// Global State
+let curCat = "bike";
+let curVeh = DATA.bike[9]; // Royal Enfield Himalayan default
+let payMode = "pre"; // "pre" (10%) or "full" (100%)
+let discountPct = 0;
+
+// Helper: Format Currency
+function fmt(n) {
+  try {
+    return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(n);
+  } catch(e) {
+    return "₹" + Math.round(n);
+  }
+}
+
+// Helper: Flatten All Vehicles
+function ALL() {
+  return [
+    ...DATA.bike.map(v => ({ ...v, cat: "bike" })),
+    ...DATA.car.map(v => ({ ...v, cat: "car" })),
+    ...DATA.truck.map(v => ({ ...v, cat: "truck" }))
+  ];
+}
+
+// DOM Elements
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+// Parse URL Parameters
+function parseUrlParams() {
+  const p = new URLSearchParams(window.location.search);
+  const vehName = p.get("veh");
+  const days = parseInt(p.get("days")) || 2;
+  const city = p.get("city") || "";
+  const route = p.get("route") || "";
+  const isPre = p.get("pre") !== "0";
+  const hasDel = p.get("del") === "1";
+  const hasIns = p.get("ins") === "1";
+  const fromDate = p.get("from");
+  const toDate = p.get("to");
+
+  // Route Banner
+  if (route) {
+    $("#routeBanner").style.display = "flex";
+    $("#routeTitle").textContent = route;
+  }
+
+  // Pre-booking mode
+  if (!isPre) {
+    selectPayMode("full");
+  }
+
+  // Find vehicle
+  if (vehName) {
+    const found = ALL().find(x => x.n.toLowerCase() === vehName.toLowerCase());
+    if (found) {
+      curCat = found.cat;
+      curVeh = found;
+    }
+  }
+
+  // Delivery / Insurance flags
+  if (hasDel && $("#chkDel")) $("#chkDel").checked = true;
+  if ($("#chkIns")) $("#chkIns").checked = hasIns !== false;
+
+  // Setup Dates
+  const now = new Date();
+  const tm = new Date(now.getTime() + 864e5);
+  const ret = new Date(now.getTime() + 864e5 * (days + 1));
+  const tmStr = tm.toISOString().slice(0, 10);
+  const retStr = ret.toISOString().slice(0, 10);
+
+  $("#pDate").min = tmStr;
+  $("#rDate").min = tmStr;
+  $("#pDate").value = fromDate || tmStr;
+  $("#rDate").value = toDate || retStr;
+
+  // City match
+  if (city) {
+    for (let opt of $("#hubSelect").options) {
+      if (opt.value.toLowerCase().includes(city.toLowerCase())) {
+        $("#hubSelect").value = opt.value;
+        break;
+      }
+    }
+  }
+}
+
+// Render Vehicle Category Tabs & Picker
+function renderCategoryTabs() {
+  $$("#catTabs .cat-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.cat === curCat);
+    btn.onclick = () => {
+      curCat = btn.dataset.cat;
+      $$("#catTabs .cat-btn").forEach(b => b.classList.toggle("active", b.dataset.cat === curCat));
+      // Pick first vehicle of category
+      curVeh = DATA[curCat][0];
+      renderVehPicker();
+      updateAddonLabels();
+      calcTotal();
+    };
+  });
+}
+
+function renderVehPicker() {
+  const list = DATA[curCat];
+  $("#vehPicker").innerHTML = list.map(v => {
+    const isSel = v.n === curVeh.n;
+    return `<div class="veh-opt ${isSel ? "selected" : ""}" data-name="${v.n}">
+      <img src="${v.ph}" class="veh-opt-img" alt="${v.n}">
+      <div class="veh-opt-title">${v.n}</div>
+      <div class="veh-opt-price">${fmt(v.p)}/day</div>
+      <div class="veh-opt-specs">⛽ ${v.mpg || "Good"} &middot; ${v.trans || "Manual"}</div>
+    </div>`;
+  }).join("");
+
+  // Attach click listener
+  $$("#vehPicker .veh-opt").forEach(card => {
+    card.onclick = () => {
+      const name = card.dataset.name;
+      const v = DATA[curCat].find(x => x.n === name);
+      if (v) {
+        curVeh = v;
+        $$("#vehPicker .veh-opt").forEach(c => c.classList.toggle("selected", c.dataset.name === name));
+        updateAddonLabels();
+        calcTotal();
+      }
+    };
+  });
+}
+
+// Update Addon titles based on category (Bikes vs Cars vs Trucks)
+function updateAddonLabels() {
+  if (curCat === "bike") {
+    $("#pilTitle").textContent = "Premium Touring Helmets (2x)";
+    $("#pilSub").textContent = "ECE/DOT certified dual-visor hill helmets with hygiene balaclavas";
+    $("#pilPriceLabel").textContent = "+₹99";
+    $("#insPriceLabel").textContent = "+₹199";
+  } else if (curCat === "car") {
+    $("#pilTitle").textContent = "Child Safety Seat / Booster Seat";
+    $("#pilSub").textContent = "ISOFIX certified padded car seat for toddlers";
+    $("#pilPriceLabel").textContent = "+₹149";
+    $("#insPriceLabel").textContent = "+₹299";
+  } else {
+    $("#pilTitle").textContent = "Heavy-Duty Cargo Straps & Tarpaulin";
+    $("#pilSub").textContent = "Waterproof monsoon cargo protection wrap";
+    $("#pilPriceLabel").textContent = "+₹199";
+    $("#insPriceLabel").textContent = "+₹499";
+  }
+}
+
+// Select Pay Mode
+function selectPayMode(mode) {
+  payMode = mode;
+  $("#modePre").classList.toggle("selected", mode === "pre");
+  $("#modeFull").classList.toggle("selected", mode === "full");
+  if (mode === "pre") {
+    $("#advLabelText").textContent = "⚡ Advance Payable Today (10%)";
+  } else {
+    $("#advLabelText").textContent = "💯 Full Payment Payable Today (100%)";
+  }
+  calcTotal();
+}
+window.selectPayMode = selectPayMode;
+
+// Calculate Trip Duration & Cost
+function calcTotal() {
+  if (!curVeh) return;
+
+  // Calculate Days
+  const pVal = $("#pDate").value;
+  const rVal = $("#rDate").value;
+  let days = 2;
+  if (pVal && rVal) {
+    const diff = (new Date(rVal) - new Date(pVal)) / 864e5;
+    days = Math.max(1, Math.min(30, Math.round(diff) || 1));
+  }
+  $("#tripDurLabel").textContent = days + " Day" + (days > 1 ? "s" : "");
+  $("#sumDays").textContent = days;
+
+  // Included km
+  const kmPerDay = curCat === "car" ? 250 : curCat === "truck" ? 300 : 200;
+  const totalKm = days * kmPerDay;
+  $("#sumTotalKm").textContent = totalKm;
+
+  // Base
+  const baseCost = curVeh.p * days;
+  $("#sumDaily").textContent = fmt(curVeh.p);
+  $("#sumBaseTotal").textContent = fmt(baseCost);
+
+  // Delivery
+  const hasDel = $("#chkDel").checked;
+  $("#rowDel").style.display = hasDel ? "flex" : "none";
+  const delCost = hasDel ? 300 : 0;
+
+  // Insurance
+  const hasIns = $("#chkIns").checked;
+  $("#rowIns").style.display = hasIns ? "flex" : "none";
+  const insDaily = curCat === "truck" ? 499 : curCat === "car" ? 299 : 199;
+  const insCost = hasIns ? insDaily * days : 0;
+  $("#sumIns").textContent = fmt(insCost);
+
+  // Helmets/Child seat
+  const hasPil = $("#chkPil").checked;
+  $("#rowPil").style.display = hasPil ? "flex" : "none";
+  const pilDaily = curCat === "truck" ? 199 : curCat === "car" ? 149 : 99;
+  const pilCost = hasPil ? pilDaily * days : 0;
+  $("#sumPil").textContent = fmt(pilCost);
+
+  // GPS
+  const hasGps = $("#chkGps").checked;
+  $("#rowGps").style.display = hasGps ? "flex" : "none";
+  const gpsCost = hasGps ? 149 * days : 0;
+  $("#sumGps").textContent = fmt(gpsCost);
+
+  // Driver
+  const hasDrv = $("#chkDrv").checked;
+  $("#rowDrv").style.display = hasDrv ? "flex" : "none";
+  const drvCost = hasDrv ? 799 * days : 0;
+  $("#sumDrv").textContent = fmt(drvCost);
+
+  // Subtotal before tax
+  const subtotal = baseCost + delCost + insCost + pilCost + gpsCost + drvCost;
+
+  // Discount
+  const discAmt = Math.round(subtotal * discountPct);
+  if (discAmt > 0) {
+    $("#rowDisc").style.display = "flex";
+    $("#sumDisc").textContent = "-" + fmt(discAmt);
+  } else {
+    $("#rowDisc").style.display = "none";
+  }
+
+  // Tax
+  const taxable = subtotal - discAmt;
+  const gst = Math.round(taxable * 0.05);
+  $("#sumGst").textContent = fmt(gst);
+
+  // Grand Total
+  const grandTotal = taxable + gst;
+  $("#sumGrandTotal").textContent = fmt(grandTotal);
+
+  // Advance Deposit vs Balance
+  const isPre = payMode === "pre";
+  const advAmt = isPre ? Math.round(grandTotal * 0.1) : grandTotal;
+  const balAmt = grandTotal - advAmt;
+
+  $("#advAmtText").textContent = fmt(advAmt);
+  if (isPre) {
+    $("#advSubText").textContent = "Remaining Balance of " + fmt(balAmt) + " payable at vehicle pickup";
+    $("#confirmBookingBtn span").textContent = "Confirm & Pre-Book Ride (" + fmt(advAmt) + ") ➔";
+  } else {
+    $("#advSubText").textContent = "Zero payment required at vehicle handover";
+    $("#confirmBookingBtn span").textContent = "Confirm & Complete Reservation (" + fmt(grandTotal) + ") ➔";
+  }
+
+  // Update Summary Card
+  $("#sumVehTitle").textContent = curVeh.n;
+  $("#sumVehImg").src = curVeh.ph;
+  $("#categoryBadge").textContent = curCat.toUpperCase();
+  $("#sumMpg").textContent = "⛽ " + (curVeh.mpg || "Good Mileage");
+  $("#sumKm").textContent = "🛣️ " + kmPerDay + " km/day";
+  $("#sumTrans").textContent = "⚙️ " + (curVeh.trans || "Manual");
+  $("#sumSeats").textContent = "👤 " + (curVeh.seats || "2 Seats");
+
+  // Deposit label
+  const depAmt = curCat === "truck" ? 15000 : curCat === "car" ? 5000 : 2000;
+  $("#sumDepLabel").textContent = fmt(depAmt);
+}
+
+// Payment Methods Pills
+$$(".methods-grid .method-btn").forEach(btn => {
+  btn.onclick = () => {
+    $$(".methods-grid .method-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  };
+});
+
+// Coupon Handler
+$("#applyCouponBtn").onclick = () => {
+  const code = $("#couponCode").value.trim().toUpperCase();
+  if (code === "RIVO10") {
+    discountPct = 0.1;
+    alert("Coupon RIVO10 applied successfully! 10% discount added.");
+    calcTotal();
+  } else if (!code) {
+    discountPct = 0;
+    calcTotal();
+  } else {
+    alert("Invalid promo code. Try RIVO10 for 10% off.");
+  }
+};
+
+// Date / Checkbox Event Listeners
+["#pDate", "#rDate", "#pTime", "#rTime", "#hubSelect", "#dropHubSelect"].forEach(s => {
+  const el = $(s);
+  if (el) {
+    el.addEventListener("input", calcTotal);
+    el.addEventListener("change", calcTotal);
+  }
+});
+["#chkDel", "#chkIns", "#chkPil", "#chkGps", "#chkDrv"].forEach(s => {
+  const el = $(s);
+  if (el) {
+    el.addEventListener("change", () => {
+      const row = el.closest(".addon-row");
+      if (row) row.classList.toggle("active", el.checked);
+      calcTotal();
+    });
+  }
+});
+
+// Theme Toggle
+const thBtn = $("#thBtn");
+function setDocTheme(t) {
+  document.documentElement.dataset.theme = t;
+  thBtn.textContent = t === "dark" ? "☀️" : "🌙";
+  try { localStorage.setItem("rivo_th", t); } catch(e){}
+}
+try {
+  const savedTh = localStorage.getItem("rivo_th") || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light");
+  setDocTheme(savedTh);
+} catch(e) { setDocTheme("dark"); }
+thBtn.onclick = () => {
+  const cur = document.documentElement.dataset.theme || "dark";
+  setDocTheme(cur === "dark" ? "light" : "dark");
+};
+
+// Confirm Booking Form Submission
+$("#confirmBookingBtn").onclick = () => {
+  const name = $("#custName").value.trim();
+  const phone = $("#custPhone").value.trim();
+  const email = $("#custEmail").value.trim();
+  const lic = $("#custLic").value.trim();
+  const hub = $("#hubSelect").value;
+  const pDate = $("#pDate").value;
+  const pTime = $("#pTime").value;
+  const rDate = $("#rDate").value;
+  const rTime = $("#rTime").value;
+
+  if (!name) {
+    alert("Please enter your Full Name.");
+    $("#custName").focus();
+    return;
+  }
+  if (!phone || phone.length < 8) {
+    alert("Please enter a valid Mobile Number for WhatsApp confirmation.");
+    $("#custPhone").focus();
+    return;
+  }
+  if (!email || !email.includes("@")) {
+    alert("Please enter a valid Email Address for your receipt.");
+    $("#custEmail").focus();
+    return;
+  }
+  if (!lic) {
+    alert("Please enter your Driving Licence or ID number.");
+    $("#custLic").focus();
+    return;
+  }
+
+  // Generate Booking Record
+  const bookingId = "RIV-" + Math.floor(10000 + Math.random() * 90000);
+  const pDateTime = new Date(pDate + "T" + pTime);
+  const rDateTime = new Date(rDate + "T" + rTime);
+  const days = Math.max(1, Math.round((rDateTime - pDateTime) / 864e5) || 1);
+  const kmPerDay = curCat === "car" ? 250 : curCat === "truck" ? 300 : 200;
+  const grandTotal = parseInt($("#sumGrandTotal").textContent.replace(/[^0-9]/g, "")) || (curVeh.p * days);
+  const isPre = payMode === "pre";
+  const advPaid = isPre ? Math.round(grandTotal * 0.1) : grandTotal;
+  const balDue = grandTotal - advPaid;
+
+  const booking = {
+    id: bookingId,
+    veh: curVeh.n,
+    days: days,
+    total: grandTotal,
+    advance: advPaid,
+    balance: balDue,
+    isPre: isPre,
+    name: name,
+    phone: phone,
+    email: email,
+    lic: lic,
+    loc: hub,
+    at: pDateTime.getTime(),
+    returnAt: rDateTime.getTime(),
+    status: "Confirmed",
+    createdAt: Date.now()
+  };
+
+  // Save into localStorage rivo_bk
+  try {
+    const existing = JSON.parse(localStorage.getItem("rivo_bk") || "[]");
+    existing.push(booking);
+    localStorage.setItem("rivo_bk", JSON.stringify(existing));
+  } catch(e) {
+    console.error("Storage error:", e);
+  }
+
+  // Populate Success Screen
+  $("#resBookingId").textContent = bookingId;
+  $("#resVehName").textContent = curVeh.n;
+  $("#resLocation").textContent = hub;
+  $("#resPickup").textContent = pDateTime.toLocaleDateString("en-IN", { dateStyle: "medium" }) + " at " + pTime;
+  $("#resReturn").textContent = rDateTime.toLocaleDateString("en-IN", { dateStyle: "medium" }) + " at " + rTime + " (" + days + " Days)";
+  $("#resKm").textContent = (days * kmPerDay) + " km total included";
+  $("#resAdvPaid").textContent = fmt(advPaid);
+  $("#resBalDue").textContent = fmt(balDue);
+  $("#resCustName").textContent = name;
+
+  // WhatsApp Button Link
+  const waMsg = `Hi Rivo Rentals! I have confirmed my booking ${bookingId} for ${curVeh.n} at ${hub} on ${pDate}. Advance paid: ${fmt(advPaid)}. Please send pickup voucher.`;
+  $("#resWaBtn").href = `https://api.whatsapp.com/send?phone=919000000000&text=${encodeURIComponent(waMsg)}`;
+
+  // Hide Form, Show Success
+  $("#bookingLayout").style.display = "none";
+  $("#stepper").style.display = "none";
+  $("#successScreen").style.display = "block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// Initialize
+parseUrlParams();
+renderCategoryTabs();
+renderVehPicker();
+updateAddonLabels();
+calcTotal();
+</script>
+</body>
+</html>

@@ -416,9 +416,9 @@ header .wrap{padding:0 10px}
 <div id="prog"></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><i>R</i>Rivo</a>
-<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill" onclick="openBreakdown();return false;">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="#top">Book a ride</a></li></ul>
+<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill" onclick="openBreakdown();return false;">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="booking.html">Book a ride</a></li></ul>
 <div class="nav-actions">
-<select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="#top">Book a ride</a>
+<select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="booking.html">Book a ride</a>
 <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
 </div>
 </nav></div></header>
@@ -470,7 +470,7 @@ header .wrap{padding:0 10px}
 <span class="eyebrow">Where to Ride</span><h2>Kerala’s Greatest Road Trips</h2>
 <p class="sub">Curated touring circuits through misty tea hills, Arabian Sea cliffs, and dense rainforest ghats. Tap any route to view the day plan and pre-book the perfect ride.</p>
 <div class="routes" id="routesGrid">
-  <div class="route" data-r="0" tabindex="0" role="button" aria-label="Kochi to Munnar Mist Trail">
+  <div class="route" data-r="0" onclick="showRoute(0)" tabindex="0" role="button" aria-label="Kochi to Munnar Mist Trail">
     <img class="rbg" src="img/himalayan.jpg" alt="Kochi to Munnar" loading="lazy">
     <span class="route-tag">☕ Hill Station &amp; Ghats</span>
     <div class="route-meta"><span>📅 2–3 Days</span><span>🛣️ 280 km</span></div>
@@ -479,7 +479,7 @@ header .wrap{padding:0 10px}
     <div class="route-foot"><span class="route-veh-badge">🏍️ Royal Enfield Himalayan</span><span class="route-btn">Explore Route ➔</span></div>
   </div>
 
-  <div class="route" data-r="1" tabindex="0" role="button" aria-label="Varkala and Kollam Coast Loop">
+  <div class="route" data-r="1" onclick="showRoute(1)" tabindex="0" role="button" aria-label="Varkala and Kollam Coast Loop">
     <img class="rbg" src="img/swift.jpg" alt="Varkala Coast" loading="lazy">
     <span class="route-tag">🌊 Cliffs &amp; Ocean Roads</span>
     <div class="route-meta"><span>📅 1–2 Days</span><span>🛣️ 135 km</span></div>
@@ -488,7 +488,7 @@ header .wrap{padding:0 10px}
     <div class="route-foot"><span class="route-veh-badge">🚗 Maruti Suzuki Swift</span><span class="route-btn">Explore Route ➔</span></div>
   </div>
 
-  <div class="route" data-r="2" tabindex="0" role="button" aria-label="Wayanad Rainforest and Ghat Pass">
+  <div class="route" data-r="2" onclick="showRoute(2)" tabindex="0" role="button" aria-label="Wayanad Rainforest and Ghat Pass">
     <img class="rbg" src="img/thar.jpg" alt="Wayanad Rainforest" loading="lazy">
     <span class="route-tag">⛰️ 9 Hairpins &amp; Ghats</span>
     <div class="route-meta"><span>📅 3 Days</span><span>🛣️ 360 km</span></div>
@@ -497,7 +497,7 @@ header .wrap{padding:0 10px}
     <div class="route-foot"><span class="route-veh-badge">🚙 Mahindra Thar 4x4</span><span class="route-btn">Explore Route ➔</span></div>
   </div>
 
-  <div class="route" data-r="3" tabindex="0" role="button" aria-label="Athirappilly and Valparai Sholayar Loop">
+  <div class="route" data-r="3" onclick="showRoute(3)" tabindex="0" role="button" aria-label="Athirappilly and Valparai Sholayar Loop">
     <img class="rbg" src="img/innova.jpg" alt="Athirappilly Waterfalls" loading="lazy">
     <span class="route-tag">🌲 Waterfalls &amp; Rainforest</span>
     <div class="route-meta"><span>📅 2 Days</span><span>🛣️ 220 km</span></div>
@@ -716,7 +716,11 @@ $("#mode").onclick=e=>{if(e.target.dataset.m)setMode(e.target.dataset.m)};
 document.querySelectorAll("[data-go]").forEach(a=>a.onclick=e=>{e.preventDefault();setMode(a.dataset.go,true)});
 $("#chips").onclick=e=>{if(e.target.dataset.t){cur=e.target.dataset.t;chips();grid()}};
 $("#type").onchange=e=>{cur=e.target.value;chips();grid()};
-$("#grid").onclick=e=>{const n=e.target.dataset.n;if(n){$("#eVeh").value=n;calc();toast(n+" selected. Check your total in the calculator.");document.getElementById("price").scrollIntoView()}};
+$("#grid").onclick=e=>{const n=e.target.dataset.n;if(n){
+  const d = $("#eDays") ? $("#eDays").value : 2;
+  const c = $("#city") ? $("#city").value : "Kochi";
+  location.href = `booking.html?veh=${encodeURIComponent(n)}&days=${d}&city=${encodeURIComponent(c)}`;
+}};
 $("#search").onsubmit=e=>{e.preventDefault();const f=$("#from").value,t=$("#to").value;if(f&&t&&t<f){toast("Return date must be after pick-up.");return}if(f&&t)$("#eDays").value=Math.max(1,Math.min(14,Math.round((new Date(t)-new Date(f))/864e5)||1));calc();document.getElementById("fleet").scrollIntoView();toast("Showing "+(mode=="car"?"cars":"bikes")+" in "+$("#city").value)};
 function refund(){const pct=+$("#rWhen").value,del=$("#eDel").checked?M.del:0,rent=TOT-del;
 const back=pct==100?TOT:pct==75?Math.round(rent*.75):pct==50?Math.round(rent*.5):0;
@@ -747,7 +751,15 @@ $("#rWhen").onchange=refund;
 let mem=[];
 const BK={get(){try{return JSON.parse(localStorage.getItem("rivo_bk")||"[]")}catch(e){return mem}},set(a){mem=a;try{localStorage.setItem("rivo_bk",JSON.stringify(a))}catch(e){}}};
 const ph10=s=>s.replace(/\D/g,"").slice(-CLEN()),when=t=>new Date(t).toLocaleString((window.CN?CN.loc:"en-IN"),{dateStyle:"medium",timeStyle:"short"});
-function closeM(){$("#modal").hidden=true}
+function closeM(){
+  const m = document.getElementById("modal");
+  if(m){
+    m.hidden = true;
+    m.setAttribute("hidden", "");
+    m.style.display = "none";
+  }
+}
+window.closeM = closeM;
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeM();
 });
@@ -755,7 +767,7 @@ document.addEventListener("click", e => {
   const m = document.getElementById("modal");
   if (m && e.target === m) closeM();
   const rc = e.target.closest(".route");
-  if (rc && rc.dataset.r !== undefined) {
+  if (rc && rc.dataset.r !== undefined && !e.target.closest(".route-btn")) {
     e.preventDefault();
     if (typeof showRoute === "function") showRoute(+rc.dataset.r);
   }
@@ -769,93 +781,32 @@ document.addEventListener("keydown", e => {
     }
   }
 });
-function modal(h){$("#mbox").innerHTML=h+'<button class="btn alt" style="margin-top:12px;width:100%" onclick="closeM()">Close</button>';$("#modal").hidden=false}
+function modal(h){
+  const mb = document.getElementById("mbox"), m = document.getElementById("modal");
+  if(mb) mb.innerHTML = h + '<button class="btn alt" style="margin-top:12px;width:100%" onclick="closeM()">Close</button>';
+  if(m){
+    m.hidden = false;
+    m.removeAttribute("hidden");
+    m.style.display = "grid";
+  }
+}
+window.modal = modal;
 function sms(b,t){return `<div class="sms"><small>SMS to +${CDIAL()} ${b.phone}</small><p>${t}</p></div><a class="btn" style="display:block;text-align:center" href="sms:+${CDIAL()}${b.phone}?body=${encodeURIComponent(t)}">Open in Messages</a><p class="note">Preview only. Sending a real SMS needs a server and an SMS provider.</p>`}
 function openBook(){
-const v=V.find(x=>x.n==$("#eVeh").value)||V[0],d=+$("#eDays").value,tm=new Date(Date.now()+864e5*7).toISOString().slice(0,10);
-const isPre = $("#ePre") ? $("#ePre").checked : true;
-const adv = Math.round(TOT*0.1);
-const bal = TOT - adv;
-const LOCS = ["Cochin International Airport (COK)", "Fort Kochi", "Munnar Hill Station", "Varkala Cliff", "Wayanad (Vythiri)", "Trivandrum Central", "Alappuzha Backwaters", "Kozhikode Beach"];
-const curCity = $("#city") ? $("#city").value : "Kochi";
-const curLoc = LOCS.find(l => l.toLowerCase().includes(curCity.toLowerCase())) || LOCS[0];
-
-modal(`<h3>${isPre?"⚡ Pre-Book Your Ride":"Confirm Booking"}</h3>
-<div class="prebook-summary-banner">
-  <div style="font-weight:700;font-size:1.05rem">${v.n} &middot; ${d} Day(s)</div>
-  <div style="font-size:.85rem;color:var(--muted)">Trip Total: <b>${fmt(TOT)}</b> ${isPre?`&middot; Pay Advance: <b style="color:var(--brand2)">${fmt(adv)}</b>`:""}</div>
-</div>
-<div class="fld"><label>Full Name</label><input type="text" id="mN" placeholder="Enter your full name"></div>
-<div class="fld"><label>Mobile Number (++${CDIAL()})</label><input type="tel" id="mP" placeholder="${CLEN()}-digit number"></div>
-<div class="fld"><label>Pick-up Location</label>
-  <select id="mLoc">
-    ${LOCS.map(l=>`<option value="${l}" ${l===curLoc?"selected":""}>${l}</option>`).join("")}
-  </select>
-</div>
-<div class="fld"><label>Pick-up Date</label><input type="date" id="mD" value="${$("#from").value||tm}" min="${today}"></div>
-<div class="fld"><label>Pick-up Time</label><input type="time" id="mT" value="10:00"></div>
-<div class="fld"><label>Booking Mode</label>
-  <select id="mType">
-    <option value="pre" ${isPre?"selected":""}>⚡ Pre-Book (Pay 10% Advance: ${fmt(adv)} &middot; Rest at pickup)</option>
-    <option value="full" ${!isPre?"selected":""}>Full Payment (${fmt(TOT)})</option>
-  </select>
-</div>
-<p class="note" style="margin:0 0 10px">🛡️ Zero cancellation fee up to 48 hrs before trip. Licence &amp; ID verified at pickup.</p>
-<button class="btn" style="width:100%" id="mOk">${isPre?"Confirm Pre-Booking ("+fmt(adv)+")":"Confirm Booking ("+fmt(TOT)+")"}</button>`);
-
-$("#mType").onchange = e => {
-  const p = e.target.value=="pre";
-  $("#mOk").textContent = p ? "Confirm Pre-Booking ("+fmt(adv)+")" : "Confirm Booking ("+fmt(TOT)+")";
-};
-
-$("#mOk").onclick=()=>{
-  const n=$("#mN").value.trim(),p=ph10($("#mP").value),at=new Date($("#mD").value+"T"+$("#mT").value);
-  const chosenLoc = $("#mLoc") ? $("#mLoc").value : curLoc;
-  const preChoice = $("#mType").value=="pre";
-  if(!n){toast("Please enter your name.");return}
-  if(p.length!=CLEN()){toast("Enter a valid mobile number.");return}
-  if(isNaN(at)||at<=Date.now()){toast("Choose a future pick-up date and time.");return}
-
-  const daysUntil = Math.max(1, Math.round((at.getTime()-Date.now())/864e5));
-  const bId = (preChoice?"PRV-":"RV-")+Math.floor(10000+Math.random()*90000);
-  const b={
-    id: bId,
-    name: n,
-    phone: p,
-    veh: v.n,
-    days: d,
-    total: TOT,
-    adv: preChoice ? adv : TOT,
-    bal: preChoice ? bal : 0,
-    del: $("#eDel").checked?M.del:0,
-    at: at.getTime(),
-    hub: chosenLoc,
-    status: "Confirmed",
-    isPre: preChoice
-  };
-
-  BK.set([...BK.get(),b]);
-  $("#bId").value=b.id;
-  $("#bPh").value=p;
-
-  const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Rivo Rental: " + v.n)}&dates=${at.toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z/${new Date(at.getTime()+d*864e5).toISOString().replace(/-|:|.\d\d\d/g,"").slice(0,15)}Z&details=${encodeURIComponent("Booking ID: "+b.id+"\nVehicle: "+v.n+"\nLocation: "+chosenLoc+"\nBalance Due: "+fmt(b.bal))}&location=${encodeURIComponent(chosenLoc)}`;
-
-  modal(`<h3>${preChoice?"🎉 Pre-Booking Confirmed!":"✅ Booking Confirmed!"}</h3>
-  <div class="prebook-success-box">
-    <div class="prebook-badge-large">📅 Pick-up in ${daysUntil} Day${daysUntil>1?"s":""} (${when(b.at)})</div>
-    <div class="row"><span>Booking ID</span><b>${b.id}</b></div>
-    <div class="row"><span>Vehicle</span><b>${v.n}</b></div>
-    <div class="row"><span>Pick-up Location</span><b>${chosenLoc}</b></div>
-    ${preChoice?`
-    <div class="row"><span>Advance Paid (10%)</span><b style="color:var(--brand2)">${fmt(b.adv)}</b></div>
-    <div class="row"><span>Balance on Arrival</span><b>${fmt(b.bal)}</b></div>
-    `:""}
-    <div class="row"><span>Total</span><b>${fmt(b.total)}</b></div>
-  </div>
-  <div class="success-actions" style="display:grid;gap:8px;margin:12px 0">
-    <a class="btn alt" style="text-align:center" target="_blank" rel="noopener" href="${calLink}">📅 Add to Google Calendar</a>
-  </div>`+sms(b, `Rivo: Hi ${n}, your ${preChoice?"pre-booking":"booking"} ${b.id} for ${v.n} is confirmed! Pick-up at ${chosenLoc} on ${when(b.at)}. ${preChoice?"Advance paid: "+fmt(b.adv)+", Balance on arrival: "+fmt(b.bal)+".":"Total: "+fmt(b.total)+"."}`));
-}}
+  const v = $("#eVeh") ? $("#eVeh").value : "";
+  const d = $("#eDays") ? $("#eDays").value : 2;
+  const c = $("#city") ? $("#city").value : "Kochi";
+  const del = $("#eDel") && $("#eDel").checked ? 1 : 0;
+  const ins = $("#eIns") && $("#eIns").checked ? 1 : 0;
+  const pre = $("#ePre") && $("#ePre").checked ? 1 : 0;
+  const from = $("#from") ? $("#from").value : "";
+  const to = $("#to") ? $("#to").value : "";
+  let url = `booking.html?veh=${encodeURIComponent(v)}&days=${d}&city=${encodeURIComponent(c)}&del=${del}&ins=${ins}&pre=${pre}`;
+  if (from) url += `&from=${encodeURIComponent(from)}`;
+  if (to) url += `&to=${encodeURIComponent(to)}`;
+  location.href = url;
+}
+window.openBook = openBook;
 function find(){const id=$("#bId").value.trim().toUpperCase(),p=ph10($("#bPh").value),all=BK.get(),b=all.find(x=>x.id==id&&x.phone==p);if(!b)toast("No booking found for that ID and number.");return b?[all,b]:null}
 $("#bCancel").onclick=()=>{const r=find();if(!r)return;const [all,b]=r;if(b.status!="Confirmed"){toast("This booking is already "+b.status.toLowerCase()+".");return}
 const h=(b.at-Date.now())/36e5,pct=h>=48?100:h>=24?75:h>=6?50:0,back=pct==100?b.total:Math.round((b.total-b.del)*pct/100);
@@ -912,7 +863,7 @@ hero.addEventListener("mouseleave",()=>{document.getElementById("heroArt").style
 
 /* ---- photos-only extras ---- */
 (function(){
-const RP=["img/himalayan.jpg","img/swift.jpg","img/thar.jpg"];document.querySelectorAll(".route img.rbg").forEach((im,i)=>im.src=RP[i]);
+// route images already set in HTML
 const all=[...DATA.bike,...DATA.car,...DATA.truck].filter(v=>v.ph);
 const f=all.map(v=>`<figure data-n="${v.n}"><img src="${v.ph}" alt="${v.n}" loading="lazy"><figcaption><div><span class="mt-name">${v.n}</span><span class="mt-cat">${v.t}</span></div><span class="mt-p">${fmt(v.p)}/day</span></figcaption></figure>`).join("");
 $("#mt").innerHTML=f+f;
@@ -1004,8 +955,8 @@ modal(`<div class="det"><div class="det-hero">${v.ph?`<img src="${v.ph}" alt="${
   <button class="btn alt" id="dRes">Select in Calculator</button>
 </div></div>`);
 document.querySelectorAll(".cd:not(.x)").forEach(b=>b.onclick=()=>{document.querySelectorAll(".cd.s").forEach(e=>e.classList.remove("s"));b.classList.add("s");$("#from").value=b.dataset.k;toast("Pick-up date set: "+b.dataset.k)});
-const dPb=$("#dPreBook");if(dPb)dPb.onclick=()=>{closeM();pick(n);setTimeout(openBook,120)};
-const dR=$("#dRes");if(dR)dR.onclick=()=>{closeM();pick(n)}}
+const dPb=$("#dPreBook");if(dPb)dPb.onclick=()=>{location.href='booking.html?veh='+encodeURIComponent(n)+'&pre=1'};
+const dR=$("#dRes");if(dR)dR.onclick=()=>{location.href='booking.html?veh='+encodeURIComponent(n)}}
 function cmpModal(){const L=CMP.map(n=>ALL().find(v=>v.n==n)).filter(Boolean),r=(a,f)=>`<tr><td><b>${a}</b></td>${L.map(v=>`<td>${f(v)}</td>`).join("")}</tr>`;
 modal(`<h3>Compare</h3><div style="overflow-x:auto"><table class="cmpt"><tr><td></td>${L.map(v=>`<td>${v.ph?`<img src="${v.ph}" style="width:90px;border-radius:8px">`:"🚚"}</td>`).join("")}</tr>${r("Name",v=>v.n)}${r("Per day",v=>fmt(v.p))}${r("Category",v=>v.t)}${r("Spec 1",v=>v.s[0])}${r("Spec 2",v=>v.s[1])}${r("Spec 3",v=>v.s[2]||"–")}${r("Distance/day",v=>DU(KM(v)))}${r("Deposit",v=>fmt(DEP(v)))}</table></div>`)}
 (function(){
@@ -1021,7 +972,7 @@ document.addEventListener("click",e=>{
   if(gc){
     const img=gc.dataset.img,t=gc.dataset.title,v=gc.dataset.veh,l=gc.dataset.loc,d=gc.dataset.desc;
     modal(`<div class="det"><div class="det-hero"><img src="${img}" alt="${t}"><span class="det-tag">${l}</span></div><div class="det-header"><div><span class="card-cat">${v}</span><h3 style="margin:2px 0 0;font-size:1.3rem">${t}</h3></div></div><p style="font-size:.88rem;color:var(--muted);margin:6px 0">${d}</p><div class="inclusions-list" style="margin:8px 0"><li><span>✓</span> Verified Kerala touring vehicle with roadside support</li><li><span>✓</span> Delivered to your hotel, airport, or partner hub</li><li><span>✓</span> 100% Free cancellation up to 48 hours</li></div><button class="btn" style="width:100%;margin-top:10px" id="galBookBtn">Reserve this ${v}</button></div>`);
-    const b=$("#galBookBtn");if(b)b.onclick=()=>{closeM();pick(v)};
+    const b=$("#galBookBtn");if(b)b.onclick=()=>{location.href='booking.html?veh='+encodeURIComponent(v)};
   }
 });
 
@@ -1126,9 +1077,9 @@ const RT=[
 function showRoute(i){
   const r = RT[i];
   if (!r) return;
-  const isGrp = (+$("#plP").value||1) > 1;
+  const isGrp = (+$("#plP") ? +$("#plP").value : 1) > 1;
   const recVeh = isGrp ? r.c : r.b;
-  const vObj = ALL().find(x=>x.n==recVeh) || ALL()[0];
+  const vObj = (typeof ALL === "function" ? ALL().find(x=>x.n==recVeh) : null) || DATA.bike[9];
 
   modal(`<h3>${r.n}</h3>
   <div style="position:relative;border-radius:14px;overflow:hidden;margin:10px 0;max-height:220px">
@@ -1137,7 +1088,7 @@ function showRoute(i){
   </div>
   <p style="font-size:.9rem;color:var(--muted);margin:6px 0">${r.desc}</p>
   <div style="background:var(--soft);border-radius:12px;padding:10px 14px;margin:10px 0;border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:8px">
-    <div><small style="color:var(--muted)">Distance</small><div style="font-weight:700">${DU(r.km)}</div></div>
+    <div><small style="color:var(--muted)">Distance</small><div style="font-weight:700">${typeof DU === "function" ? DU(r.km) : r.km + " km"}</div></div>
     <div><small style="color:var(--muted)">Recommended Days</small><div style="font-weight:700">${r.days} Days</div></div>
   </div>
   <div style="margin:12px 0"><b style="font-size:.9rem">Day-by-Day Expedition Plan:</b>
@@ -1149,33 +1100,13 @@ function showRoute(i){
     <div>
       <small style="color:var(--brand);font-weight:700;text-transform:uppercase;font-size:.72rem">Recommended Ride</small>
       <div style="font-weight:700;font-size:1.05rem">${recVeh}</div>
-      <small style="color:var(--muted)">${fmt(vObj.p)}/day &middot; Free cancellation</small>
+      <small style="color:var(--muted)">${typeof fmt === "function" ? fmt(vObj.p) : "₹" + vObj.p}/day &middot; Free cancellation</small>
     </div>
-    ${vObj.ph?`<img src="${vObj.ph}" style="width:72px;height:48px;object-fit:cover;border-radius:8px;background:var(--soft)">`:""}
+    ${vObj && vObj.ph ? `<img src="${vObj.ph}" style="width:72px;height:48px;object-fit:cover;border-radius:8px;background:var(--soft)">` : ""}
   </div>
-  <button class="btn" style="width:100%" id="rPickBtn">⚡ Pre-Book ${recVeh} for this Route</button>`);
-
-  const b = $("#rPickBtn");
-  if (b) {
-    b.onclick = () => {
-      closeM();
-      if ($("#eVeh")) $("#eVeh").value = recVeh;
-      if ($("#eDays")) $("#eDays").value = r.days;
-      if ($("#dLbl")) $("#dLbl").textContent = r.days;
-      if ($("#city")) {
-        for (let opt of $("#city").options) {
-          if (opt.value.toLowerCase().includes(r.city.toLowerCase())) {
-            $("#city").value = opt.value;
-            break;
-          }
-        }
-      }
-      calc();
-      toast("Selected " + recVeh + " for " + r.n + "! Check your pre-booking total below.");
-      document.getElementById("price").scrollIntoView();
-    };
-  }
+  <a class="btn" style="width:100%;display:block;text-align:center" href="booking.html?veh=${encodeURIComponent(recVeh)}&days=${r.days}&city=${encodeURIComponent(r.city)}&route=${encodeURIComponent(r.n)}">⚡ Book ${recVeh} for this Route ➔</a>`);
 }
+window.showRoute = showRoute;
 $("#plD").oninput=()=>$("#plDl").textContent=$("#plD").value;
 $("#plGo").onclick=()=>{const r=RT[+$("#plR").value],d=+$("#plD").value,grp=+$("#plP").value>1,n=grp?r.c:r.b,v=ALL().find(x=>x.n==n),fuel=Math.round(r.km/(grp?15:40)*105),cost=v.p*d;
 $("#plOut").innerHTML=`<h3>${r.n}</h3><p class="note">${d} day(s) · about ${r.km} km · suggested: <b>${n}</b></p><ul class="pl">${Array.from({length:d},(_,i)=>`<li><b>Day ${i+1}:</b> ${r.pl[Math.min(i,r.pl.length-1)]}${i>=r.pl.length?" (free day to explore)":""}</li>`).join("")}</ul><div class="row"><span>Rental</span><span>${fmt(cost)}</span></div><div class="row"><span>Fuel (approx.)</span><span>${fmt(fuel)}</span></div><div class="row t"><span>Estimated total</span><span>${fmt(cost+fuel)}</span></div><button class="btn" style="width:100%;margin-top:12px" id="plRes">Reserve ${n}</button>`;$("#plRes").onclick=()=>pick(n,d)};

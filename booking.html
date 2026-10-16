@@ -67,29 +67,31 @@ header{
   position:sticky;
   top:0;
   z-index:100;
-  background:rgba(12,21,18,.82);
+  background:rgba(12,21,18,.88);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
 }
-[data-theme="light"] header{background:rgba(244,247,245,.88)}
+[data-theme="light"] header{background:rgba(244,247,245,.92)}
 .hdr-wrap{
   max-width:1200px;
   margin:0 auto;
-  padding:14px 24px;
+  padding:12px 24px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:16px;
+  gap:12px;
 }
 .brand-link{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   font-family:var(--font-head);
-  font-size:1.25rem;
+  font-size:1.22rem;
   font-weight:700;
   letter-spacing:-.02em;
+  white-space:nowrap;
+  flex-shrink:0;
 }
 .brand-dot{
   width:10px;
@@ -101,25 +103,26 @@ header{
 .hdr-right{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
+  flex-shrink:0;
 }
-.back-btn{
+.help-pill{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  font-size:.88rem;
+  font-size:.82rem;
   font-weight:600;
-  color:var(--muted);
-  padding:8px 14px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  transition:all .2s;
+  color:var(--brand);
+  background:rgba(25,195,125,.12);
+  padding:7px 12px;
+  border-radius:99px;
+  border:1px solid rgba(25,195,125,.25);
+  white-space:nowrap;
+  flex-shrink:0;
+  text-decoration:none;
 }
-.back-btn:hover{
-  color:var(--ink);
-  border-color:var(--brand);
-  background:var(--surface);
-}
+.help-full{display:inline}
+.help-short{display:none}
 .th-btn{
   background:var(--surface);
   border:1px solid var(--line);
@@ -130,19 +133,62 @@ header{
   place-items:center;
   cursor:pointer;
   transition:all .2s;
+  flex-shrink:0;
 }
 .th-btn:hover{border-color:var(--line-strong)}
-.help-pill{
+.back-btn{
   display:inline-flex;
   align-items:center;
-  gap:6px;
-  font-size:.82rem;
+  gap:4px;
+  font-size:.85rem;
   font-weight:600;
+  color:var(--ink);
+  background:var(--surface);
+  padding:8px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  transition:all .2s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.back-btn:hover{
   color:var(--brand);
-  background:rgba(25,195,125,.1);
-  padding:7px 12px;
-  border-radius:99px;
-  border:1px solid rgba(25,195,125,.2);
+  border-color:var(--brand);
+}
+
+@media(max-width:600px){
+  .hdr-wrap{
+    padding:8px 12px;
+    gap:6px;
+  }
+  .brand-link{
+    font-size:1.02rem;
+    gap:6px;
+  }
+  .hdr-right{
+    gap:6px;
+  }
+  .help-full{
+    display:none !important;
+  }
+  .help-short{
+    display:inline !important;
+  }
+  .help-pill{
+    padding:6px 9px;
+    font-size:.75rem;
+    gap:4px;
+  }
+  .th-btn{
+    width:34px;
+    height:34px;
+    font-size:.85rem;
+  }
+  .back-btn{
+    padding:6px 10px;
+    font-size:.75rem;
+    gap:3px;
+  }
 }
 
 /* Page Container */
@@ -160,8 +206,11 @@ header{
   align-items:center;
   justify-content:center;
   gap:8px;
-  margin-bottom:32px;
-  flex-wrap:wrap;
+  margin-bottom:28px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:12px 20px;
+  border-radius:14px;
 }
 .step-item{
   display:flex;
@@ -170,6 +219,7 @@ header{
   font-size:.85rem;
   font-weight:600;
   color:var(--muted);
+  white-space:nowrap;
 }
 .step-item.active{
   color:var(--ink);
@@ -178,7 +228,7 @@ header{
   width:24px;
   height:24px;
   border-radius:99px;
-  background:var(--surface);
+  background:var(--card);
   border:1.5px solid var(--line);
   display:grid;
   place-items:center;
@@ -189,11 +239,45 @@ header{
   background:var(--brand);
   color:#fff;
   border-color:var(--brand);
+  box-shadow:0 0 10px var(--brand-glow);
 }
 .step-div{
-  width:28px;
+  width:24px;
   height:1.5px;
   background:var(--line);
+}
+
+@media(max-width:640px){
+  .stepper{
+    padding:8px 8px;
+    margin-bottom:16px;
+    gap:2px;
+    justify-content:space-between;
+  }
+  .step-div{
+    display:none;
+  }
+  .step-item{
+    flex-direction:column;
+    gap:3px;
+    font-size:.68rem;
+    flex:1;
+    text-align:center;
+  }
+  .step-num{
+    width:20px;
+    height:20px;
+    font-size:.68rem;
+  }
+  .step-txt{
+    font-size:0;
+  }
+  .step-txt::before{
+    content:attr(data-short);
+    font-size:.66rem;
+    font-weight:600;
+    display:block;
+  }
 }
 
 /* Layout Grid */
@@ -1171,11 +1255,11 @@ footer{
       <span class="brand-name">Rivo Rentals</span>
     </a>
     <div class="hdr-right">
-      <a href="tel:+919000000000" class="help-pill" title="24x7 Customer Support">
-        <span>📞</span><span class="help-full">24×7 +91 90000 00000</span><span class="help-short">Help</span>
+      <a href="tel:+919000000000" class="help-pill" title="Call 24x7 Support">
+        <span>📞</span><span class="help-full">24×7 +91 90000 00000</span><span class="help-short">Call 24×7</span>
       </a>
       <button class="th-btn" id="thBtn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">🌙</button>
-      <a href="index.html#fleet" class="back-btn"><span>←</span><span class="back-text">Fleet</span></a>
+      <a href="index.html#fleet" class="back-btn"><span>← Fleet</span></a>
     </div>
   </div>
 </header>
@@ -1183,13 +1267,15 @@ footer{
 <main class="page-wrap">
   <!-- Stepper -->
   <div class="stepper" id="stepper">
-    <div class="step-item active"><span class="step-num">1</span> Ride Selection</div>
+    <div class="step-item active"><span class="step-num">1</span> <span class="step-txt" data-short="Ride">Ride Selection</span></div>
     <div class="step-div"></div>
-    <div class="step-item active"><span class="step-num">2</span> Itinerary</div>
+    <div class="step-item active"><span class="step-num">2</span> <span class="step-txt" data-short="Dates">Itinerary</span></div>
     <div class="step-div"></div>
-    <div class="step-item active"><span class="step-num">3</span> Protection &amp; Details</div>
+    <div class="step-item active"><span class="step-num">3</span> <span class="step-txt" data-short="Driver">Driver Option</span></div>
     <div class="step-div"></div>
-    <div class="step-item"><span class="step-num">4</span> Confirmation</div>
+    <div class="step-item active"><span class="step-num">4</span> <span class="step-txt" data-short="Details">Rider Info</span></div>
+    <div class="step-div"></div>
+    <div class="step-item"><span class="step-num">5</span> <span class="step-txt" data-short="Pay">Confirm</span></div>
   </div>
 
   <!-- Booking Form & Summary Layout -->

@@ -1244,6 +1244,104 @@ footer{
   }
 }
 
+
+/* Document Upload Styling */
+.doc-upload-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin:14px 0;
+}
+@media(max-width:640px){
+  .doc-upload-grid{grid-template-columns:1fr;gap:10px}
+}
+.doc-box{
+  background:var(--card);
+  border:2px dashed var(--line-strong);
+  border-radius:12px;
+  padding:16px 14px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:130px;
+}
+.doc-box:hover{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.04);
+}
+.doc-box.has-file{
+  border-style:solid;
+  border-color:var(--brand);
+  background:rgba(25,195,125,.08);
+}
+.doc-icon{
+  font-size:1.8rem;
+  margin-bottom:6px;
+  display:block;
+}
+.doc-title{
+  font-size:.86rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:2px;
+  display:block;
+}
+.doc-sub{
+  font-size:.74rem;
+  color:var(--muted);
+  display:block;
+  line-height:1.35;
+}
+.doc-badge{
+  display:inline-block;
+  background:rgba(25,195,125,.15);
+  color:var(--brand);
+  font-size:.7rem;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:99px;
+  margin-top:6px;
+}
+.doc-preview-name{
+  font-size:.76rem;
+  font-weight:600;
+  color:var(--brand);
+  margin-top:6px;
+  word-break:break-all;
+  display:none;
+}
+.doc-box.has-file .doc-preview-name{
+  display:block;
+}
+.doc-box.has-file .doc-badge{
+  display:none;
+}
+.doc-box input[type="file"]{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+}
+.doc-privacy-note{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.75rem;
+  color:var(--muted);
+  margin-top:10px;
+  padding:8px 12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+}
+
 </style>
 </head>
 <body>
@@ -1516,6 +1614,53 @@ footer{
           <label>Special Instructions / Flight Details (Optional)</label>
           <textarea id="custNotes" rows="2" placeholder="e.g. Flight 6E-241 landing at 10:30 AM at Terminal 3"></textarea>
         </div>
+
+        <!-- Document Upload Section -->
+        <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <label style="font-size:.85rem;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px">
+              <span>📄</span> Upload Document Copies (Front &amp; Back)
+            </label>
+            <span class="box-badge" style="font-size:.7rem">Kerala MVD Verified</span>
+          </div>
+          <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px">
+            Upload clear photo or PDF copies for express contactless key handover:
+          </p>
+
+          <div class="doc-upload-grid">
+            <!-- Driving Licence Box -->
+            <div class="doc-box" id="licDropBox">
+              <input type="file" id="fileLic" accept="image/*,.pdf" capture="environment">
+              <span class="doc-icon">🪪</span>
+              <span class="doc-title" id="licDocTitle">Driving Licence Copy</span>
+              <span class="doc-sub">Front &amp; Back Photo or PDF</span>
+              <span class="doc-badge">Tap to Upload</span>
+              <span class="doc-preview-name" id="licFileName">✓ licence_uploaded</span>
+            </div>
+
+            <!-- Govt ID Proof Box -->
+            <div class="doc-box" id="idDropBox">
+              <input type="file" id="fileId" accept="image/*,.pdf" capture="environment">
+              <span class="doc-icon">🆔</span>
+              <span class="doc-title">Govt Photo ID Proof</span>
+              <span class="doc-sub">Aadhaar Card, Passport or Voter ID</span>
+              <span class="doc-badge">Tap to Upload</span>
+              <span class="doc-preview-name" id="idFileName">✓ id_proof_uploaded</span>
+            </div>
+          </div>
+
+          <!-- Carry Physical Option -->
+          <label style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--ink);cursor:pointer;margin-top:10px">
+            <input type="checkbox" id="chkCarryDocs" style="width:17px;height:17px;accent-color:var(--brand)">
+            <span>I will present physical original documents &amp; copies during pickup handover at the hub</span>
+          </label>
+
+          <div class="doc-privacy-note">
+            <span>🔒</span>
+            <span><b>Confidential &amp; Encrypted:</b> Your document copies are encrypted and retained solely for trip insurance &amp; Kerala Motor Vehicles Dept compliance.</span>
+          </div>
+        </div>
+
       </div>
 
       <!-- Step 6: Booking Mode & Payment Selection -->
@@ -1697,6 +1842,10 @@ footer{
         <b id="resCustName">Rahul Menon</b>
       </div>
       <div class="receipt-row">
+        <span>Document Verification</span>
+        <b id="resDocStatus" style="color:var(--brand)">✓ Copies Uploaded Online</b>
+      </div>
+      <div class="receipt-row">
         <span>Helpline &amp; Support</span>
         <b>+91 90000 00000 (24×7)</b>
       </div>
@@ -1791,6 +1940,7 @@ function setDriverPreference(enable) {
     licLabel.textContent = hasDriver ? "Govt Photo ID / Aadhaar / Passport / Licence *" : "Full Driving Licence Number *";
   }
   calcTotal();
+setupDocUpload();
 }
 window.setDriverPreference = setDriverPreference;
 
@@ -2223,9 +2373,14 @@ $("#confirmBookingBtn").onclick = () => {
   $("#resBalDue").textContent = fmt(balDue);
   $("#resCustName").textContent = name;
   $("#resDriverOption").textContent = hasDriver ? "👨‍✈️ With Professional Driver (Assigned)" : "🚗 Self-Drive";
+  const hasLicFile = $("#fileLic") && $("#fileLic").files && $("#fileLic").files.length > 0;
+  const hasIdFile = $("#fileId") && $("#fileId").files && $("#fileId").files.length > 0;
+  const carryDocs = $("#chkCarryDocs") && $("#chkCarryDocs").checked;
+  const docText = (hasLicFile || hasIdFile) ? "✓ Copies Uploaded Online (Express Check-in)" : (carryDocs ? "📄 Physical Copies at Pickup" : "Pending Verification");
+  if ($("#resDocStatus")) $("#resDocStatus").textContent = docText;
 
   // WhatsApp Button Link
-  const waMsg = `Hi Rivo Rentals! I have confirmed my booking ${bookingId} for ${curVeh.n} at ${hub} on ${pDate}. Advance paid: ${fmt(advPaid)}. Driver: ${hasDriver ? "With Professional Driver" : "Self-Drive"}. Please send pickup voucher.`;
+  const waMsg = `Hi Rivo Rentals! I have confirmed my booking ${bookingId} for ${curVeh.n} at ${hub} on ${pDate}. Advance paid: ${fmt(advPaid)}. Driver: ${hasDriver ? "With Professional Driver" : "Self-Drive"}. Documents: ${(hasLicFile || hasIdFile) ? "Copies Uploaded Online" : "Physical Copies on Handover"}. Please send pickup voucher.`;
   $("#resWaBtn").href = `https://api.whatsapp.com/send?phone=919000000000&text=${encodeURIComponent(waMsg)}`;
 
   // Hide Form, Show Success
@@ -2262,6 +2417,38 @@ function triggerMobileBooking() {
   $("#confirmBookingBtn").click();
 }
 window.triggerMobileBooking = triggerMobileBooking;
+
+
+// Document Upload Handlers
+function setupDocUpload() {
+  const fLic = $("#fileLic"), fId = $("#fileId");
+  const bLic = $("#licDropBox"), bId = $("#idDropBox");
+  const nLic = $("#licFileName"), nId = $("#idFileName");
+
+  if (fLic && bLic) {
+    fLic.addEventListener("change", () => {
+      if (fLic.files && fLic.files[0]) {
+        const file = fLic.files[0];
+        bLic.classList.add("has-file");
+        nLic.textContent = "✓ " + file.name + " (" + (file.size / 1024).toFixed(0) + " KB)";
+      } else {
+        bLic.classList.remove("has-file");
+      }
+    });
+  }
+
+  if (fId && bId) {
+    fId.addEventListener("change", () => {
+      if (fId.files && fId.files[0]) {
+        const file = fId.files[0];
+        bId.classList.add("has-file");
+        nId.textContent = "✓ " + file.name + " (" + (file.size / 1024).toFixed(0) + " KB)";
+      } else {
+        bId.classList.remove("has-file");
+      }
+    });
+  }
+}
 
 // Initialize
 parseUrlParams();

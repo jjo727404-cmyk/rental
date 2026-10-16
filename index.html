@@ -799,9 +799,10 @@ function openBook(){
   const del = $("#eDel") && $("#eDel").checked ? 1 : 0;
   const ins = $("#eIns") && $("#eIns").checked ? 1 : 0;
   const pre = $("#ePre") && $("#ePre").checked ? 1 : 0;
+  const drv = $("#eDrv") && $("#eDrv").checked ? 1 : 0;
   const from = $("#from") ? $("#from").value : "";
   const to = $("#to") ? $("#to").value : "";
-  let url = `booking.html?veh=${encodeURIComponent(v)}&days=${d}&city=${encodeURIComponent(c)}&del=${del}&ins=${ins}&pre=${pre}`;
+  let url = `booking.html?veh=${encodeURIComponent(v)}&days=${d}&city=${encodeURIComponent(c)}&del=${del}&ins=${ins}&pre=${pre}&drv=${drv}`;
   if (from) url += `&from=${encodeURIComponent(from)}`;
   if (to) url += `&to=${encodeURIComponent(to)}`;
   location.href = url;
@@ -934,6 +935,7 @@ modal(`<div class="det"><div class="det-hero">${v.ph?`<img src="${v.ph}" alt="${
   <div class="spec-box"><small>⛽ Fuel Mileage</small><b>${v.mpg||'45 km/l'}</b></div>
   <div class="spec-box"><small>🛣️ Included Distance</small><b>${DU(km)} / day</b></div>
   <div class="spec-box"><small>⚙️ Transmission</small><b>${v.trans||v.s[2]||'Manual'}</b></div>
+  <div class="spec-box"><small>👨‍✈️ Driver Service</small><b style="color:var(--brand)">Self-Drive or With Driver (+₹799/day)</b></div>
   <div class="spec-box"><small>⛽ Fuel &amp; Tank</small><b>${v.fuel||'Petrol'} (${v.tank||'Standard'})</b></div>
   <div class="spec-box"><small>🐎 Engine / Power</small><b>${v.s[0]} &middot; ${v.power||'High Output'}</b></div>
   <div class="spec-box"><small>👥 Seating / Crew</small><b>${v.seats||v.s[1]||'Standard'}</b></div>

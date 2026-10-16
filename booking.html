@@ -777,6 +777,129 @@ footer{
   font-size:.82rem;
   color:var(--muted);
 }
+
+/* Driver Preference Cards */
+.driver-select-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+@media(max-width:640px){
+  .driver-select-grid{grid-template-columns:1fr}
+}
+.driver-card{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+  cursor:pointer;
+  transition:all .25s ease;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.driver-card:hover{
+  border-color:var(--line-strong);
+  transform:translateY(-2px);
+}
+.driver-card.selected{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.08);
+  box-shadow:0 0 0 2px var(--brand);
+}
+.driver-card-top{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:12px;
+}
+.driver-card-icon{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  font-size:1.5rem;
+  flex-shrink:0;
+}
+.driver-card.selected .driver-card-icon{
+  border-color:var(--brand);
+  background:rgba(25,195,125,.15);
+}
+.driver-card-top b{
+  font-size:.98rem;
+  display:block;
+  color:var(--ink);
+  margin-bottom:2px;
+}
+.driver-card-top small{
+  color:var(--muted);
+  font-size:.78rem;
+  line-height:1.4;
+  display:block;
+}
+.driver-card-price{
+  font-size:1.1rem;
+  font-weight:800;
+  color:var(--brand);
+  margin-bottom:10px;
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+}
+.driver-card-price small{
+  font-size:.74rem;
+  color:var(--muted);
+  font-weight:600;
+}
+.driver-perks{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  border-top:1px solid var(--line);
+  padding-top:10px;
+}
+.driver-perks li{
+  font-size:.78rem;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.driver-tag{
+  position:absolute;
+  top:-10px;
+  right:14px;
+  background:var(--brand2);
+  color:#fff;
+  font-size:.68rem;
+  font-weight:700;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:99px;
+  letter-spacing:.02em;
+}
+.driver-notice-box{
+  background:rgba(245,158,11,.1);
+  border:1.5px solid var(--brand2);
+  border-radius:12px;
+  padding:12px 16px;
+  margin-top:14px;
+  font-size:.82rem;
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  line-height:1.45;
+}
+
 </style>
 </head>
 <body>
@@ -899,10 +1022,66 @@ footer{
         </div>
       </div>
 
-      <!-- Step 3: Protection & Add-ons -->
+      
+      <!-- Step 3: Driver Preference -->
+      <div class="box" id="driverStepBox">
+        <div class="box-head">
+          <h2 class="box-title">👨‍✈️ Step 3: Do you want a Professional Driver?</h2>
+          <span class="box-badge" style="background:rgba(245,158,11,.15);color:var(--brand2);border-color:rgba(245,158,11,.3)">Optional Extra</span>
+        </div>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:4px">
+          We can provide a verified, badged Kerala commercial chauffeur for your journey, or you can self-drive. Choose your preference below:
+        </p>
+
+        <div class="driver-select-grid">
+          <!-- Option A: Self Drive -->
+          <div class="driver-card selected" id="drvCardSelf" onclick="setDriverPreference(false)">
+            <div class="driver-card-top">
+              <span class="driver-card-icon" id="selfIcon">🚗</span>
+              <div>
+                <b>Self-Drive / Self-Ride</b>
+                <small>You drive the vehicle yourself</small>
+              </div>
+            </div>
+            <div class="driver-card-price">₹0 <small>(Included)</small></div>
+            <ul class="driver-perks">
+              <li><span>✓</span> Full privacy and flexible personal pace</li>
+              <li><span>✓</span> Valid Driving Licence required at handover</li>
+              <li><span>✓</span> 24×7 Kerala roadside breakdown assistance</li>
+            </ul>
+          </div>
+
+          <!-- Option B: With Driver -->
+          <div class="driver-card" id="drvCardWith" onclick="setDriverPreference(true)">
+            <span class="driver-tag">Recommended for Tourists</span>
+            <div class="driver-card-top">
+              <span class="driver-card-icon">👨‍✈️</span>
+              <div>
+                <b id="withDrvTitle">Yes, Provide a Driver</b>
+                <small>We assign an expert Kerala chauffeur</small>
+              </div>
+            </div>
+            <div class="driver-card-price"><span id="drvDailyRateLabel">+₹799</span> <small>/ day</small></div>
+            <ul class="driver-perks">
+              <li><span>✓</span> Badged commercial chauffeur (English, Malayalam, Hindi)</li>
+              <li><span>✓</span> Expert in Munnar tea hairpins, Wayanad ghats & coast roads</li>
+              <li><span>✓</span> Customer driving licence NOT required when driver is taken</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="driver-notice-box" id="driverNoticeBox" style="display:none">
+          <span style="font-size:1.3rem">👨‍✈️</span>
+          <div>
+            <b>Driver Service Added:</b> An experienced local driver will be assigned with your vehicle at your chosen pick-up hub. Driver allowance and batta are included in the extra daily rate.
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Protection & Add-ons -->
       <div class="box">
         <div class="box-head">
-          <h2 class="box-title">🛡️ Step 3: Protection &amp; Add-ons</h2>
+          <h2 class="box-title">🛡️ Step 4: Protection &amp; Add-ons</h2>
           <span class="box-badge">Recommended</span>
         </div>
 
@@ -940,23 +1119,14 @@ footer{
             <div class="addon-price">+₹149/day</div>
           </div>
 
-          <div class="addon-row" id="drvRow">
-            <div class="addon-left">
-              <input type="checkbox" id="chkDrv" class="addon-chk">
-              <div class="addon-info">
-                <b>Professional Kerala Tour Chauffeur / Guide</b>
-                <small>Experienced hill-station commercial driver (fuel extra)</small>
-              </div>
-            </div>
-            <div class="addon-price">+₹799/day</div>
-          </div>
+          <!-- Driver choice handled in dedicated Step 3 above -->
         </div>
       </div>
 
-      <!-- Step 4: Rider / Customer Information -->
+      <!-- Step 5: Rider / Customer Information -->
       <div class="box">
         <div class="box-head">
-          <h2 class="box-title">👤 Step 4: Rider Information</h2>
+          <h2 class="box-title">👤 Step 5: Rider / Customer Information</h2>
           <span class="box-badge">ID Verified</span>
         </div>
 
@@ -1000,10 +1170,10 @@ footer{
         </div>
       </div>
 
-      <!-- Step 5: Booking Mode & Payment Selection -->
+      <!-- Step 6: Booking Mode & Payment Selection -->
       <div class="box">
         <div class="box-head">
-          <h2 class="box-title">💳 Step 5: Pre-Booking Payment Mode</h2>
+          <h2 class="box-title">💳 Step 6: Payment &amp; Pre-Booking Mode</h2>
           <span class="box-badge">Secure 256-Bit</span>
         </div>
 
@@ -1147,6 +1317,10 @@ footer{
         <b id="resVehName">Royal Enfield Himalayan</b>
       </div>
       <div class="receipt-row">
+        <span>Driver Service</span>
+        <b id="resDriverOption" style="color:var(--brand)">🚗 Self-Drive</b>
+      </div>
+      <div class="receipt-row">
         <span>Pick-up Location</span>
         <b id="resLocation">Cochin International Airport (COK)</b>
       </div>
@@ -1241,7 +1415,23 @@ car:{h:"Rent a ride",hv:"car",sub:"Self-drive cars for families, groups and long
 let curCat = "bike";
 let curVeh = DATA.bike[9]; // Royal Enfield Himalayan default
 let payMode = "pre"; // "pre" (10%) or "full" (100%)
+let hasDriver = false; // Driver requested flag
 let discountPct = 0;
+
+function setDriverPreference(enable) {
+  hasDriver = enable;
+  $("#drvCardSelf").classList.toggle("selected", !hasDriver);
+  $("#drvCardWith").classList.toggle("selected", hasDriver);
+  $("#driverNoticeBox").style.display = hasDriver ? "flex" : "none";
+
+  // If driver is requested, licence field is not mandatory (can be any Govt ID)
+  const licLabel = $("label[for='custLic']") || $("#custLic") ? $("#custLic").previousElementSibling : null;
+  if (licLabel) {
+    licLabel.textContent = hasDriver ? "Govt Photo ID / Aadhaar / Passport / Licence *" : "Full Driving Licence Number *";
+  }
+  calcTotal();
+}
+window.setDriverPreference = setDriverPreference;
 
 // Helper: Format Currency
 function fmt(n) {
@@ -1275,6 +1465,7 @@ function parseUrlParams() {
   const isPre = p.get("pre") !== "0";
   const hasDel = p.get("del") === "1";
   const hasIns = p.get("ins") === "1";
+  const hasDrv = p.get("drv") === "1";
   const fromDate = p.get("from");
   const toDate = p.get("to");
 
@@ -1301,6 +1492,7 @@ function parseUrlParams() {
   // Delivery / Insurance flags
   if (hasDel && $("#chkDel")) $("#chkDel").checked = true;
   if ($("#chkIns")) $("#chkIns").checked = hasIns !== false;
+  if (hasDrv) setDriverPreference(true);
 
   // Setup Dates
   const now = new Date();
@@ -1370,21 +1562,31 @@ function renderVehPicker() {
 
 // Update Addon titles based on category (Bikes vs Cars vs Trucks)
 function updateAddonLabels() {
+  const selfIcon = $("#selfIcon");
   if (curCat === "bike") {
+    if (selfIcon) selfIcon.textContent = "🏍️";
     $("#pilTitle").textContent = "Premium Touring Helmets (2x)";
     $("#pilSub").textContent = "ECE/DOT certified dual-visor hill helmets with hygiene balaclavas";
     $("#pilPriceLabel").textContent = "+₹99";
     $("#insPriceLabel").textContent = "+₹199";
+    $("#withDrvTitle").textContent = "Yes, Tour Guide / Escort Pilot";
+    $("#drvDailyRateLabel").textContent = "+₹599";
   } else if (curCat === "car") {
+    if (selfIcon) selfIcon.textContent = "🚗";
     $("#pilTitle").textContent = "Child Safety Seat / Booster Seat";
     $("#pilSub").textContent = "ISOFIX certified padded car seat for toddlers";
     $("#pilPriceLabel").textContent = "+₹149";
     $("#insPriceLabel").textContent = "+₹299";
+    $("#withDrvTitle").textContent = "Yes, Provide a Driver";
+    $("#drvDailyRateLabel").textContent = "+₹799";
   } else {
+    if (selfIcon) selfIcon.textContent = "🚚";
     $("#pilTitle").textContent = "Heavy-Duty Cargo Straps & Tarpaulin";
     $("#pilSub").textContent = "Waterproof monsoon cargo protection wrap";
     $("#pilPriceLabel").textContent = "+₹199";
     $("#insPriceLabel").textContent = "+₹499";
+    $("#withDrvTitle").textContent = "Yes, Commercial Heavy Driver";
+    $("#drvDailyRateLabel").textContent = "+₹999";
   }
 }
 
@@ -1453,10 +1655,14 @@ function calcTotal() {
   $("#sumGps").textContent = fmt(gpsCost);
 
   // Driver
-  const hasDrv = $("#chkDrv").checked;
-  $("#rowDrv").style.display = hasDrv ? "flex" : "none";
-  const drvCost = hasDrv ? 799 * days : 0;
+  const drvDaily = curCat === "truck" ? 999 : curCat === "car" ? 799 : 599;
+  const drvCost = hasDriver ? drvDaily * days : 0;
+  $("#rowDrv").style.display = hasDriver ? "flex" : "none";
   $("#sumDrv").textContent = fmt(drvCost);
+  const drvRowLabel = $("#rowDrv span");
+  if (drvRowLabel) {
+    drvRowLabel.textContent = (curCat === "bike" ? "Tour Guide / Pilot" : "Professional Driver") + " (" + days + "d × " + fmt(drvDaily) + ")";
+  }
 
   // Subtotal before tax
   const subtotal = baseCost + delCost + insCost + pilCost + gpsCost + drvCost;
@@ -1617,6 +1823,8 @@ $("#confirmBookingBtn").onclick = () => {
     advance: advPaid,
     balance: balDue,
     isPre: isPre,
+    hasDriver: hasDriver,
+    driverCost: hasDriver ? (curCat === "truck" ? 999 : curCat === "car" ? 799 : 599) * days : 0,
     name: name,
     phone: phone,
     email: email,
@@ -1647,9 +1855,10 @@ $("#confirmBookingBtn").onclick = () => {
   $("#resAdvPaid").textContent = fmt(advPaid);
   $("#resBalDue").textContent = fmt(balDue);
   $("#resCustName").textContent = name;
+  $("#resDriverOption").textContent = hasDriver ? "👨‍✈️ With Professional Driver (Assigned)" : "🚗 Self-Drive";
 
   // WhatsApp Button Link
-  const waMsg = `Hi Rivo Rentals! I have confirmed my booking ${bookingId} for ${curVeh.n} at ${hub} on ${pDate}. Advance paid: ${fmt(advPaid)}. Please send pickup voucher.`;
+  const waMsg = `Hi Rivo Rentals! I have confirmed my booking ${bookingId} for ${curVeh.n} at ${hub} on ${pDate}. Advance paid: ${fmt(advPaid)}. Driver: ${hasDriver ? "With Professional Driver" : "Self-Drive"}. Please send pickup voucher.`;
   $("#resWaBtn").href = `https://api.whatsapp.com/send?phone=919000000000&text=${encodeURIComponent(waMsg)}`;
 
   // Hide Form, Show Success

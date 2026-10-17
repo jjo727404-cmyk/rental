@@ -657,6 +657,84 @@ header{
   border:1px solid var(--line);
 }
 
+/* ---- Interactive Booking Range Graph ---- */
+.range-graph-wrap{
+  background:var(--soft);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  margin:14px 0;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+}
+.range-graph-wrap:hover{
+  border-color:color-mix(in srgb,var(--brand) 40%,var(--line));
+}
+.rg-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+  gap:8px;
+}
+.rg-title{
+  font:700 .82rem var(--font-head),sans-serif;
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.rg-badge{
+  font:600 .72rem Inter,sans-serif;
+  background:color-mix(in srgb,var(--brand) 15%,transparent);
+  color:var(--brand);
+  padding:3px 10px;
+  border-radius:99px;
+  border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);
+  white-space:nowrap;
+}
+.rg-svg{
+  width:100%;
+  height:auto;
+  display:block;
+  overflow:visible;
+}
+.rg-bar{
+  cursor:pointer;
+  transition:opacity .2s,filter .2s;
+}
+.rg-bar:hover{
+  opacity:1;
+  filter:brightness(1.15);
+}
+.rg-point{
+  cursor:pointer;
+  transition:transform .2s cubic-bezier(.16,1,.3,1);
+}
+.rg-point:hover{
+  transform:scale(1.35);
+}
+.rg-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed var(--line);
+}
+.rg-stat{
+  font-size:.74rem;
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+}
+.rg-stat b{
+  font:700 .84rem var(--font-head),sans-serif;
+  color:var(--ink);
+  margin-top:2px;
+}
+
 /* Price Lines */
 .price-table{
   border-top:1px solid var(--line);
@@ -1727,6 +1805,9 @@ footer{
           <span class="pill" id="sumSeats">👤 2 Seats</span>
         </div>
 
+        <!-- Interactive Booking Range Graph -->
+        <div class="range-graph-wrap" id="bookingRangeGraph"></div>
+
         <!-- Price Breakdown -->
         <div class="price-table">
           <div class="price-row">
@@ -2230,6 +2311,137 @@ function calcTotal() {
   // Deposit label
   const depAmt = curCat === "truck" ? 15000 : curCat === "car" ? 5000 : 2000;
   $("#sumDepLabel").textContent = fmt(depAmt);
+
+  // Render Range & Distance Graph
+  drawRangeGraph("bookingRangeGraph", {
+    days: days,
+    dailyPrice: curVeh.p,
+    kmPerDay: kmPerDay,
+    vehName: curVeh.n,
+    extraKmRate: curVeh.extraKm || (curCat === "truck" ? "₹15/km" : curCat === "car" ? "₹8/km" : "₹5/km"),
+    onSelect: (newD) => {
+      setBookingDurationDays(newD);
+    }
+  });
+}
+
+function setBookingDurationDays(newD) {
+  const pInput = $("#pDate");
+  const rInput = $("#rDate");
+  if (!pInput || !rInput) return;
+  let pVal = pInput.value;
+  if (!pVal) {
+    pVal = new Date().toISOString().split("T")[0];
+    pInput.value = pVal;
+  }
+  const [y, m, d] = pVal.split("-").map(Number);
+  const pDateObj = new Date(y, m - 1, d);
+  const rDateObj = new Date(pDateObj.getTime() + newD * 86400000);
+  const ry = rDateObj.getFullYear();
+  const rm = String(rDateObj.getMonth() + 1).padStart(2, "0");
+  const rd = String(rDateObj.getDate()).padStart(2, "0");
+  rInput.value = `${ry}-${rm}-${rd}`;
+  calcTotal();
+}
+
+function drawRangeGraph(id, opt) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const { days, dailyPrice, kmPerDay, vehName, extraKmRate, onSelect } = opt;
+  const curD = Math.max(1, Math.min(30, days || 1));
+  let mDays = [1, 2, 3, 5, 7, 10, 14];
+  if (curD > 14) mDays = [1, 3, 7, 10, 14, 21, 30];
+  if (!mDays.includes(curD)) {
+    mDays.push(curD);
+    mDays.sort((a,b)=>a-b);
+  }
+  const maxD = mDays[mDays.length - 1];
+  const maxCost = maxD * dailyPrice;
+  const maxKm = maxD * kmPerDay;
+  const W = 460, H = 136;
+  const padL = 36, padR = 20, padT = 26, padB = 26;
+  const pW = W - padL - padR, pH = H - padT - padB;
+  
+  const points = mDays.map((d, i) => {
+    const x = padL + (i / (mDays.length - 1)) * pW;
+    const cost = d * dailyPrice;
+    const km = d * kmPerDay;
+    const yCost = padT + pH - (cost / maxCost) * (pH - 6);
+    const barH = Math.max(8, (km / maxKm) * (pH * 0.72));
+    const yBar = padT + pH - barH;
+    return { d, x, cost, km, yCost, barH, yBar, isCur: d === curD };
+  });
+  
+  const barW = Math.max(14, Math.min(22, Math.floor(pW / mDays.length - 10)));
+  const pathD = points.reduce((acc, pt, i) => acc + (i === 0 ? `M ${pt.x},${pt.yCost}` : ` L ${pt.x},${pt.yCost}`), "");
+  const areaD = pathD + ` L ${points[points.length-1].x},${padT + pH} L ${points[0].x},${padT + pH} Z`;
+  const curPt = points.find(p => p.isCur) || points[0];
+  const totalKm = curD * kmPerDay;
+
+  el.innerHTML = `
+    <div class="rg-head">
+      <div class="rg-title">
+        <span>📈 Booking Range &amp; Distance</span>
+      </div>
+      <div class="rg-badge">
+        <b>${curD} Days</b> &middot; ${totalKm} km included
+      </div>
+    </div>
+    <svg class="rg-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Booking range vs cost and distance">
+      <defs>
+        <linearGradient id="rgArea_${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.32"/>
+          <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.02"/>
+        </linearGradient>
+        <linearGradient id="rgBar_${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+        </linearGradient>
+        <linearGradient id="rgBarCur_${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--brand2)" stop-opacity="0.95"/>
+          <stop offset="100%" stop-color="var(--brand2)" stop-opacity="0.45"/>
+        </linearGradient>
+      </defs>
+      <line x1="${padL}" y1="${padT + pH}" x2="${W - padR}" y2="${padT + pH}" stroke="var(--line)" stroke-width="1.2"/>
+      <rect x="${curPt.x - barW - 4}" y="${padT - 6}" width="${barW * 2 + 8}" height="${pH + 10}" rx="8" fill="color-mix(in srgb, var(--brand) 12%, transparent)"/>
+      ${points.map(pt => `
+        <rect class="rg-bar" data-d="${pt.d}" x="${pt.x - barW/2}" y="${pt.yBar}" width="${barW}" height="${pt.barH}" rx="4"
+          fill="${pt.isCur ? `url(#rgBarCur_${id})` : `url(#rgBar_${id})`}" opacity="${pt.isCur ? '1' : '0.8'}"/>
+      `).join("")}
+      <path d="${areaD}" fill="url(#rgArea_${id})"/>
+      <path d="${pathD}" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      ${points.map(pt => `
+        <circle class="rg-point" data-d="${pt.d}" cx="${pt.x}" cy="${pt.yCost}" r="${pt.isCur ? 6 : 3.5}"
+          fill="${pt.isCur ? '#fff' : 'var(--brand)'}" stroke="${pt.isCur ? 'var(--brand2)' : 'var(--brand)'}" stroke-width="${pt.isCur ? 3.5 : 1.5}"/>
+      `).join("")}
+      <g transform="translate(${Math.max(54, Math.min(W - 54, curPt.x))}, ${Math.max(16, curPt.yCost - 10)})">
+        <rect x="-48" y="-18" width="96" height="18" rx="5" fill="var(--surface)" stroke="var(--brand2)" stroke-width="1.2"/>
+        <text x="0" y="-5" text-anchor="middle" fill="var(--ink)" font-size="9" font-family="Sora,Inter,sans-serif" font-weight="700">₹${fmt(curPt.cost)} &middot; ${curPt.km}km</text>
+      </g>
+      ${points.map(pt => `
+        <text data-d="${pt.d}" x="${pt.x}" y="${padT + pH + 18}" text-anchor="middle"
+          fill="${pt.isCur ? 'var(--brand2)' : 'var(--muted)'}" font-size="10" font-family="Inter,sans-serif" font-weight="${pt.isCur ? '700' : '500'}" style="cursor:pointer">${pt.d}d</text>
+      `).join("")}
+    </svg>
+    <div class="rg-meta">
+      <div class="rg-stat">
+        <span>🛣️ Included Distance Allowance</span>
+        <b>${totalKm} km free (${kmPerDay} km/day)</b>
+      </div>
+      <div class="rg-stat" style="text-align:right">
+        <span>⚡ Extra Distance Rate</span>
+        <b>${extraKmRate || '₹8/km'} after limit</b>
+      </div>
+    </div>
+  `;
+  if (typeof onSelect === "function") {
+    el.querySelectorAll("[data-d]").forEach(node => {
+      node.onclick = () => {
+        const val = parseInt(node.getAttribute("data-d"), 10);
+        if (val) onSelect(val);
+      };
+    });
+  }
 }
 
 // Payment Methods Pills

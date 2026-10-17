@@ -657,7 +657,7 @@ header{
   border:1px solid var(--line);
 }
 
-/* ---- Interactive Booking Range Graph ---- */
+/* ---- Interactive Booking Demand Graph ---- */
 .range-graph-wrap{
   background:var(--soft);
   border:1px solid var(--line);
@@ -677,6 +677,7 @@ header{
   align-items:center;
   margin-bottom:10px;
   gap:8px;
+  flex-wrap:wrap;
 }
 .rg-title{
   font:700 .82rem var(--font-head),sans-serif;
@@ -693,6 +694,28 @@ header{
   border-radius:99px;
   border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);
   white-space:nowrap;
+}
+.rg-tabs{
+  display:inline-flex;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:2px;
+  gap:2px;
+}
+.rg-tab{
+  border:none;
+  background:transparent;
+  color:var(--muted);
+  font:600 .7rem Inter,sans-serif;
+  padding:3px 9px;
+  border-radius:16px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.rg-tab.active{
+  background:var(--brand);
+  color:#fff;
 }
 .rg-svg{
   width:100%;
@@ -2312,136 +2335,266 @@ function calcTotal() {
   const depAmt = curCat === "truck" ? 15000 : curCat === "car" ? 5000 : 2000;
   $("#sumDepLabel").textContent = fmt(depAmt);
 
-  // Render Range & Distance Graph
-  drawRangeGraph("bookingRangeGraph", {
-    days: days,
-    dailyPrice: curVeh.p,
-    kmPerDay: kmPerDay,
+  // Render People Booking Demand Graph
+  const pDateVal = $("#pDate") ? $("#pDate").value : "";
+  drawDemandGraph("bookingRangeGraph", {
     vehName: curVeh.n,
-    extraKmRate: curVeh.extraKm || (curCat === "truck" ? "₹15/km" : curCat === "car" ? "₹8/km" : "₹5/km"),
-    onSelect: (newD) => {
-      setBookingDurationDays(newD);
-    }
+    cat: curCat,
+    pickupDate: pDateVal
   });
 }
 
-function setBookingDurationDays(newD) {
-  const pInput = $("#pDate");
-  const rInput = $("#rDate");
-  if (!pInput || !rInput) return;
-  let pVal = pInput.value;
-  if (!pVal) {
-    pVal = new Date().toISOString().split("T")[0];
-    pInput.value = pVal;
+const demandGraphState = {};
+function getVehicleDemand(vehName, cat) {
+  const name = vehName || "Vehicle";
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) & 0x7fffffff;
   }
-  const [y, m, d] = pVal.split("-").map(Number);
-  const pDateObj = new Date(y, m - 1, d);
-  const rDateObj = new Date(pDateObj.getTime() + newD * 86400000);
-  const ry = rDateObj.getFullYear();
-  const rm = String(rDateObj.getMonth() + 1).padStart(2, "0");
-  const rd = String(rDateObj.getDate()).padStart(2, "0");
-  rInput.value = `${ry}-${rm}-${rd}`;
-  calcTotal();
+  const isTruck = cat === "truck";
+  const isBike = cat === "bike";
+  const isPremium = /bmw|audi|mercedes|fortuner|m4/i.test(name);
+  const isSuv = /brezza|thar|creta|hycross|scorpio|xuv/i.test(name);
+
+  let weekly;
+  if (isTruck) {
+    weekly = [
+      { d: "Mon", count: 28 + (hash % 7), peak: false },
+      { d: "Tue", count: 36 + ((hash >> 2) % 6), peak: true },
+      { d: "Wed", count: 42 + ((hash >> 4) % 7), peak: true },
+      { d: "Thu", count: 39 + ((hash >> 6) % 6), peak: true },
+      { d: "Fri", count: 31 + ((hash >> 8) % 5), peak: false },
+      { d: "Sat", count: 20 + ((hash >> 10) % 5), peak: false },
+      { d: "Sun", count: 11 + ((hash >> 12) % 4), peak: false }
+    ];
+  } else if (isPremium) {
+    weekly = [
+      { d: "Mon", count: 8 + (hash % 4), peak: false },
+      { d: "Tue", count: 7 + ((hash >> 2) % 4), peak: false },
+      { d: "Wed", count: 11 + ((hash >> 4) % 4), peak: false },
+      { d: "Thu", count: 18 + ((hash >> 6) % 5), peak: false },
+      { d: "Fri", count: 34 + ((hash >> 8) % 8), peak: true },
+      { d: "Sat", count: 48 + ((hash >> 10) % 8), peak: true },
+      { d: "Sun", count: 41 + ((hash >> 12) % 6), peak: true }
+    ];
+  } else if (isBike) {
+    weekly = [
+      { d: "Mon", count: 22 + (hash % 6), peak: false },
+      { d: "Tue", count: 19 + ((hash >> 2) % 5), peak: false },
+      { d: "Wed", count: 28 + ((hash >> 4) % 7), peak: false },
+      { d: "Thu", count: 42 + ((hash >> 6) % 8), peak: false },
+      { d: "Fri", count: 76 + ((hash >> 8) % 12), peak: true },
+      { d: "Sat", count: 98 + ((hash >> 10) % 14), peak: true },
+      { d: "Sun", count: 89 + ((hash >> 12) % 12), peak: true }
+    ];
+  } else if (isSuv) {
+    weekly = [
+      { d: "Mon", count: 19 + (hash % 6), peak: false },
+      { d: "Tue", count: 18 + ((hash >> 2) % 5), peak: false },
+      { d: "Wed", count: 26 + ((hash >> 4) % 6), peak: false },
+      { d: "Thu", count: 44 + ((hash >> 6) % 8), peak: false },
+      { d: "Fri", count: 72 + ((hash >> 8) % 10), peak: true },
+      { d: "Sat", count: 88 + ((hash >> 10) % 12), peak: true },
+      { d: "Sun", count: 79 + ((hash >> 12) % 10), peak: true }
+    ];
+  } else {
+    weekly = [
+      { d: "Mon", count: 24 + (hash % 6), peak: false },
+      { d: "Tue", count: 22 + ((hash >> 2) % 5), peak: false },
+      { d: "Wed", count: 29 + ((hash >> 4) % 6), peak: false },
+      { d: "Thu", count: 41 + ((hash >> 6) % 7), peak: false },
+      { d: "Fri", count: 62 + ((hash >> 8) % 9), peak: true },
+      { d: "Sat", count: 78 + ((hash >> 10) % 11), peak: true },
+      { d: "Sun", count: 69 + ((hash >> 12) % 9), peak: true }
+    ];
+  }
+
+  const weeklySum = weekly.reduce((s, x) => s + x.count, 0);
+  const monthly = [
+    { d: "Wk 1", count: Math.round(weeklySum * 0.92), peak: false },
+    { d: "Wk 2", count: Math.round(weeklySum * 0.98), peak: false },
+    { d: "Wk 3", count: Math.round(weeklySum * 1.08), peak: true },
+    { d: "Wk 4", count: Math.round(weeklySum * 1.15), peak: true }
+  ];
+  const monthlyTotal = monthly.reduce((s, x) => s + x.count, 0);
+
+  return { weekly, monthly, monthlyTotal, isTruck, isPremium };
 }
 
-function drawRangeGraph(id, opt) {
+function drawDemandGraph(id, opt) {
   const el = document.getElementById(id);
   if (!el) return;
-  const { days, dailyPrice, kmPerDay, vehName, extraKmRate, onSelect } = opt;
-  const curD = Math.max(1, Math.min(30, days || 1));
-  let mDays = [1, 2, 3, 5, 7, 10, 14];
-  if (curD > 14) mDays = [1, 3, 7, 10, 14, 21, 30];
-  if (!mDays.includes(curD)) {
-    mDays.push(curD);
-    mDays.sort((a,b)=>a-b);
+  if (!demandGraphState[id]) demandGraphState[id] = { view: "weekly", selectedIdx: null };
+  const st = demandGraphState[id];
+
+  const vehName = opt.vehName || "Vehicle";
+  const cat = opt.cat || (typeof curCat !== "undefined" ? curCat : "car");
+  const { weekly, monthly, monthlyTotal, isTruck } = getVehicleDemand(vehName, cat);
+
+  let tripDayName = "";
+  if (opt.pickupDate) {
+    const dStr = opt.pickupDate.includes("T") ? opt.pickupDate : opt.pickupDate + "T12:00:00";
+    const dObj = new Date(dStr);
+    if (!isNaN(dObj.getTime())) {
+      const daysArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      tripDayName = daysArr[dObj.getDay()];
+    }
   }
-  const maxD = mDays[mDays.length - 1];
-  const maxCost = maxD * dailyPrice;
-  const maxKm = maxD * kmPerDay;
-  const W = 460, H = 136;
-  const padL = 36, padR = 20, padT = 26, padB = 26;
+
+  const isWeekly = st.view === "weekly";
+  const items = isWeekly ? weekly : monthly;
+  const maxVal = Math.max(...items.map(x => x.count)) * 1.32;
+
+  let activeIdx = st.selectedIdx;
+  if (activeIdx === null || activeIdx >= items.length) {
+    if (isWeekly && tripDayName) {
+      const found = items.findIndex(x => x.d === tripDayName);
+      activeIdx = found >= 0 ? found : items.findIndex(x => x.peak);
+    } else {
+      activeIdx = items.findIndex(x => x.peak);
+    }
+    if (activeIdx < 0) activeIdx = items.length - 2;
+  }
+  const curPt = items[activeIdx];
+
+  const W = 460, H = 146;
+  const padL = 34, padR = 20, padT = 28, padB = 26;
   const pW = W - padL - padR, pH = H - padT - padB;
-  
-  const points = mDays.map((d, i) => {
-    const x = padL + (i / (mDays.length - 1)) * pW;
-    const cost = d * dailyPrice;
-    const km = d * kmPerDay;
-    const yCost = padT + pH - (cost / maxCost) * (pH - 6);
-    const barH = Math.max(8, (km / maxKm) * (pH * 0.72));
+
+  const points = items.map((it, i) => {
+    const x = padL + (i / (items.length - 1)) * pW;
+    const barH = Math.max(10, (it.count / maxVal) * (pH - 10));
     const yBar = padT + pH - barH;
-    return { d, x, cost, km, yCost, barH, yBar, isCur: d === curD };
+    const yPoint = yBar;
+    const isTripDay = isWeekly && it.d === tripDayName;
+    const isCur = i === activeIdx;
+    return { ...it, idx: i, x, barH, yBar, yPoint, isTripDay, isCur };
   });
-  
-  const barW = Math.max(14, Math.min(22, Math.floor(pW / mDays.length - 10)));
-  const pathD = points.reduce((acc, pt, i) => acc + (i === 0 ? `M ${pt.x},${pt.yCost}` : ` L ${pt.x},${pt.yCost}`), "");
+
+  const barW = isWeekly ? 22 : 36;
+  const pathD = points.reduce((acc, pt, i) => acc + (i === 0 ? `M ${pt.x},${pt.yPoint}` : ` L ${pt.x},${pt.yPoint}`), "");
   const areaD = pathD + ` L ${points[points.length-1].x},${padT + pH} L ${points[0].x},${padT + pH} Z`;
-  const curPt = points.find(p => p.isCur) || points[0];
-  const totalKm = curD * kmPerDay;
+  const activePt = points[activeIdx];
 
   el.innerHTML = `
     <div class="rg-head">
       <div class="rg-title">
-        <span>📈 Booking Range &amp; Distance</span>
+        <span>👥 People Booking Demand</span>
       </div>
-      <div class="rg-badge">
-        <b>${curD} Days</b> &middot; ${totalKm} km included
+      <div class="rg-tabs">
+        <button type="button" class="rg-tab ${isWeekly ? 'active' : ''}" data-view="weekly">Weekly</button>
+        <button type="button" class="rg-tab ${!isWeekly ? 'active' : ''}" data-view="monthly">Monthly Trend</button>
       </div>
     </div>
-    <svg class="rg-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Booking range vs cost and distance">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div class="rg-badge">
+        <b>${activePt.d}</b>: <b>${activePt.count} people booking</b> ${activePt.peak ? '· 🔥 Peak Demand' : '· Normal Demand'}
+      </div>
+      <span style="font-size:.72rem;color:var(--muted);font-weight:600">
+        🔥 <b>${monthlyTotal}</b> booked this month
+      </span>
+    </div>
+    <svg class="rg-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="People booking demand curve">
       <defs>
-        <linearGradient id="rgArea_${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.32"/>
+        <linearGradient id="dmArea_${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.35"/>
           <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.02"/>
         </linearGradient>
-        <linearGradient id="rgBar_${id}" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="dmBar_${id}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.6"/>
-          <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.16"/>
         </linearGradient>
-        <linearGradient id="rgBarCur_${id}" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="dmBarPeak_${id}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="var(--brand2)" stop-opacity="0.95"/>
           <stop offset="100%" stop-color="var(--brand2)" stop-opacity="0.45"/>
         </linearGradient>
+        <linearGradient id="dmBarTrip_${id}" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--brand)" stop-opacity="1"/>
+          <stop offset="100%" stop-color="var(--brand)" stop-opacity="0.5"/>
+        </linearGradient>
       </defs>
-      <line x1="${padL}" y1="${padT + pH}" x2="${W - padR}" y2="${padT + pH}" stroke="var(--line)" stroke-width="1.2"/>
-      <rect x="${curPt.x - barW - 4}" y="${padT - 6}" width="${barW * 2 + 8}" height="${pH + 10}" rx="8" fill="color-mix(in srgb, var(--brand) 12%, transparent)"/>
-      ${points.map(pt => `
-        <rect class="rg-bar" data-d="${pt.d}" x="${pt.x - barW/2}" y="${pt.yBar}" width="${barW}" height="${pt.barH}" rx="4"
-          fill="${pt.isCur ? `url(#rgBarCur_${id})` : `url(#rgBar_${id})`}" opacity="${pt.isCur ? '1' : '0.8'}"/>
-      `).join("")}
-      <path d="${areaD}" fill="url(#rgArea_${id})"/>
+
+      <line x1="${padL - 4}" y1="${padT + pH}" x2="${W - padR + 4}" y2="${padT + pH}" stroke="var(--line)" stroke-width="1.2"/>
+      <line x1="${padL - 4}" y1="${padT + pH/2}" x2="${W - padR + 4}" y2="${padT + pH/2}" stroke="var(--line)" stroke-dasharray="3 3" stroke-width="1" opacity="0.6"/>
+
+      <rect x="${activePt.x - barW/2 - 5}" y="${padT - 6}" width="${barW + 10}" height="${pH + 8}" rx="8" fill="color-mix(in srgb, var(--brand) 12%, transparent)"/>
+
+      ${points.map(pt => {
+        let fill = pt.peak ? `url(#dmBarPeak_${id})` : `url(#dmBar_${id})`;
+        if (pt.isTripDay) fill = `url(#dmBarTrip_${id})`;
+        const op = pt.isCur ? '1' : '0.75';
+        return `
+          <rect class="rg-bar" data-idx="${pt.idx}" x="${pt.x - barW/2}" y="${pt.yBar}" width="${barW}" height="${pt.barH}" rx="5"
+            fill="${fill}" opacity="${op}"/>
+          ${pt.peak ? `
+            <g transform="translate(${pt.x}, ${pt.yBar - 9})">
+              <rect x="-16" y="-8" width="32" height="11" rx="3" fill="var(--brand2)"/>
+              <text x="0" y="0" text-anchor="middle" fill="#fff" font-size="7" font-weight="700" font-family="Inter,sans-serif">PEAK</text>
+            </g>
+          ` : ''}
+          ${pt.isTripDay ? `
+            <g transform="translate(${pt.x}, ${pt.yBar - (pt.peak ? 21 : 9)})">
+              <rect x="-18" y="-8" width="36" height="11" rx="3" fill="var(--brand)"/>
+              <text x="0" y="0" text-anchor="middle" fill="#fff" font-size="7" font-weight="700" font-family="Inter,sans-serif">YOU</text>
+            </g>
+          ` : ''}
+        `;
+      }).join("")}
+
+      <path d="${areaD}" fill="url(#dmArea_${id})"/>
       <path d="${pathD}" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
       ${points.map(pt => `
-        <circle class="rg-point" data-d="${pt.d}" cx="${pt.x}" cy="${pt.yCost}" r="${pt.isCur ? 6 : 3.5}"
-          fill="${pt.isCur ? '#fff' : 'var(--brand)'}" stroke="${pt.isCur ? 'var(--brand2)' : 'var(--brand)'}" stroke-width="${pt.isCur ? 3.5 : 1.5}"/>
+        <circle class="rg-point" data-idx="${pt.idx}" cx="${pt.x}" cy="${pt.yPoint}" r="${pt.isCur ? 5.5 : 3.5}"
+          fill="${pt.isCur ? '#fff' : (pt.peak ? 'var(--brand2)' : 'var(--brand)')}"
+          stroke="${pt.peak ? 'var(--brand2)' : 'var(--brand)'}" stroke-width="${pt.isCur ? 3 : 1.5}"/>
       `).join("")}
-      <g transform="translate(${Math.max(54, Math.min(W - 54, curPt.x))}, ${Math.max(16, curPt.yCost - 10)})">
-        <rect x="-48" y="-18" width="96" height="18" rx="5" fill="var(--surface)" stroke="var(--brand2)" stroke-width="1.2"/>
-        <text x="0" y="-5" text-anchor="middle" fill="var(--ink)" font-size="9" font-family="Sora,Inter,sans-serif" font-weight="700">₹${fmt(curPt.cost)} &middot; ${curPt.km}km</text>
+
+      <g transform="translate(${Math.max(48, Math.min(W - 48, activePt.x))}, ${Math.max(16, activePt.yPoint - 14)})">
+        <rect x="-42" y="-17" width="84" height="17" rx="5" fill="var(--surface)" stroke="${activePt.peak ? 'var(--brand2)' : 'var(--brand)'}" stroke-width="1.2"/>
+        <text x="0" y="-5" text-anchor="middle" fill="var(--ink)" font-size="8.5" font-family="Sora,Inter,sans-serif" font-weight="700">${activePt.count} Bookings</text>
       </g>
+
       ${points.map(pt => `
-        <text data-d="${pt.d}" x="${pt.x}" y="${padT + pH + 18}" text-anchor="middle"
-          fill="${pt.isCur ? 'var(--brand2)' : 'var(--muted)'}" font-size="10" font-family="Inter,sans-serif" font-weight="${pt.isCur ? '700' : '500'}" style="cursor:pointer">${pt.d}d</text>
+        <text class="rg-xlabel" data-idx="${pt.idx}" x="${pt.x}" y="${padT + pH + 16}" text-anchor="middle"
+          fill="${pt.isCur ? 'var(--brand2)' : 'var(--muted)'}" font-size="10" font-family="Inter,sans-serif"
+          font-weight="${pt.isCur ? '700' : '500'}" style="cursor:pointer">${pt.d}</text>
       `).join("")}
     </svg>
+
     <div class="rg-meta">
       <div class="rg-stat">
-        <span>🛣️ Included Distance Allowance</span>
-        <b>${totalKm} km free (${kmPerDay} km/day)</b>
+        <span>👥 Peak Booking Window</span>
+        <b>${isTruck ? 'Tue – Thu (Commercial Midweek)' : 'Fri – Sun (Weekend Peak)'}</b>
       </div>
       <div class="rg-stat" style="text-align:right">
-        <span>⚡ Extra Distance Rate</span>
-        <b>${extraKmRate || '₹8/km'} after limit</b>
+        <span>💡 Demand Insight</span>
+        <b>${tripDayName ? (activePt.isTripDay && activePt.peak ? '⚡ Lock now, high weekend demand' : '✓ Normal booking availability') : '⚡ 78% reserved for weekend'}</b>
       </div>
     </div>
   `;
-  if (typeof onSelect === "function") {
-    el.querySelectorAll("[data-d]").forEach(node => {
-      node.onclick = () => {
-        const val = parseInt(node.getAttribute("data-d"), 10);
-        if (val) onSelect(val);
-      };
-    });
-  }
+
+  el.querySelectorAll(".rg-tab").forEach(tab => {
+    tab.onclick = (e) => {
+      e.stopPropagation();
+      st.view = tab.getAttribute("data-view");
+      st.selectedIdx = null;
+      drawDemandGraph(id, opt);
+    };
+  });
+
+  el.querySelectorAll("[data-idx]").forEach(node => {
+    node.onclick = () => {
+      const idx = parseInt(node.getAttribute("data-idx"), 10);
+      if (!isNaN(idx)) {
+        st.selectedIdx = idx;
+        drawDemandGraph(id, opt);
+      }
+    };
+  });
+}
+function drawRangeGraph(id, opt) {
+  drawDemandGraph(id, opt);
 }
 
 // Payment Methods Pills

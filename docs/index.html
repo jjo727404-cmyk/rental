@@ -459,7 +459,9 @@ header .wrap{padding:0 10px}
 <div><label>Type</label><select id="type"></select></div>
 <div><label id="paxL">Riders</label><select id="pax"></select></div>
 <button class="btn" type="submit">Search</button>
-</form><div class="prebook-banner-bar"><span class="prebook-pill">⚡ <b>Pre-Booking Active:</b> Reserve up to 90 days ahead &middot; Pay only 10% advance &middot; Lock festival rates &middot; 100% Refundable up to 48h</span></div></div></div>
+</form><div class="prebook-banner-bar"><span class="prebook-pill">⚡ <b>Pre-Booking Active:</b> Reserve up to 90 days ahead &middot; Pay only 10% advance &middot; Lock festival rates &middot; 100% Refundable up to 48h</span></div>
+<div id="heroDemandGraph" class="range-graph-wrap" style="margin-top:16px"></div>
+</div></div>
 
 <div class="marq" aria-hidden="true"><div class="mt" id="mt"></div></div>
 <section id="fleet"><div class="wrap">
@@ -997,34 +999,7 @@ function drawDemandGraph(id, opt) {
 function drawRangeGraph(id, opt) {
   drawDemandGraph(id, opt);
 }
-function calc(){const v=V.find(x=>x.n==$("#eVeh").value)||V[0],d=+$("#eDays").value;$("#dLbl").textContent=d;
-const base=v.p*d,del=$("#eDel").checked?M.del:0,ins=$("#eIns").checked?M.ins*d:0,pil=$("#ePil").checked?M.pil*d:0,tot=base+del+ins+pil;TOT=tot;
-const isPre = $("#ePre") ? $("#ePre").checked : true;
-const adv = Math.round(tot*0.1);
-const bal = tot - adv;
-$("#sum").innerHTML=`<div class="prebook-tag-wrap"><span class="prebook-badge-sm">${isPre?"⚡ Pre-Booking Mode (10% Advance)":"Standard Booking"}</span><span class="lock-pill">🔒 Festive Rate Locked</span></div>
-<h3 style="margin:4px 0 8px">${v.n}</h3>
-<div class="row"><span>Rental (${d} × ${fmt(v.p)})</span><span>${fmt(base)}</span></div>
-<div class="row"><span>Delivery</span><span>${fmt(del)}</span></div>
-<div class="row"><span>Cover</span><span>${fmt(ins)}</span></div>
-<div class="row"><span>${M.extra}</span><span>${fmt(pil)}</span></div>
-<div class="row t"><span>Total Trip Value</span><span>${fmt(tot)}</span></div>
-${isPre?`
-<div class="prebook-summary-box">
-  <div class="row adv-row"><span><b>⚡ Advance to Pay Now (10%)</b></span><b style="color:var(--brand2);font-size:1.15rem">${fmt(adv)}</b></div>
-  <div class="row bal-row"><span>Balance Due on Pick-up</span><span>${fmt(bal)}</span></div>
-  <small style="color:var(--muted);display:block;margin-top:4px">✓ Locks your vehicle for future dates &middot; 100% refundable up to 48h before trip</small>
-</div>`:""}
-<button class="btn" style="width:100%;margin-top:14px" id="go">${isPre?"Pre-Book Now (Pay "+fmt(adv)+")":"Continue to booking"}</button>
-<p style="font-size:.78rem;color:var(--muted);margin:10px 0 0">✅ Free cancellation up to 48 hrs before pick-up. <a href="#cancel" style="text-decoration:underline">See policy</a>. Pick-up at any hub or doorstep delivery.</p>`;
-$("#go").onclick=openBook;
-const pFrom = $("#from") ? $("#from").value : "";
-drawDemandGraph("estRangeGraph", {
-  vehName: v.n,
-  cat: mode,
-  pickupDate: pFrom
-});
-refund()}
+
 ["#eVeh","#eDays","#eDel","#eIns","#ePil","#ePre","#eGps","#eKid","#eDrv","#from","#to"].forEach(s=>{const el=$(s);if(el){el.addEventListener("input",calc);el.addEventListener("change",calc)}});
 $("#rWhen").onchange=refund;
 let mem=[];
@@ -1196,13 +1171,36 @@ function hsh(n){return [...n].reduce((a,c)=>a+c.charCodeAt(0),0)}
 function isBooked(v,key){const t=new Date(key+"T00:00").getTime();if(((hsh(v.n)+Math.floor(t/864e5)*13)%9)<2)return true;
 return BK.get().some(b=>b.veh==v.n&&b.status!="Cancelled"&&t>=new Date(new Date(b.at).toDateString()).getTime()&&t<new Date(new Date(b.at).toDateString()).getTime()+b.days*864e5)}
 function calc(){const v=V.find(x=>x.n==$("#eVeh").value)||V[0],d=+$("#eDays").value;$("#dLbl").textContent=d;
-const car=mode=="car";$("#eKidL").style.display=car?"flex":"none";$("#eDrvL").style.display=mode!="bike"?"flex":"none";
+const car=mode=="car";if($("#eKidL"))$("#eKidL").style.display=car?"flex":"none";if($("#eDrvL"))$("#eDrvL").style.display=mode!="bike"?"flex":"none";
 const st=$("#from").value?new Date($("#from").value+"T00:00"):new Date(Date.now()+864e5);let wk=0,fe=0,conf=false;
 for(let i=0;i<d;i++){const x=new Date(st.getTime()+i*864e5),k=ymd(x),w=x.getDay();if(FESTL().includes(k))fe+=v.p*.15;else if(w==0||w==6)wk+=v.p*.1;if(isBooked(v,k))conf=true}
-const base=v.p*d,sur=Math.round(wk+fe),dp=d>=30?.2:d>=7?.1:0,dis=Math.round((base+sur)*dp),del=$("#eDel").checked?M.del:0,ins=$("#eIns").checked?M.ins*d:0,pil=$("#ePil").checked?M.pil*d:0,gps=$("#eGps").checked?80*d:0,kid=car&&$("#eKid").checked?100*d:0,drv=mode!="bike"&&$("#eDrv").checked?1200*d:0,tot=base+sur-dis+del+ins+pil+gps+kid+drv;TOT=tot;
+const base=v.p*d,sur=Math.round(wk+fe),dp=d>=30?.2:d>=7?.1:0,dis=Math.round((base+sur)*dp),del=$("#eDel")&&$("#eDel").checked?M.del:0,ins=$("#eIns")&&$("#eIns").checked?M.ins*d:0,pil=$("#ePil")&&$("#ePil").checked?M.pil*d:0,gps=$("#eGps")&&$("#eGps").checked?80*d:0,kid=car&&$("#eKid")&&$("#eKid").checked?100*d:0,drv=mode!="bike"&&$("#eDrv")&&$("#eDrv").checked?1200*d:0,tot=base+sur-dis+del+ins+pil+gps+kid+drv;TOT=tot;
+const isPre=$("#ePre")?$("#ePre").checked:true;
+const adv=Math.round(tot*0.1);
+const bal=tot-adv;
 const R=(a,b,c)=>`<div class="row"${c||""}><span>${a}</span><span>${b}</span></div>`;
-$("#sum").innerHTML=`<h3 style="margin-bottom:8px">${v.n}</h3>`+R(`Rental (${d} × ${fmt(v.p)})`,fmt(base))+(sur?R("Weekend / festival surcharge","+"+fmt(sur)):"")+(dis?R(`${d>=30?"Monthly 20%":"Weekly 10%"} discount`,"−"+fmt(dis)):"")+R("Delivery",fmt(del))+R("Cover",fmt(ins))+R(M.extra,fmt(pil))+(gps||kid||drv?R("GPS / child seat / driver",fmt(gps+kid+drv)):"")+`<div class="row t"><span>Total</span><span>${fmt(tot)}</span></div>`+(conf?`<p style="color:#d63f4f;font-size:.85rem;margin:8px 0">⚠ Some of these dates look booked. Change the pick-up date or days.</p>`:"")+`<button class="btn" style="width:100%;margin-top:14px" id="go" ${conf?"disabled":""}>Continue to booking</button><p style="font-size:.78rem;color:var(--muted);margin:10px 0 0">✅ Free cancellation up to 48 hrs before pick-up. <a href="#cancel" style="text-decoration:underline">See policy</a>. Sample rates. Refundable deposit collected at pick-up.</p>`;
-$("#go").onclick=openBook;refund()}
+$("#sum").innerHTML=`<div class="prebook-tag-wrap"><span class="prebook-badge-sm">${isPre?"⚡ Pre-Booking Mode (10% Advance)":"Standard Booking"}</span><span class="lock-pill">🔒 Festive Rate Locked</span></div>
+<h3 style="margin:4px 0 8px">${v.n}</h3>`+R(`Rental (${d} × ${fmt(v.p)})`,fmt(base))+(sur?R("Weekend / festival surcharge","+"+fmt(sur)):"")+(dis?R(`${d>=30?"Monthly 20%":"Weekly 10%"} discount`,"−"+fmt(dis)):"")+R("Delivery",fmt(del))+R("Cover",fmt(ins))+R(M.extra,fmt(pil))+(gps||kid||drv?R("GPS / child seat / driver",fmt(gps+kid+drv)):"")+`<div class="row t"><span>Total Trip Value</span><span>${fmt(tot)}</span></div>`+
+(isPre?`
+<div class="prebook-summary-box">
+  <div class="row adv-row"><span><b>⚡ Advance to Pay Now (10%)</b></span><b style="color:var(--brand2);font-size:1.15rem">${fmt(adv)}</b></div>
+  <div class="row bal-row"><span>Balance Due on Pick-up</span><span>${fmt(bal)}</span></div>
+  <small style="color:var(--muted);display:block;margin-top:4px">✓ Locks your vehicle for future dates &middot; 100% refundable up to 48h before trip</small>
+</div>`:"")+
+(conf?`<p style="color:#d63f4f;font-size:.85rem;margin:8px 0">⚠ Some of these dates look booked. Change the pick-up date or days.</p>`:"")+`<button class="btn" style="width:100%;margin-top:14px" id="go" ${conf?"disabled":""}>${isPre?"Pre-Book Now (Pay "+fmt(adv)+")":"Continue to booking"}</button><p style="font-size:.78rem;color:var(--muted);margin:10px 0 0">✅ Free cancellation up to 48 hrs before pick-up. <a href="#cancel" style="text-decoration:underline">See policy</a>. Sample rates. Refundable deposit collected at pick-up.</p>`;
+$("#go").onclick=openBook;
+const pFrom=$("#from")?$("#from").value:"";
+drawDemandGraph("heroDemandGraph",{
+  vehName:v?v.n:(mode=="car"?"Maruti Suzuki Baleno":"Royal Enfield Classic 350"),
+  cat:mode,
+  pickupDate:pFrom
+});
+drawDemandGraph("estRangeGraph",{
+  vehName:v?v.n:"Vehicle",
+  cat:mode,
+  pickupDate:pFrom
+});
+refund()}
 ["#eGps","#eKid","#eDrv","#from"].forEach(q=>$(q).addEventListener("input",calc));$("#from").addEventListener("change",calc);
 function pick(n,d){const m=ALL().find(v=>v.n==n);if(!m)return;if(m.m!=mode)setMode(m.m);$("#eVeh").value=n;if(d)$("#eDays").value=d;calc();document.getElementById("price").scrollIntoView()}
 function detail(n){const v=ALL().find(x=>x.n==n);if(!v)return;const car=v.m=="car",km=KM(v),dep=DEP(v);

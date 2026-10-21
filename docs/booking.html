@@ -8,7 +8,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 <style>
+/* ---- Supabase Status & Modal Styles ---- */
+.sb-status-badge{font-size:.78rem;gap:6px;cursor:pointer;transition:all .2s;font-weight:600;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:99px;padding:0 12px;height:36px;display:inline-flex;align-items:center}
+.sb-status-badge.is-connected{border-color:color-mix(in srgb,var(--brand) 40%,var(--line));background:color-mix(in srgb,var(--brand) 10%,transparent);color:var(--brand)}
+.sb-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.sb-dot.connected{background:#10b981;box-shadow:0 0 8px #10b981}
+.sb-dot.disconnected{background:#f59e0b}
+.sb-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
+.sb-modal-card{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:20px;max-width:520px;width:100%;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.35);position:relative;animation:sbPop .2s cubic-bezier(.16,1,.3,1)}
+@keyframes sbPop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.sb-modal-header{display:flex;justify-content:space-between;align-items:center}
+.sb-icon{width:32px;height:32px;border-radius:9px;background:color-mix(in srgb,var(--brand) 15%,transparent);color:var(--brand);display:grid;place-items:center;font-size:1.1rem}
+.sb-close-btn{border:none;background:transparent;color:var(--muted);font-size:1.6rem;cursor:pointer;line-height:1;padding:4px}
+
 :root{
   --bg:#0c1512;
   --surface:#13221e;
@@ -1454,6 +1469,7 @@ footer{
       <span class="brand-name">Rivo Rentals</span>
     </a>
     <div class="hdr-right">
+      <button type="button" class="sb-status-badge" onclick="if(window.RivoDB)RivoDB.openSetupModal();" title="Supabase Cloud Database Settings"><span class="sb-dot disconnected"></span> Connect Supabase</button>
       <a href="tel:+919000000000" class="help-pill" title="Call 24x7 Support">
         <span>📞</span><span class="help-full">24×7 +91 90000 00000</span><span class="help-short">Call 24×7</span>
       </a>
@@ -2701,11 +2717,18 @@ $("#confirmBookingBtn").onclick = () => {
 
   const booking = {
     id: bookingId,
+    bookingId: bookingId,
     veh: curVeh.n,
+    vehName: curVeh.n,
+    cat: curCat,
     days: days,
+    basePrice: curVeh.p * days,
     total: grandTotal,
+    totalAmount: grandTotal,
     advance: advPaid,
+    advPaid: advPaid,
     balance: balDue,
+    balDue: balDue,
     isPre: isPre,
     hasDriver: hasDriver,
     driverCost: hasDriver ? (curCat === "truck" ? 999 : curCat === "car" ? 799 : 599) * days : 0,
@@ -2727,6 +2750,20 @@ $("#confirmBookingBtn").onclick = () => {
     localStorage.setItem("rivo_bk", JSON.stringify(existing));
   } catch(e) {
     console.error("Storage error:", e);
+  }
+
+  // Save to Supabase Cloud Database
+  if (window.RivoDB && typeof RivoDB.saveBooking === "function") {
+    RivoDB.saveBooking(booking).then(res => {
+      if (res && res.error) {
+        console.error("Supabase booking error:", res.error);
+        alert("Supabase Database Error: " + (res.error.message || JSON.stringify(res.error)));
+      } else {
+        console.log("Supabase booking saved successfully:", res);
+      }
+    }).catch(err => {
+      console.warn("Supabase booking sync warning:", err);
+    });
   }
 
   // Populate Success Screen

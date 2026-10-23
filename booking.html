@@ -2671,8 +2671,41 @@ thBtn.onclick = () => {
   setDocTheme(cur === "dark" ? "light" : "dark");
 };
 
+// Document file compression and reader helper
+function readUploadFile(file) {
+  if (!file) return Promise.resolve("");
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      if (file.type && file.type.startsWith("image/")) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          let w = img.width, h = img.height;
+          const maxDim = 1200;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+          }
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/jpeg", 0.78));
+        };
+        img.onerror = () => resolve(dataUrl);
+        img.src = dataUrl;
+      } else {
+        resolve(dataUrl);
+      }
+    };
+    reader.onerror = () => resolve("");
+    reader.readAsDataURL(file);
+  });
+}
+
 // Confirm Booking Form Submission
-$("#confirmBookingBtn").onclick = () => {
+$("#confirmBookingBtn").onclick = async () => {
   const name = $("#custName").value.trim();
   const phone = $("#custPhone").value.trim();
   const email = $("#custEmail").value.trim();
@@ -2703,6 +2736,12 @@ $("#confirmBookingBtn").onclick = () => {
     $("#custLic").focus();
     return;
   }
+
+  // Read uploaded document files (Front & Back Driving Licence + ID Proof)
+  const fLicEl = $("#fileLic"), fIdEl = $("#fileId");
+  const licFile = fLicEl && fLicEl.files && fLicEl.files[0] ? fLicEl.files[0] : null;
+  const idFile = fIdEl && fIdEl.files && fIdEl.files[0] ? fIdEl.files[0] : null;
+  const [licDocData, idDocData] = await Promise.all([readUploadFile(licFile), readUploadFile(idFile)]);
 
   // Generate Booking Record
   const bookingId = "RIV-" + Math.floor(10000 + Math.random() * 90000);
@@ -2736,6 +2775,8 @@ $("#confirmBookingBtn").onclick = () => {
     phone: phone,
     email: email,
     lic: lic,
+    licenseDoc: licDocData,
+    idDoc: idDocData,
     loc: hub,
     at: pDateTime.getTime(),
     returnAt: rDateTime.getTime(),

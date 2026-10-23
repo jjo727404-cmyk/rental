@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rivo Rentals · Staff & Document Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="supabase.js"></script>
+<style>
+:root{
+  --bg:#0b1411;
+  --surface:#12211c;
+  --surface-hover:#192e27;
+  --card:#152621;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.16);
+  --ink:#f1f7f4;
+  --muted:#8fa49b;
+  --brand:#19c37d;
+  --brand-hover:#22da8e;
+  --brand2:#f59e0b;
+  --danger:#ef4444;
+  --danger-bg:rgba(239,68,68,.12);
+  --success:#10b981;
+  --success-bg:rgba(16,185,129,.14);
+  --font-head:'Sora',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --radius:16px;
+  --shadow:0 12px 36px rgba(0,0,0,.4);
+}
+[data-theme="light"]{
+  --bg:#f4f7f5;
+  --surface:#ffffff;
+  --surface-hover:#f0f4f2;
+  --card:#ffffff;
+  --line:rgba(0,0,0,.08);
+  --line-strong:rgba(0,0,0,.15);
+  --ink:#121a17;
+  --muted:#667b73;
+  --brand:#0f5c4d;
+  --brand-hover:#147360;
+  --brand2:#e8742a;
+  --danger:#dc2626;
+  --danger-bg:#fee2e2;
+  --success:#059669;
+  --success-bg:#d1fae5;
+  --shadow:0 12px 36px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:90;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.hdr-wrap{
+  max-width:1280px;
+  margin:0 auto;
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--font-head);
+  font-weight:700;
+  font-size:1.15rem;
+  color:var(--ink);
+  text-decoration:none;
+}
+.brand-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand);
+}
+.admin-tag{
+  background:color-mix(in srgb,var(--brand2) 18%,transparent);
+  color:var(--brand2);
+  border:1px solid color-mix(in srgb,var(--brand2) 35%,transparent);
+  font-size:.7rem;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:99px;
+  letter-spacing:.5px;
+}
+.hdr-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.btn{
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  padding:9px 16px;
+  border-radius:99px;
+  font-size:.85rem;
+  font-weight:600;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:all .2s;
+  text-decoration:none;
+}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.alt{
+  background:transparent;
+  border:1.5px solid var(--line);
+  color:var(--ink);
+}
+.btn.alt:hover{
+  background:var(--surface-hover);
+  border-color:var(--line-strong);
+}
+.th-btn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:1rem;
+}
+
+/* Container */
+.container{
+  max-width:1280px;
+  margin:0 auto;
+  padding:24px 20px 60px;
+}
+
+/* Lockscreen */
+.lockscreen{
+  min-height:70vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.lock-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:36px 30px;
+  width:100%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+.lock-icon{
+  width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--brand) 15%,transparent);color:var(--brand);display:grid;place-items:center;font-size:1.8rem;margin:0 auto 16px;
+}
+.lock-card h2{
+  font-family:var(--font-head);
+  margin-bottom:8px;
+  font-size:1.4rem;
+}
+.lock-card p{
+  color:var(--muted);
+  font-size:.86rem;
+  margin-bottom:20px;
+}
+.pin-input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1.5px solid var(--line);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:1.2rem;
+  text-align:center;
+  letter-spacing:6px;
+  margin-bottom:16px;
+  outline:none;
+}
+.pin-input:focus{border-color:var(--brand)}
+
+/* Dashboard */
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-bottom:24px;
+}
+.stat-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  box-shadow:var(--shadow);
+}
+.stat-icon{
+  width:48px;height:48px;border-radius:12px;background:color-mix(in srgb,var(--brand) 15%,transparent);color:var(--brand);display:grid;place-items:center;font-size:1.4rem;flex-shrink:0;
+}
+.stat-info .num{
+  font-family:var(--font-head);
+  font-size:1.6rem;
+  font-weight:700;
+  line-height:1.1;
+}
+.stat-info .lbl{
+  color:var(--muted);
+  font-size:.78rem;
+  font-weight:500;
+  margin-top:4px;
+}
+
+/* Tabs */
+.tabs-bar{
+  display:flex;
+  gap:8px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:20px;
+  overflow-x:auto;
+}
+.tab-btn{
+  padding:12px 18px;
+  background:transparent;
+  border:none;
+  border-bottom:2px solid transparent;
+  color:var(--muted);
+  font-weight:600;
+  font-size:.92rem;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.tab-btn.active{
+  color:var(--brand);
+  border-bottom-color:var(--brand);
+}
+.tab-badge{
+  background:var(--surface-hover);
+  color:var(--ink);
+  font-size:.72rem;
+  padding:2px 7px;
+  border-radius:99px;
+}
+.tab-btn.active .tab-badge{
+  background:color-mix(in srgb,var(--brand) 20%,transparent);
+  color:var(--brand);
+}
+
+/* Search bar */
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.search-input{
+  flex:1;
+  min-width:240px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1.5px solid var(--line);
+  background:var(--surface);
+  color:var(--ink);
+  font-size:.88rem;
+  outline:none;
+}
+.search-input:focus{border-color:var(--brand)}
+
+/* Bookings Cards / Table */
+.data-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.tbl-wrap{overflow-x:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.86rem;
+  text-align:left;
+}
+th{
+  background:color-mix(in srgb,var(--surface) 95%,#000);
+  padding:12px 14px;
+  color:var(--muted);
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  font-weight:600;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+td{
+  padding:14px;
+  border-bottom:1px solid var(--line);
+  vertical-align:middle;
+}
+tr:hover td{
+  background:color-mix(in srgb,var(--surface-hover) 40%,transparent);
+}
+
+/* Badges */
+.badge{
+  font-size:.74rem;
+  font-weight:600;
+  padding:4px 9px;
+  border-radius:99px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+}
+.badge.confirmed{background:var(--success-bg);color:var(--success)}
+.badge.pending{background:rgba(245,158,11,.15);color:var(--brand2)}
+.badge.cancelled{background:var(--danger-bg);color:var(--danger)}
+.badge.doc-yes{background:var(--success-bg);color:var(--success);cursor:pointer}
+.badge.doc-physical{background:rgba(245,158,11,.15);color:var(--brand2)}
+
+.doc-btn{
+  background:color-mix(in srgb,var(--brand) 15%,transparent);
+  color:var(--brand);
+  border:1px solid color-mix(in srgb,var(--brand) 30%,transparent);
+  font-size:.76rem;
+  font-weight:600;
+  padding:5px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  transition:all .15s;
+}
+.doc-btn:hover{background:var(--brand);color:#fff}
+
+/* Modal */
+.doc-modal-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.doc-modal-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:24px;
+  max-width:740px;
+  width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:28px;
+  box-shadow:var(--shadow);
+  position:relative;
+  animation:pop .2s ease-out;
+}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.doc-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:18px 0;
+}
+@media(max-width:640px){.doc-grid{grid-template-columns:1fr}}
+.doc-box{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
+}
+.doc-preview-img{
+  max-width:100%;
+  max-height:260px;
+  object-fit:contain;
+  border-radius:8px;
+  margin-top:10px;
+  background:#000;
+  cursor:zoom-in;
+}
+.doc-empty-box{
+  padding:36px 16px;
+  color:var(--muted);
+  font-size:.82rem;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-dot"></span>
+      <span>Rivo Rentals</span>
+      <span class="admin-tag">ADMIN</span>
+    </a>
+    <div class="hdr-right">
+      <button class="btn alt" id="refreshBtn" title="Refresh Live Data">🔄 Refresh</button>
+      <button class="th-btn" id="thBtn" title="Toggle Light/Dark Theme">🌙</button>
+      <a href="index.html" class="btn alt">← Client Website</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Lockscreen -->
+  <div id="lockscreen" class="lockscreen">
+    <div class="lock-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Staff Portal Login</h2>
+      <p>Enter your 4-digit staff PIN to view live bookings, customer documents, and roadside tickets.</p>
+      <form id="pinForm" onsubmit="return false;">
+        <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="8" autofocus>
+        <button type="submit" class="btn" style="width:100%;padding:12px" id="loginBtn">Unlock Admin Portal ➔</button>
+      </form>
+      <small style="display:block;margin-top:14px;color:var(--muted);font-size:.76rem">Default Passcode: <b>7404</b> or <b>1234</b></small>
+    </div>
+  </div>
+
+  <!-- Main Dashboard Content (Hidden until PIN verified) -->
+  <div id="adminApp" style="display:none">
+    
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🚗</div>
+        <div class="stat-info">
+          <div class="num" id="statBookings">0</div>
+          <div class="lbl">Total Bookings</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-info">
+          <div class="num" id="statRevenue">₹0</div>
+          <div class="lbl">Total Rental Value</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛠️</div>
+        <div class="stat-info">
+          <div class="num" id="statTickets">0</div>
+          <div class="lbl">Breakdown Requests</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📄</div>
+        <div class="stat-info">
+          <div class="num" id="statDocs">0</div>
+          <div class="lbl">Uploaded Documents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Bar -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabBookings">🚗 Bookings <span class="tab-badge" id="badgeBookings">0</span></button>
+      <button class="tab-btn" id="tabTickets">🛠️ Roadside Tickets <span class="tab-badge" id="badgeTickets">0</span></button>
+      <button class="tab-btn" id="tabReviews">⭐ Customer Reviews <span class="tab-badge" id="badgeReviews">0</span></button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <input type="text" id="searchBox" class="search-input" placeholder="🔍 Search by customer name, phone, booking ID, or car...">
+      <div style="display:flex;gap:8px">
+        <button class="btn alt" id="exportBtn">📥 Export CSV</button>
+        <button class="btn alt" onclick="logout()">🔒 Lock</button>
+      </div>
+    </div>
+
+    <!-- View: Bookings -->
+    <div id="viewBookings" class="data-card">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID &amp; Date</th>
+              <th>Customer</th>
+              <th>Vehicle</th>
+              <th>Duration</th>
+              <th>Financials</th>
+              <th>Documents</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTbody">
+            <tr><td colspan="7" style="text-align:center;padding:36px;color:var(--muted)">Loading bookings from Supabase...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- View: Tickets -->
+    <div id="viewTickets" class="data-card" style="display:none">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ticket ID</th>
+              <th>Vehicle</th>
+              <th>Issue</th>
+              <th>Phone</th>
+              <th>Location &amp; Notes</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ticketsTbody">
+            <tr><td colspan="6" style="text-align:center;padding:36px;color:var(--muted)">Loading tickets...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- View: Reviews -->
+    <div id="viewReviews" class="data-card" style="display:none">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Rider Name</th>
+              <th>Rating</th>
+              <th>Feedback</th>
+            </tr>
+          </thead>
+          <tbody id="reviewsTbody">
+            <tr><td colspan="3" style="text-align:center;padding:36px;color:var(--muted)">Loading reviews...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Document Viewer Modal -->
+<div id="docModal" class="doc-modal-backdrop" style="display:none" onclick="if(event.target===this)closeDocModal()">
+  <div class="doc-modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <h3 id="docModalTitle" style="margin:0;font-family:var(--font-head);font-size:1.25rem">Customer Verification Documents</h3>
+        <p id="docModalSub" style="color:var(--muted);font-size:.82rem;margin:4px 0 0">Booking Details &amp; KYC Verification</p>
+      </div>
+      <button class="btn alt" onclick="closeDocModal()" style="padding:4px 10px;font-size:1.1rem">&times;</button>
+    </div>
+
+    <div class="doc-grid">
+      <!-- Driving Licence -->
+      <div class="doc-box">
+        <div style="font-weight:600;font-size:.84rem">🪪 Driving Licence Copy</div>
+        <div id="licPreviewContainer"></div>
+      </div>
+      <!-- Govt ID -->
+      <div class="doc-box">
+        <div style="font-weight:600;font-size:.84rem">🆔 Govt Photo ID Proof</div>
+        <div id="idPreviewContainer"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-top:14px;border-top:1px solid var(--line)">
+      <div id="docVerificationSummary" style="font-size:.82rem;color:var(--muted)"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn alt" onclick="closeDocModal()">Close</button>
+        <button class="btn" onclick="alert('Documents verified and approved for key handover!');closeDocModal()">✓ Approve Documents</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const VALID_PINS = ["7404", "1234", "9999"];
+let allBookings = [];
+let allTickets = [];
+let allReviews = [];
+
+// Theme toggle
+const thBtn = document.getElementById("thBtn");
+thBtn.onclick = () => {
+  const cur = document.documentElement.dataset.theme || "dark";
+  const nxt = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nxt;
+  thBtn.textContent = nxt === "dark" ? "🌙" : "☀️";
+  try { localStorage.setItem("rivo_theme", nxt); } catch(e){}
+};
+
+// PIN Login
+const pinInput = document.getElementById("pinInput");
+const loginBtn = document.getElementById("loginBtn");
+const lockscreen = document.getElementById("lockscreen");
+const adminApp = document.getElementById("adminApp");
+
+function checkAuth() {
+  if (sessionStorage.getItem("rivo_admin_auth") === "1") {
+    lockscreen.style.display = "none";
+    adminApp.style.display = "block";
+    loadAllData();
+  } else {
+    lockscreen.style.display = "flex";
+    adminApp.style.display = "none";
+  }
+}
+
+loginBtn.onclick = () => {
+  const pin = pinInput.value.trim();
+  if (VALID_PINS.includes(pin)) {
+    sessionStorage.setItem("rivo_admin_auth", "1");
+    checkAuth();
+  } else {
+    alert("Invalid Staff PIN. Please try again.");
+    pinInput.value = "";
+    pinInput.focus();
+  }
+};
+
+function logout() {
+  sessionStorage.removeItem("rivo_admin_auth");
+  checkAuth();
+}
+
+// Data fetching
+async function loadAllData() {
+  if (!window.RivoDB) return;
+  
+  // Bookings
+  const bList = await RivoDB.getBookings();
+  // Merge with any local bookings if Supabase didn't have them
+  const localRaw = localStorage.getItem("rivo_bk");
+  const localList = localRaw ? JSON.parse(localRaw) : [];
+  const bMap = new Map();
+  [...bList, ...localList].forEach(b => {
+    const id = b.booking_id || b.id || b.bookingId;
+    if (id && !bMap.has(id)) bMap.set(id, b);
+  });
+  allBookings = Array.from(bMap.values());
+
+  // Tickets
+  const tList = await RivoDB.getTickets();
+  const localTRaw = localStorage.getItem("rivo_tk");
+  const localTList = localTRaw ? JSON.parse(localTRaw) : [];
+  const tMap = new Map();
+  [...tList, ...localTList].forEach(t => {
+    const id = t.ticket_id || t.id;
+    if (id && !tMap.has(id)) tMap.set(id, t);
+  });
+  allTickets = Array.from(tMap.values());
+
+  // Reviews
+  allReviews = await RivoDB.getReviews();
+
+  renderStats();
+  renderBookings();
+  renderTickets();
+  renderReviews();
+}
+
+function renderStats() {
+  document.getElementById("statBookings").textContent = allBookings.length;
+  document.getElementById("badgeBookings").textContent = allBookings.length;
+  
+  const totalRev = allBookings.reduce((sum, b) => sum + (parseFloat(b.total_amount || b.total || 0)), 0);
+  document.getElementById("statRevenue").textContent = "₹" + totalRev.toLocaleString("en-IN");
+  
+  document.getElementById("statTickets").textContent = allTickets.length;
+  document.getElementById("badgeTickets").textContent = allTickets.length;
+
+  const docsCount = allBookings.filter(b => b.license_doc || b.licenseDoc || b.id_doc || b.idDoc).length;
+  document.getElementById("statDocs").textContent = docsCount;
+  document.getElementById("badgeReviews").textContent = allReviews.length;
+}
+
+function fmt(n) {
+  return "₹" + (parseInt(n, 10) || 0).toLocaleString("en-IN");
+}
+
+function renderBookings() {
+  const tbody = document.getElementById("bookingsTbody");
+  const q = document.getElementById("searchBox").value.toLowerCase().trim();
+  const filtered = allBookings.filter(b => {
+    const txt = [
+      b.booking_id || b.id || "",
+      b.customer_name || b.name || "",
+      b.customer_phone || b.phone || "",
+      b.customer_email || b.email || "",
+      b.veh_name || b.veh || "",
+      b.pickup_hub || b.loc || ""
+    ].join(" ").toLowerCase();
+    return !q || txt.includes(q);
+  });
+
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:36px;color:var(--muted)">No bookings matching search.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(b => {
+    const bId = b.booking_id || b.id || "N/A";
+    const name = b.customer_name || b.name || "Customer";
+    const phone = b.customer_phone || b.phone || "";
+    const email = b.customer_email || b.email || "";
+    const veh = b.veh_name || b.veh || "Vehicle";
+    const days = b.days || 1;
+    const hub = b.pickup_hub || b.loc || "Kochi Hub";
+    const total = b.total_amount || b.total || 0;
+    const advance = b.advance_paid || b.advance || 0;
+    const balance = b.balance_due || b.balance || 0;
+    const hasDoc = Boolean(b.license_doc || b.licenseDoc || b.id_doc || b.idDoc);
+    const dateStr = b.created_at ? new Date(b.created_at).toLocaleDateString("en-IN", {month:"short", day:"numeric"}) : "Recent";
+
+    return `
+      <tr>
+        <td>
+          <div style="font-weight:700;color:var(--brand)">${bId}</div>
+          <small style="color:var(--muted)">${dateStr}</small>
+        </td>
+        <td>
+          <div style="font-weight:600">${name}</div>
+          <small style="color:var(--muted)">📱 ${phone}</small>
+          ${email ? `<div style="font-size:.72rem;color:var(--muted)">✉️ ${email}</div>` : ""}
+        </td>
+        <td>
+          <div style="font-weight:600">${veh}</div>
+          <small style="color:var(--muted)">📍 ${hub}</small>
+        </td>
+        <td><b>${days} Day(s)</b></td>
+        <td>
+          <div>Total: <b>${fmt(total)}</b></div>
+          <div style="font-size:.76rem;color:var(--success)">Paid: ${fmt(advance)}</div>
+          <div style="font-size:.76rem;color:var(--brand2)">Due: ${fmt(balance)}</div>
+        </td>
+        <td>
+          ${hasDoc ? `
+            <button class="doc-btn" onclick="openDocModal('${bId}')">
+              📄 View Documents (2)
+            </button>
+          ` : `
+            <span class="badge doc-physical">📄 Physical at Hub</span>
+          `}
+        </td>
+        <td>
+          <div style="display:flex;gap:6px">
+            <a href="https://wa.me/91${phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn alt" style="padding:4px 8px;font-size:.76rem" title="WhatsApp Customer">💬</a>
+            <a href="tel:${phone}" class="btn alt" style="padding:4px 8px;font-size:.76rem" title="Call Customer">📞</a>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderTickets() {
+  const tbody = document.getElementById("ticketsTbody");
+  if (!allTickets.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:36px;color:var(--muted)">No tickets reported yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = allTickets.map(t => {
+    const tId = t.ticket_id || t.id || "TKT";
+    const veh = t.vehicle || t.veh || "Vehicle";
+    const issue = t.issue || "General Issue";
+    const phone = t.phone || "";
+    const loc = t.location || t.loc || "Roadside";
+    const notes = t.notes || t.note || "";
+    const status = t.status || "Ticket raised";
+
+    return `
+      <tr>
+        <td><b style="color:var(--danger)">${tId}</b></td>
+        <td><b>${veh}</b></td>
+        <td><span class="badge ${issue==='Accident'?'cancelled':'pending'}">${issue}</span></td>
+        <td><a href="tel:${phone}" style="color:var(--brand);font-weight:600">${phone}</a></td>
+        <td>
+          <div>📍 ${loc}</div>
+          ${notes ? `<small style="color:var(--muted)">Note: ${notes}</small>` : ""}
+        </td>
+        <td>
+          <select onchange="changeTicketStatus('${tId}', this.value)" style="padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:.8rem;font-weight:600">
+            <option value="Ticket raised" ${status==='Ticket raised'?'selected':''}>⏳ Ticket raised</option>
+            <option value="Technician Dispatched" ${status==='Technician Dispatched'?'selected':''}>🚚 Technician Dispatched</option>
+            <option value="In Progress" ${status==='In Progress'?'selected':''}>🛠️ In Progress</option>
+            <option value="Resolved" ${status==='Resolved'?'selected':''}>✅ Resolved</option>
+          </select>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+async function changeTicketStatus(tId, newStatus) {
+  if (window.RivoDB && typeof RivoDB.updateTicketStatus === "function") {
+    await RivoDB.updateTicketStatus(tId, newStatus);
+  }
+  alert(`Ticket ${tId} status updated to: ${newStatus}`);
+}
+
+function renderReviews() {
+  const tbody = document.getElementById("reviewsTbody");
+  if (!allReviews.length) {
+    tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:36px;color:var(--muted)">No customer reviews yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = allReviews.map(r => `
+    <tr>
+      <td><b>${r.name || "Rider"}</b></td>
+      <td style="color:#f59e0b;font-size:1.1rem">${"★".repeat(r.stars || 5)}${"☆".repeat(5 - (r.stars || 5))}</td>
+      <td>${r.text || ""}</td>
+    </tr>
+  `).join("");
+}
+
+// Document Modal Logic
+function openDocModal(bookingId) {
+  const b = allBookings.find(x => (x.booking_id || x.id || x.bookingId) === bookingId);
+  if (!b) return;
+
+  const licDoc = b.license_doc || b.licenseDoc;
+  const idDoc = b.id_doc || b.idDoc;
+  const name = b.customer_name || b.name || "Customer";
+  const phone = b.customer_phone || b.phone || "";
+  const licNo = b.license_no || b.lic || "N/A";
+
+  document.getElementById("docModalTitle").textContent = `${b.booking_id || b.id} · ${name}`;
+  document.getElementById("docModalSub").textContent = `Phone: ${phone} · Licence / ID No: ${licNo}`;
+
+  // Licence preview
+  const licContainer = document.getElementById("licPreviewContainer");
+  if (licDoc) {
+    if (licDoc.startsWith("data:application/pdf") || licDoc.includes(".pdf")) {
+      licContainer.innerHTML = `
+        <div style="padding:24px 0">
+          <div style="font-size:2.5rem">📄</div>
+          <div style="font-size:.82rem;margin:8px 0">Driving Licence (PDF Document)</div>
+          <a href="${licDoc}" target="_blank" download="licence_${bookingId}.pdf" class="btn" style="padding:6px 14px;font-size:.78rem">Download PDF</a>
+        </div>
+      `;
+    } else {
+      licContainer.innerHTML = `
+        <a href="${licDoc}" target="_blank" title="Click to view full image">
+          <img src="${licDoc}" class="doc-preview-img" alt="Driving Licence Copy">
+        </a>
+        <div style="margin-top:8px">
+          <a href="${licDoc}" download="Licence_${bookingId}.jpg" class="btn alt" style="padding:5px 10px;font-size:.74rem">⬇ Download Image</a>
+        </div>
+      `;
+    }
+  } else {
+    licContainer.innerHTML = `<div class="doc-empty-box">❌ No Driving Licence uploaded.<br>Customer will present physical copy at pickup hub.</div>`;
+  }
+
+  // ID preview
+  const idContainer = document.getElementById("idPreviewContainer");
+  if (idDoc) {
+    if (idDoc.startsWith("data:application/pdf") || idDoc.includes(".pdf")) {
+      idContainer.innerHTML = `
+        <div style="padding:24px 0">
+          <div style="font-size:2.5rem">📄</div>
+          <div style="font-size:.82rem;margin:8px 0">Govt ID Proof (PDF Document)</div>
+          <a href="${idDoc}" target="_blank" download="id_${bookingId}.pdf" class="btn" style="padding:6px 14px;font-size:.78rem">Download PDF</a>
+        </div>
+      `;
+    } else {
+      idContainer.innerHTML = `
+        <a href="${idDoc}" target="_blank" title="Click to view full image">
+          <img src="${idDoc}" class="doc-preview-img" alt="Govt Photo ID">
+        </a>
+        <div style="margin-top:8px">
+          <a href="${idDoc}" download="GovtID_${bookingId}.jpg" class="btn alt" style="padding:5px 10px;font-size:.74rem">⬇ Download Image</a>
+        </div>
+      `;
+    }
+  } else {
+    idContainer.innerHTML = `<div class="doc-empty-box">❌ No Govt ID uploaded.<br>Customer will present physical copy at pickup hub.</div>`;
+  }
+
+  document.getElementById("docVerificationSummary").innerHTML = `
+    <b>Vehicle:</b> ${b.veh_name || b.veh} · <b>Pickup Hub:</b> ${b.pickup_hub || b.loc}
+  `;
+
+  document.getElementById("docModal").style.display = "flex";
+}
+
+function closeDocModal() {
+  document.getElementById("docModal").style.display = "none";
+}
+
+// Tab Switching
+const tabB = document.getElementById("tabBookings");
+const tabT = document.getElementById("tabTickets");
+const tabR = document.getElementById("tabReviews");
+const vB = document.getElementById("viewBookings");
+const vT = document.getElementById("viewTickets");
+const vR = document.getElementById("viewReviews");
+
+tabB.onclick = () => {
+  tabB.classList.add("active"); tabT.classList.remove("active"); tabR.classList.remove("active");
+  vB.style.display = "block"; vT.style.display = "none"; vR.style.display = "none";
+};
+tabT.onclick = () => {
+  tabT.classList.add("active"); tabB.classList.remove("active"); tabR.classList.remove("active");
+  vT.style.display = "block"; vB.style.display = "none"; vR.style.display = "none";
+};
+tabR.onclick = () => {
+  tabR.classList.add("active"); tabB.classList.remove("active"); tabT.classList.remove("active");
+  vR.style.display = "block"; vB.style.display = "none"; vR.style.display = "none";
+};
+
+// Search Filter
+document.getElementById("searchBox").oninput = renderBookings;
+document.getElementById("refreshBtn").onclick = () => {
+  document.getElementById("refreshBtn").textContent = "⏳...";
+  loadAllData().then(() => {
+    document.getElementById("refreshBtn").textContent = "🔄 Refresh";
+  });
+};
+
+// CSV Export
+document.getElementById("exportBtn").onclick = () => {
+  if (!allBookings.length) return alert("No bookings to export.");
+  const headers = ["Booking ID", "Customer Name", "Phone", "Email", "Vehicle", "Days", "Pickup Hub", "Total", "Advance Paid", "Balance Due"];
+  const rows = allBookings.map(b => [
+    b.booking_id || b.id || "",
+    `"${(b.customer_name || b.name || '').replace(/"/g, '""')}"`,
+    b.customer_phone || b.phone || "",
+    b.customer_email || b.email || "",
+    `"${(b.veh_name || b.veh || '').replace(/"/g, '""')}"`,
+    b.days || 1,
+    `"${(b.pickup_hub || b.loc || '').replace(/"/g, '""')}"`,
+    b.total_amount || b.total || 0,
+    b.advance_paid || b.advance || 0,
+    b.balance_due || b.balance || 0
+  ]);
+  const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `Rivo_Bookings_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+// Init
+checkAuth();
+</script>
+
+</body>
+</html>

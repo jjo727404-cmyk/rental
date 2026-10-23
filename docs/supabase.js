@@ -118,6 +118,8 @@ const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
         customer_phone: b.phone || "",
         customer_email: b.email || "",
         license_no: b.lic || "",
+        license_doc: b.licenseDoc || b.license_doc || "",
+        id_doc: b.idDoc || b.id_doc || "",
         status: b.status || "Confirmed"
       };
 
@@ -130,6 +132,22 @@ const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 
         if (!res.ok) {
           const errText = await res.text();
+          // Fallback if license_doc or id_doc columns don't exist yet in Supabase
+          if (errText.includes("license_doc") || errText.includes("id_doc")) {
+            console.warn("Supabase bookings table missing doc columns. Retrying without them...");
+            const fallbackRow = { ...row };
+            delete fallbackRow.license_doc;
+            delete fallbackRow.id_doc;
+            const retryRes = await sbFetch("/rest/v1/bookings", {
+              method: "POST",
+              headers: { "Prefer": "return=minimal" },
+              body: JSON.stringify(fallbackRow)
+            });
+            if (retryRes.ok) {
+              console.log("✅ Booking saved to Supabase (without doc columns):", row.booking_id);
+              return { data: fallbackRow };
+            }
+          }
           console.error("Supabase booking insert error:", res.status, errText);
           if (!silent) {
             alert(`⚠️ Supabase Error (HTTP ${res.status}):\n${errText}`);
@@ -139,7 +157,6 @@ const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 
         console.log("✅ Booking successfully saved to Supabase:", row.booking_id);
         if (!silent) {
-          // Visual confirmation toast or brief alert
           console.info("Saved to Supabase:", row);
         }
         return { data: row };
@@ -247,6 +264,44 @@ const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
         return res.ok ? { data: row } : { error: await res.text() };
       } catch (err) {
         return { error: err.message };
+      }
+    },
+
+    // Fetch bookings for Admin dashboard
+    async getBookings() {
+      try {
+        const res = await sbFetch("/rest/v1/bookings?select=*&order=id.desc&limit=100");
+        if (!res.ok) return [];
+        return await res.json();
+      } catch (err) {
+        console.error("Failed to load bookings:", err);
+        return [];
+      }
+    },
+
+    // Fetch tickets for Admin dashboard
+    async getTickets() {
+      try {
+        const res = await sbFetch("/rest/v1/tickets?select=*&order=id.desc&limit=100");
+        if (!res.ok) return [];
+        return await res.json();
+      } catch (err) {
+        console.error("Failed to load tickets:", err);
+        return [];
+      }
+    },
+
+    // Update ticket status
+    async updateTicketStatus(ticketId, status) {
+      try {
+        const res = await sbFetch(`/rest/v1/tickets?ticket_id=eq.${encodeURIComponent(ticketId)}`, {
+          method: "PATCH",
+          headers: { "Prefer": "return=minimal" },
+          body: JSON.stringify({ status })
+        });
+        return res.ok;
+      } catch (err) {
+        return false;
       }
     },
 

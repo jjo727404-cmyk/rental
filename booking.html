@@ -1437,6 +1437,9 @@ footer{
 .doc-box.has-file .doc-badge{
   display:none;
 }
+.doc-box *{
+  pointer-events:none;
+}
 .doc-box input[type="file"]{
   position:absolute;
   inset:0;
@@ -1444,6 +1447,16 @@ footer{
   width:100%;
   height:100%;
   cursor:pointer;
+  z-index:20;
+  pointer-events:auto;
+}
+.doc-thumb{
+  width:100%;
+  max-height:85px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-top:6px;
+  border:1.5px solid var(--brand);
 }
 .doc-privacy-note{
   display:flex;
@@ -1747,7 +1760,7 @@ footer{
           <div class="doc-upload-grid">
             <!-- Driving Licence Box -->
             <div class="doc-box" id="licDropBox">
-              <input type="file" id="fileLic" accept="image/*,.pdf" capture="environment">
+              <input type="file" id="fileLic" accept="image/*,.pdf">
               <span class="doc-icon">🪪</span>
               <span class="doc-title" id="licDocTitle">Driving Licence Copy</span>
               <span class="doc-sub">Front &amp; Back Photo or PDF</span>
@@ -1757,7 +1770,7 @@ footer{
 
             <!-- Govt ID Proof Box -->
             <div class="doc-box" id="idDropBox">
-              <input type="file" id="fileId" accept="image/*,.pdf" capture="environment">
+              <input type="file" id="fileId" accept="image/*,.pdf">
               <span class="doc-icon">🆔</span>
               <span class="doc-title">Govt Photo ID Proof</span>
               <span class="doc-sub">Aadhaar Card, Passport or Voter ID</span>
@@ -2870,29 +2883,46 @@ function setupDocUpload() {
   const bLic = $("#licDropBox"), bId = $("#idDropBox");
   const nLic = $("#licFileName"), nId = $("#idFileName");
 
-  if (fLic && bLic) {
-    fLic.addEventListener("change", () => {
-      if (fLic.files && fLic.files[0]) {
-        const file = fLic.files[0];
-        bLic.classList.add("has-file");
-        nLic.textContent = "✓ " + file.name + " (" + (file.size / 1024).toFixed(0) + " KB)";
+  function attachBox(fileInput, dropBox, nameLabel) {
+    if (!fileInput || !dropBox) return;
+
+    dropBox.onclick = (e) => {
+      if (e.target !== fileInput) {
+        fileInput.click();
+      }
+    };
+
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        dropBox.classList.add("has-file");
+        if (nameLabel) {
+          nameLabel.textContent = "✓ " + file.name + " (" + (file.size / 1024).toFixed(0) + " KB)";
+        }
+
+        // Instant visual image thumbnail preview inside the box
+        let thumb = dropBox.querySelector(".doc-thumb");
+        if (file.type && file.type.startsWith("image/")) {
+          if (!thumb) {
+            thumb = document.createElement("img");
+            thumb.className = "doc-thumb";
+            dropBox.appendChild(thumb);
+          }
+          thumb.src = URL.createObjectURL(file);
+          thumb.style.display = "block";
+        } else if (thumb) {
+          thumb.style.display = "none";
+        }
       } else {
-        bLic.classList.remove("has-file");
+        dropBox.classList.remove("has-file");
+        const thumb = dropBox.querySelector(".doc-thumb");
+        if (thumb) thumb.remove();
       }
     });
   }
 
-  if (fId && bId) {
-    fId.addEventListener("change", () => {
-      if (fId.files && fId.files[0]) {
-        const file = fId.files[0];
-        bId.classList.add("has-file");
-        nId.textContent = "✓ " + file.name + " (" + (file.size / 1024).toFixed(0) + " KB)";
-      } else {
-        bId.classList.remove("has-file");
-      }
-    });
-  }
+  attachBox(fLic, bLic, nLic);
+  attachBox(fId, bId, nId);
 }
 
 // Initialize
@@ -2901,6 +2931,7 @@ renderCategoryTabs();
 renderVehPicker();
 updateAddonLabels();
 calcTotal();
+setupDocUpload();
 </script>
 </body>
 </html>

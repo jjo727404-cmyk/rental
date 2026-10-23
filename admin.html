@@ -652,7 +652,10 @@ async function loadAllData() {
   allTickets = Array.from(tMap.values());
 
   // Reviews
-  allReviews = await RivoDB.getReviews();
+  const remoteR = await RivoDB.getReviews();
+  const localRRaw = localStorage.getItem("rivo_rv");
+  const localRList = localRRaw ? JSON.parse(localRRaw) : [];
+  allReviews = [...remoteR, ...localRList];
 
   renderStats();
   renderBookings();
@@ -805,13 +808,22 @@ function renderReviews() {
     tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;padding:36px;color:var(--muted)">No customer reviews yet.</td></tr>`;
     return;
   }
-  tbody.innerHTML = allReviews.map(r => `
-    <tr>
-      <td><b>${r.name || "Rider"}</b></td>
-      <td style="color:#f59e0b;font-size:1.1rem">${"★".repeat(r.stars || 5)}${"☆".repeat(5 - (r.stars || 5))}</td>
-      <td>${r.text || ""}</td>
-    </tr>
-  `).join("");
+  tbody.innerHTML = allReviews.map(r => {
+    const name = r.name || r.n || "Rider";
+    const stars = parseInt(r.stars || r.s || 5, 10);
+    const text = r.text || r.t || "";
+    const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString("en-IN", {month:"short", day:"numeric"}) : "Verified Ride";
+    return `
+      <tr>
+        <td>
+          <div style="font-weight:700">${name}</div>
+          <small style="color:var(--muted)">${dateStr}</small>
+        </td>
+        <td style="color:#f59e0b;font-size:1.15rem;white-space:nowrap">${"★".repeat(stars)}${"☆".repeat(Math.max(0, 5 - stars))}</td>
+        <td style="line-height:1.45">${text}</td>
+      </tr>
+    `;
+  }).join("");
 }
 
 // Document Modal Logic
@@ -907,7 +919,7 @@ tabT.onclick = () => {
 };
 tabR.onclick = () => {
   tabR.classList.add("active"); tabB.classList.remove("active"); tabT.classList.remove("active");
-  vR.style.display = "block"; vB.style.display = "none"; vR.style.display = "none";
+  vR.style.display = "block"; vB.style.display = "none"; vT.style.display = "none";
 };
 
 // Search Filter

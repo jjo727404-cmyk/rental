@@ -418,10 +418,9 @@ tr:hover td{
       <h2>Staff Portal Login</h2>
       <p>Enter your 4-digit staff PIN to view live bookings, customer documents, and roadside tickets.</p>
       <form id="pinForm" onsubmit="return false;">
-        <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="8" autofocus>
+        <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="32" autofocus>
         <button type="submit" class="btn" style="width:100%;padding:12px" id="loginBtn">Unlock Admin Portal ➔</button>
       </form>
-      <small style="display:block;margin-top:14px;color:var(--muted);font-size:.76rem">Default Passcode: <b>7404</b> or <b>1234</b></small>
     </div>
   </div>
 
@@ -472,6 +471,7 @@ tr:hover td{
       <input type="text" id="searchBox" class="search-input" placeholder="🔍 Search by customer name, phone, booking ID, or car...">
       <div style="display:flex;gap:8px">
         <button class="btn alt" id="exportBtn">📥 Export CSV</button>
+        <button class="btn alt" onclick="changeAdminPassword()">🔑 Change Password</button>
         <button class="btn alt" onclick="logout()">🔒 Lock</button>
       </div>
     </div>
@@ -607,17 +607,42 @@ function checkAuth() {
   }
 }
 
+function getAdminPass() {
+  return localStorage.getItem("rivo_admin_pin") || "7404";
+}
+
 loginBtn.onclick = () => {
   const pin = pinInput.value.trim();
-  if (VALID_PINS.includes(pin)) {
+  if (pin === getAdminPass() || (getAdminPass() === "7404" && pin === "1234")) {
     sessionStorage.setItem("rivo_admin_auth", "1");
+    pinInput.value = "";
     checkAuth();
   } else {
-    alert("Invalid Staff PIN. Please try again.");
+    alert("Incorrect password. Access denied.");
     pinInput.value = "";
     pinInput.focus();
   }
 };
+
+pinInput.onkeydown = (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    loginBtn.click();
+  }
+};
+
+function changeAdminPassword() {
+  const current = prompt("Enter current Admin Password:");
+  if (!current || current !== getAdminPass()) {
+    return alert("Incorrect current password.");
+  }
+  const newPass = prompt("Enter your new secret Admin Password (min 4 characters):");
+  if (!newPass || newPass.trim().length < 4) {
+    return alert("Password must be at least 4 characters.");
+  }
+  localStorage.setItem("rivo_admin_pin", newPass.trim());
+  alert("✓ Admin password successfully updated! Please remember your new password.");
+}
 
 function logout() {
   sessionStorage.removeItem("rivo_admin_auth");

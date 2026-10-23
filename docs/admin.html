@@ -483,9 +483,9 @@ tr:hover td{
           <thead>
             <tr>
               <th>ID &amp; Date</th>
-              <th>Customer</th>
-              <th>Vehicle</th>
-              <th>Duration</th>
+              <th>Customer &amp; Phone</th>
+              <th>Vehicle &amp; Hub</th>
+              <th>Pickup &amp; Return</th>
               <th>Financials</th>
               <th>Documents</th>
               <th>Action</th>
@@ -707,6 +707,23 @@ function fmt(n) {
   return "₹" + (parseInt(n, 10) || 0).toLocaleString("en-IN");
 }
 
+function formatDateTime(dt) {
+  if (!dt) return "—";
+  try {
+    const d = new Date(dt);
+    if (isNaN(d.getTime())) return String(dt);
+    return d.toLocaleString("en-IN", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  } catch(e) {
+    return String(dt);
+  }
+}
+
 function renderBookings() {
   const tbody = document.getElementById("bookingsTbody");
   const q = document.getElementById("searchBox").value.toLowerCase().trim();
@@ -740,6 +757,13 @@ function renderBookings() {
     const balance = b.balance_due || b.balance || 0;
     const hasDoc = Boolean(b.license_doc || b.licenseDoc || b.id_doc || b.idDoc);
     const dateStr = b.created_at ? new Date(b.created_at).toLocaleDateString("en-IN", {month:"short", day:"numeric"}) : "Recent";
+    const pickupDt = b.pickup_datetime || b.at;
+    let returnDt = b.return_datetime || b.returnAt;
+    if (!returnDt && pickupDt) {
+      try {
+        returnDt = new Date(new Date(pickupDt).getTime() + (days || 1) * 86400000).toISOString();
+      } catch(e) {}
+    }
 
     return `
       <tr>
@@ -748,15 +772,29 @@ function renderBookings() {
           <small style="color:var(--muted)">${dateStr}</small>
         </td>
         <td>
-          <div style="font-weight:600">${name}</div>
-          <small style="color:var(--muted)">📱 ${phone}</small>
+          <div style="font-weight:700;font-size:.92rem;color:var(--ink)">${name}</div>
+          <div style="margin:4px 0">
+            <a href="tel:${phone}" style="color:var(--brand);font-weight:700;font-size:.88rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+              📞 ${phone || "No Phone"}
+            </a>
+          </div>
           ${email ? `<div style="font-size:.72rem;color:var(--muted)">✉️ ${email}</div>` : ""}
         </td>
         <td>
           <div style="font-weight:600">${veh}</div>
           <small style="color:var(--muted)">📍 ${hub}</small>
         </td>
-        <td><b>${days} Day(s)</b></td>
+        <td>
+          <div style="font-size:.82rem;margin-bottom:3px;white-space:nowrap">
+            <span style="color:var(--brand);font-weight:700">🟢 Pickup:</span> <b>${formatDateTime(pickupDt)}</b>
+          </div>
+          <div style="font-size:.82rem;margin-bottom:4px;white-space:nowrap">
+            <span style="color:var(--brand2);font-weight:700">🔴 Return:</span> <b>${formatDateTime(returnDt)}</b>
+          </div>
+          <div style="display:inline-block;background:var(--surface-hover);padding:2px 8px;border-radius:6px;font-size:.74rem;font-weight:700;color:var(--ink)">
+            ⏱️ ${days} Day${days > 1 ? 's' : ''}
+          </div>
+        </td>
         <td>
           <div>Total: <b>${fmt(total)}</b></div>
           <div style="font-size:.76rem;color:var(--success)">Paid: ${fmt(advance)}</div>
@@ -773,8 +811,8 @@ function renderBookings() {
         </td>
         <td>
           <div style="display:flex;gap:6px">
-            <a href="https://wa.me/91${phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn alt" style="padding:4px 8px;font-size:.76rem" title="WhatsApp Customer">💬</a>
-            <a href="tel:${phone}" class="btn alt" style="padding:4px 8px;font-size:.76rem" title="Call Customer">📞</a>
+            <a href="https://wa.me/91${phone.replace(/[^0-9]/g,'')}" target="_blank" class="btn alt" style="padding:5px 9px;font-size:.82rem" title="WhatsApp Customer">💬</a>
+            <a href="tel:${phone}" class="btn alt" style="padding:5px 9px;font-size:.82rem" title="Call Customer">📞</a>
           </div>
         </td>
       </tr>
@@ -959,7 +997,7 @@ document.getElementById("refreshBtn").onclick = () => {
 // CSV Export
 document.getElementById("exportBtn").onclick = () => {
   if (!allBookings.length) return alert("No bookings to export.");
-  const headers = ["Booking ID", "Customer Name", "Phone", "Email", "Vehicle", "Days", "Pickup Hub", "Total", "Advance Paid", "Balance Due"];
+  const headers = ["Booking ID", "Customer Name", "Phone", "Email", "Vehicle", "Days", "Pickup Hub", "Pickup Date Time", "Return Date Time", "Total", "Advance Paid", "Balance Due"];
   const rows = allBookings.map(b => [
     b.booking_id || b.id || "",
     `"${(b.customer_name || b.name || '').replace(/"/g, '""')}"`,
@@ -968,6 +1006,8 @@ document.getElementById("exportBtn").onclick = () => {
     `"${(b.veh_name || b.veh || '').replace(/"/g, '""')}"`,
     b.days || 1,
     `"${(b.pickup_hub || b.loc || '').replace(/"/g, '""')}"`,
+    `"${formatDateTime(b.pickup_datetime || b.at)}"`,
+    `"${formatDateTime(b.return_datetime || b.returnAt)}"`,
     b.total_amount || b.total || 0,
     b.advance_paid || b.advance || 0,
     b.balance_due || b.balance || 0

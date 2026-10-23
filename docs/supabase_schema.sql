@@ -28,9 +28,16 @@ create table if not exists public.bookings (
     customer_phone text not null,
     customer_email text,
     license_no text,
+    license_doc text,
+    id_doc text,
     status text not null default 'Confirmed',
     created_at timestamptz default timezone('utc'::text, now()) not null
 );
+
+-- Quick 1-Click Upgrade for existing database:
+alter table public.bookings 
+add column if not exists license_doc text,
+add column if not exists id_doc text;
 
 -- 2. BREAKDOWN TICKETS TABLE
 create table if not exists public.tickets (

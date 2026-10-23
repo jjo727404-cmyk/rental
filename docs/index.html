@@ -328,7 +328,12 @@ textarea{width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid var(
 #cmpbar{position:fixed;left:50%;bottom:16px;transform:translate(-50%,120px);z-index:14;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:99px;display:flex;gap:10px;align-items:center;transition:transform .4s;font-size:.85rem}#cmpbar.on{transform:translate(-50%,0)}
 .det img{width:100%;border-radius:14px;aspect-ratio:3/2;object-fit:cover;animation:rise .5s both}.det table,.cmpt{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}.det td,.cmpt td,.cmpt th{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}.det td:last-child{text-align:right;font-weight:600}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:8px 0}.cal b{font-size:.68rem;color:var(--muted);text-align:center}.cd{border:0;border-radius:8px;padding:8px 0;font:600 .78rem Inter,sans-serif;background:#2f9e6e22;color:var(--ink);cursor:pointer;transition:transform .15s}.cd:hover{transform:scale(1.12)}.cd.x{background:#d63f4f22;color:var(--muted);text-decoration:line-through;cursor:not-allowed}.cd.s{background:var(--brand);color:#fff}
-.pl li{margin:6px 0}#plOut{animation:rise .5s both}.stars{color:#e8a21f;letter-spacing:2px}.rvf{display:grid;gap:8px;max-width:520px;margin:26px auto 0}
+.pl li{margin:6px 0}#plOut{animation:rise .5s both}.stars{color:#e8a21f;letter-spacing:2px}
+.rvf{display:grid;gap:10px;max-width:520px;width:100%;margin:28px auto 0;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:22px 18px;box-shadow:0 8px 24px rgba(0,0,0,.06);box-sizing:border-box}
+.rvf h3{margin:0 0 2px;font-size:1.15rem;text-align:center}
+.rvf select,.rvf input,.rvf textarea{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:.92rem;box-sizing:border-box;outline:none}
+.rvf select:focus,.rvf input:focus,.rvf textarea:focus{border-color:var(--brand)}
+.rvf button.btn{width:100%;padding:13px;font-weight:700;font-size:.95rem;border-radius:12px;margin-top:2px}
 .chip.on2{background:var(--brand);color:#fff}
 .nophoto{aspect-ratio:300/170;display:grid;place-items:center;align-content:center;gap:4px;background:linear-gradient(135deg,var(--soft),var(--line));color:var(--muted)}.nophoto span{font-size:3rem;animation:float 3.5s ease-in-out infinite}.nophoto small{font-size:.75rem}
 .mob-cta{display:none}
@@ -449,7 +454,7 @@ header .wrap{padding:0 10px}
 <div id="prog"></div>
 <header><div class="wrap"><nav>
 <a class="logo" href="#top"><i>R</i>Rivo</a>
-<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill" onclick="openBreakdown();return false;">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="booking.html">Book a ride</a></li></ul>
+<ul id="navLinks"><li><a href="#fleet" data-go="bike">Bikes</a></li><li><a href="#fleet" data-go="car">Cars</a></li><li><a href="#fleet" data-go="truck">Trucks</a></li><li><a href="#how">How it works</a></li><li><a href="#routes">Routes</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#price">Pre-Book / Price</a></li><li><a href="#cancel">Cancellation</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#faq">FAQ</a></li><li><a href="#" class="tkopen tk-pill" onclick="openBreakdown();return false;">🛠 Breakdown help</a></li><li id="mobPref" class="mob-pref"></li><li id="mobPwaLi" hidden><button class="btn alt" id="mobPwa" style="width:100%;text-align:center;margin-top:6px">⬇ Install App</button></li><li class="mob-cta"><a class="btn" href="booking.html">Book a ride</a></li></ul>
 <div class="nav-actions">
 <button type="button" class="chip sb-status-badge" onclick="if(window.RivoDB)RivoDB.openSetupModal();" title="Supabase Cloud Database Settings"><span class="sb-dot disconnected"></span> Connect Supabase</button>
 <select class="chip" id="cSel" aria-label="Country"></select><select class="chip" id="lSel" aria-label="Language"></select><button class="chip" id="thB" aria-label="Theme">🌙</button><button class="chip" id="pwaB" hidden>⬇ Install</button><a class="btn nav-book" href="booking.html">Book a ride</a>
@@ -462,8 +467,8 @@ header .wrap{padding:0 10px}
 <span class="tag">📍 Kochi · Munnar · Varkala · Wayanad</span><span class="tag">✅ Free cancellation up to 48 hrs</span>
 <h1>Rent a <span id="hv">bike</span>.<br>Find your <em>own road</em> through <span class="cname">Kerala</span>.</h1>
 <p>Well-serviced cars, bikes and scooters, delivered to your hotel or airport. No hidden fees, easy cancellation, 24×7 roadside help.</p>
-<a class="btn" href="#fleet" data-go="bike">Browse bikes</a> <a class="btn" href="#fleet" data-go="car" style="background:#fff;color:#0f3d34">Browse cars</a> <a class="btn alt" style="color:#fff;border-color:rgba(255,255,255,.35)" href="#cancel">Cancellation policy</a>
-<div class="stats"><div><b class="stat-num" data-target="150" data-suffix="+">150+</b><span>Cars, bikes &amp; scooters</span></div><div><b class="stat-num" data-target="8" data-suffix="">8</b><span>Pickup cities in Kerala</span></div><div><b class="stat-num" data-target="4.8" data-suffix="★">4.8★</b><span>Verified rider score</span></div></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><a class="btn" href="#fleet" data-go="bike">Browse bikes</a> <a class="btn" href="#fleet" data-go="car" style="background:#fff;color:#0f3d34">Browse cars</a> <a class="btn alt" style="color:#fff;border-color:rgba(255,255,255,.35)" href="#cancel">Cancellation policy</a> <a class="btn alt" style="color:#fff;border-color:rgba(255,255,255,.35)" href="#reviews">⭐ Customer reviews</a></div>
+<div class="stats"><div><b class="stat-num" data-target="150" data-suffix="+">150+</b><span>Cars, bikes &amp; scooters</span></div><div><b class="stat-num" data-target="8" data-suffix="">8</b><span>Pickup cities in Kerala</span></div><div><a href="#reviews" style="display:block;color:inherit;text-decoration:none" title="Read customer reviews"><b class="stat-num" data-target="4.8" data-suffix="★">4.8★</b><span>Verified rider score ➔</span></a></div></div>
 </div>
 <div class="hero-frame"><img id="heroArt" class="hero-img" src="img/classic350.jpg" alt="Rivo Premium Fleet" loading="eager"><div class="hero-badge"><span class="badge-dot"></span> Certified &amp; Insured Fleet</div></div>
 </div></div>
@@ -1426,7 +1431,7 @@ const draw=()=>{
 if(window.RivoDB&&typeof RivoDB.getReviews=="function"){
   RivoDB.getReviews().then(res=>{if(res&&res.length){remoteReviews=res;draw();}}).catch(()=>{});
 }
-q.insertAdjacentHTML("afterend",'<div class="rvf"><h3 style="text-align:center">Rate your ride</h3><select id="rvS"><option value="5">★★★★★ Excellent</option><option value="4">★★★★ Good</option><option value="3">★★★ Okay</option><option value="2">★★ Poor</option><option value="1">★ Bad</option></select><input type="text" id="rvN" placeholder="Your name"><textarea id="rvT" placeholder="How was your ride?"></textarea><button class="btn" id="rvG">Post review</button></div>');
+q.insertAdjacentHTML("afterend",'<div class="rvf"><h3>Rate your ride</h3><small style="text-align:center;color:var(--muted);margin-bottom:4px">Share your trip review with fellow travellers</small><select id="rvS"><option value="5">★★★★★ 5 Stars - Excellent ride</option><option value="4">★★★★☆ 4 Stars - Very good</option><option value="3">★★★☆☆ 3 Stars - Average / Okay</option><option value="2">★★☆☆☆ 2 Stars - Needs improvement</option><option value="1">★☆☆☆☆ 1 Star - Poor experience</option></select><input type="text" id="rvN" placeholder="Your name (e.g. Arun Kumar)" maxlength="40"><textarea id="rvT" rows="3" placeholder="How was your vehicle condition, pickup handover, and trip?" maxlength="400"></textarea><button class="btn" id="rvG">Submit Rider Review ➔</button></div>');
 $("#rvG").onclick=()=>{
   const n=$("#rvN").value.trim(),t=$("#rvT").value.trim(),s=+$("#rvS").value;
   if(!n||!t)return toast("Add your name and a few words.");

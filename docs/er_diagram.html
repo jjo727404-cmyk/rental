@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivo Rentals - ER Diagram (Chen Notation & Relational Schema)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c1017;
+    --surface: #141b24;
+    --border: #232f3e;
+    --text: #f0f4f8;
+    --muted: #8b9bb4;
+    --entity-bg: #1e293b;
+    --entity-stroke: #38bdf8;
+    --rel-bg: #2d2417;
+    --rel-stroke: #f59e0b;
+    --attr-bg: #1a2230;
+    --attr-stroke: #94a3b8;
+    --pk-stroke: #10b981;
+    --derived-stroke: #a855f7;
+    --line: #475569;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    max-width: 1200px;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .title-group h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #38bdf8, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .title-group p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    border-color: #38bdf8;
+    transform: translateY(-1px);
+  }
+  .btn.primary {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #fff;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: #1e293b;
+    color: #38bdf8;
+  }
+  .canvas-card {
+    max-width: 1300px;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+    overflow-x: auto;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 14px 18px;
+    background: #0f151e;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-shape {
+    width: 24px;
+    height: 14px;
+    border-radius: 3px;
+  }
+  .b-entity { background: var(--entity-bg); border: 2px solid var(--entity-stroke); }
+  .b-rel { background: var(--rel-bg); border: 2px solid var(--rel-stroke); transform: rotate(45deg); width: 14px; height: 14px; }
+  .b-attr { background: var(--attr-bg); border: 1.5px solid var(--attr-stroke); border-radius: 99px; }
+  .b-pk { background: var(--attr-bg); border: 1.5px solid var(--pk-stroke); border-radius: 99px; text-decoration: underline; }
+  .b-derived { background: var(--attr-bg); border: 1.5px dashed var(--derived-stroke); border-radius: 99px; }
+
+  svg text {
+    font-family: 'Inter', -apple-system, sans-serif;
+  }
+  .svg-entity rect { fill: var(--entity-bg); stroke: var(--entity-stroke); stroke-width: 2.5; rx: 4; }
+  .svg-entity text { fill: #f8fafc; font-weight: 700; font-size: 13px; text-anchor: middle; letter-spacing: 0.5px; }
+
+  .svg-rel polygon { fill: var(--rel-bg); stroke: var(--rel-stroke); stroke-width: 2; }
+  .svg-rel text { fill: #fef3c7; font-weight: 700; font-size: 11px; text-anchor: middle; }
+
+  .svg-attr ellipse { fill: var(--attr-bg); stroke: var(--attr-stroke); stroke-width: 1.4; }
+  .svg-attr text { fill: #cbd5e1; font-size: 10.5px; text-anchor: middle; font-weight: 500; }
+  .svg-attr.pk ellipse { stroke: var(--pk-stroke); stroke-width: 2; }
+  .svg-attr.pk text { fill: #6ee7b7; font-weight: 700; text-decoration: underline; }
+  .svg-attr.derived ellipse { stroke: var(--derived-stroke); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .svg-attr.derived text { fill: #d8b4fe; font-style: italic; }
+
+  .svg-link { stroke: var(--line); stroke-width: 1.5; fill: none; }
+  .svg-cardinality { fill: #38bdf8; font-weight: 800; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Relational Table View */
+  .rel-table-view { display: none; }
+  .rel-table-view.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .schema-table {
+    background: #0f151e;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .schema-header {
+    background: #1e293b;
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #38bdf8;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .schema-rows { list-style: none; }
+  .schema-rows li {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .schema-rows li:last-child { border-bottom: none; }
+  .schema-rows li .col-name { display: flex; align-items: center; gap: 6px; }
+  .schema-rows li .col-type { color: var(--muted); font-size: 0.78rem; }
+  .key-tag { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .tag-pk { background: #065f46; color: #34d399; }
+  .tag-fk { background: #1e3a8a; color: #60a5fa; }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 0; }
+    .canvas-card { border: none; box-shadow: none; padding: 0; }
+    header, .tabs, .legend, .actions { display: none; }
+    :root {
+      --entity-bg: #f8fafc;
+      --entity-stroke: #0284c7;
+      --rel-bg: #fffbeb;
+      --rel-stroke: #d97706;
+      --attr-bg: #f1f5f9;
+      --attr-stroke: #475569;
+      --pk-stroke: #059669;
+      --derived-stroke: #7c3aed;
+      --line: #64748b;
+    }
+    .svg-entity text { fill: #0f172a; }
+    .svg-rel text { fill: #78350f; }
+    .svg-attr text { fill: #1e293b; }
+    .svg-attr.pk text { fill: #065f46; }
+    .svg-cardinality { fill: #0284c7; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-group">
+    <h1>Rivo Rentals - Entity-Relationship (ER) Diagram</h1>
+    <p>Academic & Database Specification for Supabase Cloud Database</p>
+  </div>
+  <div class="actions">
+    <button class="btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+    <a href="index.html" class="btn primary">← Back to Website</a>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchView('chen')">Chen Notation (Conceptual)</button>
+  <button class="tab-btn" onclick="switchView('relational')">Relational Schema (Supabase Tables)</button>
+</div>
+
+<div class="canvas-card">
+  <div class="legend" id="chenLegend">
+    <div class="legend-item"><div class="badge-shape b-entity"></div><strong>Entity (Rectangle)</strong>: Strong Entity Set</div>
+    <div class="legend-item"><div class="badge-shape b-rel"></div><strong>Relationship (Diamond)</strong>: Association between entities</div>
+    <div class="legend-item"><div class="badge-shape b-attr"></div><strong>Attribute (Oval)</strong>: Entity property</div>
+    <div class="legend-item"><div class="badge-shape b-pk"></div><strong>Primary Key (Underlined)</strong>: Unique identifier</div>
+    <div class="legend-item"><div class="badge-shape b-derived"></div><strong>Derived Attribute (Dashed)</strong>: Calculated at runtime</div>
+    <div class="legend-item"><strong style="color:#38bdf8;font-family:'JetBrains Mono'">1 : N</strong><strong>Cardinality</strong>: Multiplicity</div>
+  </div>
+
+  <!-- CHEN NOTATION SVG -->
+  <div id="chenView">
+    <svg viewBox="0 0 1200 920" width="100%" height="auto">
+      <defs>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- ==================== CONNECTING LINES ==================== -->
+      <!-- CUSTOMER Attributes Lines -->
+      <line class="svg-link" x1="250" y1="230" x2="110" y2="130" />
+      <line class="svg-link" x1="250" y1="230" x2="200" y2="100" />
+      <line class="svg-link" x1="250" y1="230" x2="300" y2="100" />
+      <line class="svg-link" x1="250" y1="230" x2="100" y2="210" />
+      <line class="svg-link" x1="250" y1="230" x2="100" y2="280" />
+
+      <!-- BOOKING Attributes Lines -->
+      <line class="svg-link" x1="600" y1="360" x2="480" y2="260" />
+      <line class="svg-link" x1="600" y1="360" x2="570" y2="230" />
+      <line class="svg-link" x1="600" y1="360" x2="660" y2="230" />
+      <line class="svg-link" x1="600" y1="360" x2="740" y2="260" />
+      <line class="svg-link" x1="600" y1="360" x2="750" y2="330" />
+      <line class="svg-link" x1="600" y1="360" x2="750" y2="400" />
+      <line class="svg-link" x1="600" y1="360" x2="730" y2="470" />
+      <line class="svg-link" x1="600" y1="360" x2="640" y2="490" />
+      <line class="svg-link" x1="600" y1="360" x2="530" y2="480" />
+
+      <!-- VEHICLE Attributes Lines -->
+      <line class="svg-link" x1="970" y1="230" x2="930" y2="110" />
+      <line class="svg-link" x1="970" y1="230" x2="1030" y2="110" />
+      <line class="svg-link" x1="970" y1="230" x2="1110" y2="180" />
+      <line class="svg-link" x1="970" y1="230" x2="1110" y2="260" />
+
+      <!-- TICKET Attributes Lines -->
+      <line class="svg-link" x1="250" y1="710" x2="100" y2="650" />
+      <line class="svg-link" x1="250" y1="710" x2="100" y2="720" />
+      <line class="svg-link" x1="250" y1="710" x2="110" y2="790" />
+      <line class="svg-link" x1="250" y1="710" x2="190" y2="840" />
+      <line class="svg-link" x1="250" y1="710" x2="300" y2="840" />
+      <line class="svg-link" x1="250" y1="710" x2="380" y2="800" />
+
+      <!-- REVIEW Attributes Lines -->
+      <line class="svg-link" x1="970" y1="710" x2="900" y2="830" />
+      <line class="svg-link" x1="970" y1="710" x2="990" y2="840" />
+      <line class="svg-link" x1="970" y1="710" x2="1080" y2="820" />
+      <line class="svg-link" x1="970" y1="710" x2="1110" y2="740" />
+
+      <!-- Entity to Relationship Lines -->
+      <!-- CUSTOMER -[PLACES]-> BOOKING -->
+      <line class="svg-link" x1="250" y1="230" x2="410" y2="290" />
+      <line class="svg-link" x1="410" y1="290" x2="600" y2="360" />
+
+      <!-- BOOKING -[RESERVES]-> VEHICLE -->
+      <line class="svg-link" x1="600" y1="360" x2="800" y2="290" />
+      <line class="svg-link" x1="800" y1="290" x2="970" y2="230" />
+
+      <!-- CUSTOMER -[REPORTS]-> TICKET -->
+      <line class="svg-link" x1="250" y1="230" x2="250" y2="470" />
+      <line class="svg-link" x1="250" y1="470" x2="250" y2="710" />
+
+      <!-- CUSTOMER -[SUBMITS]-> REVIEW -->
+      <line class="svg-link" x1="250" y1="230" x2="570" y2="600" />
+      <line class="svg-link" x1="570" y1="600" x2="970" y2="710" />
+
+      <!-- BOOKING -[LOGS]-> TICKET -->
+      <line class="svg-link" x1="600" y1="360" x2="430" y2="540" />
+      <line class="svg-link" x1="430" y1="540" x2="250" y2="710" />
+
+      <!-- Cardinality Labels -->
+      <text class="svg-cardinality" x="290" y="270">1</text>
+      <text class="svg-cardinality" x="510" y="340">N</text>
+
+      <text class="svg-cardinality" x="690" y="340">N</text>
+      <text class="svg-cardinality" x="900" y="270">1</text>
+
+      <text class="svg-cardinality" x="262" y="320">1</text>
+      <text class="svg-cardinality" x="262" y="630">N</text>
+
+      <text class="svg-cardinality" x="330" y="300">1</text>
+      <text class="svg-cardinality" x="880" y="690">N</text>
+
+      <text class="svg-cardinality" x="540" y="440">1</text>
+      <text class="svg-cardinality" x="350" y="630">N</text>
+
+      <!-- ==================== RELATIONSHIPS (DIAMONDS) ==================== -->
+      <!-- PLACES -->
+      <g class="svg-rel" transform="translate(410,290)">
+        <polygon points="0,-32 54,0 0,32 -54,0" />
+        <text y="4">PLACES</text>
+      </g>
+
+      <!-- RESERVES -->
+      <g class="svg-rel" transform="translate(800,290)">
+        <polygon points="0,-32 58,0 0,32 -58,0" />
+        <text y="4">RESERVES</text>
+      </g>
+
+      <!-- REPORTS -->
+      <g class="svg-rel" transform="translate(250,470)">
+        <polygon points="0,-30 54,0 0,30 -54,0" />
+        <text y="4">REPORTS</text>
+      </g>
+
+      <!-- SUBMITS -->
+      <g class="svg-rel" transform="translate(570,600)">
+        <polygon points="0,-30 54,0 0,30 -54,0" />
+        <text y="4">SUBMITS</text>
+      </g>
+
+      <!-- LOGS INCIDENT -->
+      <g class="svg-rel" transform="translate(430,540)">
+        <polygon points="0,-28 48,0 0,28 -48,0" />
+        <text y="4">LOGS_FOR</text>
+      </g>
+
+      <!-- ==================== ENTITIES (RECTANGLES) ==================== -->
+      <!-- CUSTOMER -->
+      <g class="svg-entity" transform="translate(180,205)">
+        <rect width="140" height="50" />
+        <text x="70" y="30">CUSTOMER</text>
+      </g>
+
+      <!-- BOOKING -->
+      <g class="svg-entity" transform="translate(530,335)">
+        <rect width="140" height="50" />
+        <text x="70" y="30">BOOKING</text>
+      </g>
+
+      <!-- VEHICLE -->
+      <g class="svg-entity" transform="translate(900,205)">
+        <rect width="140" height="50" />
+        <text x="70" y="30">VEHICLE</text>
+      </g>
+
+      <!-- BREAKDOWN_TICKET -->
+      <g class="svg-entity" transform="translate(170,685)">
+        <rect width="160" height="50" />
+        <text x="80" y="30">BREAKDOWN_TKT</text>
+      </g>
+
+      <!-- REVIEW -->
+      <g class="svg-entity" transform="translate(900,685)">
+        <rect width="140" height="50" />
+        <text x="70" y="30">REVIEW</text>
+      </g>
+
+      <!-- ==================== ATTRIBUTES (OVALS) ==================== -->
+      <!-- CUSTOMER Attributes -->
+      <g class="svg-attr pk" transform="translate(110,130)"><ellipse rx="60" ry="22"/><text y="4">customer_phone</text></g>
+      <g class="svg-attr" transform="translate(200,90)"><ellipse rx="52" ry="20"/><text y="4">customer_name</text></g>
+      <g class="svg-attr" transform="translate(310,90)"><ellipse rx="52" ry="20"/><text y="4">customer_email</text></g>
+      <g class="svg-attr" transform="translate(85,210)"><ellipse rx="50" ry="20"/><text y="4">license_no</text></g>
+      <g class="svg-attr" transform="translate(85,280)"><ellipse rx="50" ry="20"/><text y="4">id_doc</text></g>
+
+      <!-- BOOKING Attributes -->
+      <g class="svg-attr pk" transform="translate(480,250)"><ellipse rx="55" ry="22"/><text y="4">booking_id</text></g>
+      <g class="svg-attr" transform="translate(570,200)"><ellipse rx="55" ry="20"/><text y="4">pickup_date</text></g>
+      <g class="svg-attr" transform="translate(670,200)"><ellipse rx="55" ry="20"/><text y="4">return_date</text></g>
+      <g class="svg-attr" transform="translate(760,250)"><ellipse rx="45" ry="20"/><text y="4">days</text></g>
+      <g class="svg-attr" transform="translate(780,330)"><ellipse rx="52" ry="20"/><text y="4">pickup_hub</text></g>
+      <g class="svg-attr" transform="translate(770,410)"><ellipse rx="52" ry="20"/><text y="4">total_amount</text></g>
+      <g class="svg-attr" transform="translate(740,490)"><ellipse rx="54" ry="20"/><text y="4">advance_paid</text></g>
+      <g class="svg-attr derived" transform="translate(630,520)"><ellipse rx="54" ry="20"/><text y="4">balance_due</text></g>
+      <g class="svg-attr" transform="translate(500,500)"><ellipse rx="45" ry="20"/><text y="4">status</text></g>
+
+      <!-- VEHICLE Attributes -->
+      <g class="svg-attr pk" transform="translate(930,90)"><ellipse rx="55" ry="22"/><text y="4">veh_name</text></g>
+      <g class="svg-attr" transform="translate(1040,90)"><ellipse rx="48" ry="20"/><text y="4">category</text></g>
+      <g class="svg-attr" transform="translate(1120,180)"><ellipse rx="52" ry="20"/><text y="4">base_price</text></g>
+      <g class="svg-attr" transform="translate(1120,260)"><ellipse rx="55" ry="20"/><text y="4">insurance_fee</text></g>
+
+      <!-- BREAKDOWN TICKET Attributes -->
+      <g class="svg-attr pk" transform="translate(85,630)"><ellipse rx="50" ry="22"/><text y="4">ticket_id</text></g>
+      <g class="svg-attr" transform="translate(80,710)"><ellipse rx="46" ry="20"/><text y="4">issue</text></g>
+      <g class="svg-attr" transform="translate(90,790)"><ellipse rx="54" ry="20"/><text y="4">location_gps</text></g>
+      <g class="svg-attr" transform="translate(180,850)"><ellipse rx="46" ry="20"/><text y="4">notes</text></g>
+      <g class="svg-attr" transform="translate(290,850)"><ellipse rx="46" ry="20"/><text y="4">is_urgent</text></g>
+      <g class="svg-attr" transform="translate(400,810)"><ellipse rx="46" ry="20"/><text y="4">status</text></g>
+
+      <!-- REVIEW Attributes -->
+      <g class="svg-attr pk" transform="translate(880,840)"><ellipse rx="45" ry="22"/><text y="4">review_id</text></g>
+      <g class="svg-attr" transform="translate(980,850)"><ellipse rx="48" ry="20"/><text y="4">stars (1-5)</text></g>
+      <g class="svg-attr" transform="translate(1090,820)"><ellipse rx="52" ry="20"/><text y="4">feedback_txt</text></g>
+      <g class="svg-attr" transform="translate(1120,740)"><ellipse rx="52" ry="20"/><text y="4">created_at</text></g>
+    </svg>
+  </div>
+
+  <!-- RELATIONAL SCHEMA VIEW (SUPABASE TABLES) -->
+  <div id="relationalView" class="rel-table-view">
+    <!-- Table 1: bookings -->
+    <div class="schema-table">
+      <div class="schema-header">
+        <span>📋 public.bookings</span>
+        <span style="font-size:0.75rem;color:var(--muted)">24 columns</span>
+      </div>
+      <ul class="schema-rows">
+        <li><span class="col-name"><span class="key-tag tag-pk">PK</span> id</span><span class="col-type">bigint</span></li>
+        <li><span class="col-name"><span class="key-tag" style="background:#475569;color:#fff">UK</span> booking_id</span><span class="col-type">text</span></li>
+        <li><span class="col-name">customer_name</span><span class="col-type">text</span></li>
+        <li><span class="col-name">customer_phone</span><span class="col-type">text</span></li>
+        <li><span class="col-name">customer_email</span><span class="col-type">text</span></li>
+        <li><span class="col-name">license_no</span><span class="col-type">text</span></li>
+        <li><span class="col-name">veh_name</span><span class="col-type">text</span></li>
+        <li><span class="col-name">category</span><span class="col-type">text</span></li>
+        <li><span class="col-name">days</span><span class="col-type">integer</span></li>
+        <li><span class="col-name">pickup_hub</span><span class="col-type">text</span></li>
+        <li><span class="col-name">pickup_datetime</span><span class="col-type">timestamptz</span></li>
+        <li><span class="col-name">return_datetime</span><span class="col-type">timestamptz</span></li>
+        <li><span class="col-name">total_amount</span><span class="col-type">numeric</span></li>
+        <li><span class="col-name">advance_paid</span><span class="col-type">numeric</span></li>
+        <li><span class="col-name">balance_due</span><span class="col-type">numeric</span></li>
+        <li><span class="col-name">status</span><span class="col-type">text</span></li>
+      </ul>
+    </div>
+
+    <!-- Table 2: tickets -->
+    <div class="schema-table">
+      <div class="schema-header">
+        <span>🛠 public.tickets</span>
+        <span style="font-size:0.75rem;color:var(--muted)">10 columns</span>
+      </div>
+      <ul class="schema-rows">
+        <li><span class="col-name"><span class="key-tag tag-pk">PK</span> id</span><span class="col-type">bigint</span></li>
+        <li><span class="col-name"><span class="key-tag" style="background:#475569;color:#fff">UK</span> ticket_id</span><span class="col-type">text</span></li>
+        <li><span class="col-name"><span class="key-tag tag-fk">FK</span> booking_ref</span><span class="col-type">bigint ➔ bookings(id)</span></li>
+        <li><span class="col-name">vehicle</span><span class="col-type">text</span></li>
+        <li><span class="col-name">issue</span><span class="col-type">text</span></li>
+        <li><span class="col-name">phone</span><span class="col-type">text</span></li>
+        <li><span class="col-name">location</span><span class="col-type">text</span></li>
+        <li><span class="col-name">notes</span><span class="col-type">text</span></li>
+        <li><span class="col-name">is_urgent</span><span class="col-type">boolean</span></li>
+        <li><span class="col-name">status</span><span class="col-type">text</span></li>
+        <li><span class="col-name">created_at</span><span class="col-type">timestamptz</span></li>
+      </ul>
+    </div>
+
+    <!-- Table 3: reviews -->
+    <div class="schema-table">
+      <div class="schema-header">
+        <span>⭐ public.reviews</span>
+        <span style="font-size:0.75rem;color:var(--muted)">5 columns</span>
+      </div>
+      <ul class="schema-rows">
+        <li><span class="col-name"><span class="key-tag tag-pk">PK</span> id</span><span class="col-type">bigint</span></li>
+        <li><span class="col-name"><span class="key-tag tag-fk">FK</span> booking_ref</span><span class="col-type">bigint ➔ bookings(id)</span></li>
+        <li><span class="col-name">name</span><span class="col-type">text</span></li>
+        <li><span class="col-name">stars</span><span class="col-type">integer (1-5)</span></li>
+        <li><span class="col-name">text</span><span class="col-type">text</span></li>
+        <li><span class="col-name">created_at</span><span class="col-type">timestamptz</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchView(mode) {
+    const isChen = mode === 'chen';
+    document.getElementById('chenView').style.display = isChen ? 'block' : 'none';
+    document.getElementById('chenLegend').style.display = isChen ? 'flex' : 'none';
+    document.getElementById('relationalView').classList.toggle('active', !isChen);
+    
+    document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', (isChen && idx === 0) || (!isChen && idx === 1));
+    });
+  }
+</script>
+
+</body>
+</html>
